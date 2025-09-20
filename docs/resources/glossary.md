@@ -94,4 +94,4 @@ A comprehensive list of technical terms used throughout the 0G documentation.
 
 ---
 
-*This glossary is continuously updated as the 0G ecosystem evolves. If you encounter a term not listed here, please contribute by submitting a pull request to our [documentation repository](https://github.com/0glabs/0g-docs).*
+*This glossary is continuously updated as the 0G ecosystem evolves. If you encounter a term not listed here, please contribute by submitting a pull request to our [documentation repository](https://github.com/0glabs/0g-doc).*
