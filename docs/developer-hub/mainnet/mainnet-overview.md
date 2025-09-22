@@ -14,14 +14,15 @@ Build and run production workloads on the 0G Mainnet.
 
 ## Network Details
 
-| Parameters | Network Details |
-|----------------|---|
-| **Network Name** | 0G Mainnet |
-| **Chain ID** | 16661 |
-| **Token Symbol** | 0G |
-| **Block Explorer** | `https://chianscan.0g.ai` |
+| Parameters         | Network Details           |
+| ------------------ | ------------------------- |
+| **Network Name**   | 0G Mainnet                |
+| **Chain ID**       | 16661                     |
+| **Token Symbol**   | 0G                        |
+| **Block Explorer** | `https://chainscan.0g.ai` |
 
 #### ✅ 3rd Party RPCs (Recommended for production)
+
 - QuickNode
 - ThirdWeb
 - Ankr
