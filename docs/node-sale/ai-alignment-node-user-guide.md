@@ -66,7 +66,7 @@ Download the latest 0G alignment node binary from the official repository:
 
 ```bash
 # Download the binary (replace with actual URL)
-wget https://github.com/0gfoundation/alignment-node-release/releases/latest/0g-alignment-node
+wget https://github.com/0gfoundation/alignment-node-release/releases/download/v1.0.0/0g-alignment-node
 chmod +x 0g-alignment-node
 ```
 
