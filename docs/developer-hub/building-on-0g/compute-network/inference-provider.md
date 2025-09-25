@@ -112,7 +112,7 @@ targetUrl: "http://localhost:8000"           # Your model service
 model: "llama-3.3-70b-instruct"              # Model identifier
 ```
 :::info Serving URL
-Serving URL must be publically accessible from the internet.
+Serving URL must be publicly accessible from the internet.
 :::
 
 ### Configure Docker Port
