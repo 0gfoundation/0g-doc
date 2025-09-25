@@ -196,7 +196,7 @@ git clone -b <latest_tag> https://github.com/0gfoundation/0g-storage-kv.git
 cd 0g-storage-kv
 
 # Build in release mode
-cargo build --release
+RUSTFLAGS="-C target-cpu=native" cargo build --release
 ```
 
 ## Configuration
