@@ -32,7 +32,7 @@ struct Supply {
 - **Fields**:
   - `cap`: The maximum allowed mint supply for the minter.
   - `initialSupply`: The initial mint supply to the minter, equivalent to the initial allowed burn amount.
-  - `supply`: The current mint supply used by the minter, set to `initialSupply` at beginning.
+  - `supply`: The current mint supply used by the minter, set to `initialSupply` at the beginning.
 
 ---
 

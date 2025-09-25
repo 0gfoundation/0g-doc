@@ -104,7 +104,7 @@ The transfer mechanism ensures both token ownership and encrypted metadata trans
 
 2. **Secure Transfer Initiation**
    - Trusted oracle (using TEEs) decrypts original metadata
-   - Process happens in secure environment
+   - Process happens in a secure environment
 
 3. **Re-encryption for Receiver**
    - Oracle generates new encryption key

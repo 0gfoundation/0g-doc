@@ -50,7 +50,7 @@ Validators process transactions and produce blocks:
 
 ### Delegations
 Token holders earn rewards by delegating to validators:
-- **Share-Based**: Delegations represented as shares in validator pool
+- **Share-Based**: Delegations represented as shares in the validator pool
 - **Proportional Rewards**: Earnings based on share percentage
 - **Withdrawal Delay**: Undelegation subject to network delay period
 
@@ -342,7 +342,7 @@ Remove the zero paddings to get the validator address.
 
 ### Step 3: Generate Signature
 
-Use the validator's contract address from Step 2 to generate signature.
+Use the validator's contract address from Step 2 to generate a signature.
 
 ```bash
 # set your params

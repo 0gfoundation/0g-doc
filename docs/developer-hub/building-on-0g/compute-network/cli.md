@@ -22,7 +22,7 @@ pnpm install @0glabs/0g-serving-broker -g
 ### Set Environment
 
 ```bash
-export RPC_ENDPOINT=https://evmrpc-testnet.0g.ai  # Optional, this is default
+export RPC_ENDPOINT=https://evmrpc-testnet.0g.ai  # Optional, this is the default
 export ZG_PRIVATE_KEY=your_private_key_here
 ```
 

@@ -22,7 +22,7 @@ However, it's worth noting that not all DALs are built equally.
 
 ## The Challenge Today
 
-Existing DALs tend to require that data be simultaneously sent to all of their network nodes, preventing horizontal scalability and limiting network speed to its slowest node. They also do not have built-in storage systems, requiring connectivity to external systems that impact throughput, latency, and cost. 
+Existing DALs tend to require that data be simultaneously sent to all of their network nodes, preventing horizontal scalability and limiting network speed to the slowest node. They also do not have built-in storage systems, requiring connectivity to external systems that impact throughput, latency, and cost. 
 
 Additionally, 0G inherits Ethereum's security, while other systems rely upon their own security mechanisms that fall short. This is significant because Ethereum's network is secured by over 34 million ETH staked, representing approximately $80 billion in cryptoeconomic security at the time of writing. In contrast, competitors rely on security mechanisms that, at best, represent only a fraction of Ethereum's total security. This gives 0G a distinct advantage, as it leverages the vast economic incentives and decentralization of Ethereum's staking system, providing a level of protection that competitors cannot match.
 
@@ -66,7 +66,7 @@ The consensus mechanism used by 0G is fast and efficient due to its sampling-bas
 
 Validators in the 0G Consensus network, who are separate from the DA nodes, verify and finalize these proofs. Although DA nodes ensure data availability, they do not directly participate in the final consensus process, which is the responsibility of 0G validators. Validators use a shared staking mechanism where they stake 0G tokens on a primary network (likely Ethereum). Any slashable event across connected networks leads to slashing on the main network, securing the system's scalability while maintaining robust security. 
 
-This is a key mechanism that allows for the system to scale infinitely while maintaining data availability. In return, validators engaged in shared staking receive 0G tokens on any network managed, which can then be burnt in return for 0G tokens on the mainnet.
+This is a key mechanism that allows the system to scale infinitely while maintaining data availability. In return, validators engaged in shared staking receive 0G tokens on any network managed, which can then be burnt in return for 0G tokens on the mainnet.
 
 <div style={{textAlign: 'center'}}>
   <img src="/img/consensus process.png" alt="0G DA Consensus Process" style={{maxWidth: '100%'}} />

@@ -72,7 +72,7 @@ This means no one can censor your AI usage, freeze your account, or change terms
 <summary>**What about reliability?**</summary>
 
 Built-in redundancy:
-- Automatic failover to next provider
+- Automatic failover to the next provider
 - Thousands of providers globally
 
 </details>
@@ -80,7 +80,7 @@ Built-in redundancy:
 <details>
 <summary>**Can I run proprietary models?**</summary>
 
-Yes. Upload any model, set requirements and pricing, start serving requests. Perfect for specialized use cases.
+Yes. Upload any model, set requirements and pricing, and start serving requests. Perfect for specialized use cases.
 
 </details>
 

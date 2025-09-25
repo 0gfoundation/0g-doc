@@ -27,7 +27,7 @@ Transform your AI services into verifiable, revenue-generating endpoints on the 
 ### Prepare Your Model Service
 
 #### Service Interface Requirements
-Your AI service must implement the [OpenAI API Interface](https://platform.openai.com/docs/api-reference/chat) for compatibility. This ensures consistent user experience across all providers.
+Your AI service must implement the [OpenAI API Interface](https://platform.openai.com/docs/api-reference/chat) for compatibility. This ensures a consistent user experience across all providers.
 
 #### Verification Interfaces
 To ensure the integrity and trustworthiness of services, different verification mechanisms are employed. Each mechanism comes with its own specific set of protocols and requirements to ensure service verification and security.
@@ -112,7 +112,7 @@ targetUrl: "http://localhost:8000"           # Your model service
 model: "llama-3.3-70b-instruct"              # Model identifier
 ```
 :::info Serving URL
-Serving URL must be publically accessible from the internet.
+Serving URL must be publicly accessible from the internet.
 :::
 
 ### Configure Docker Port

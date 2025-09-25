@@ -24,7 +24,7 @@ For a quick and easy web interface, try the [0G Storage Web Tool](https://storag
 ## Installation
 
 ### Prerequisites
-- Go 1.18 or higher installed on your system
+- Go 1.18 or higher is installed on your system
 - Git for cloning the repository
 
 ### Setup Steps
@@ -75,9 +75,9 @@ Global Flags:
   --gas-price uint                Custom gas price for transactions
   --log-level string              Set log level (default "info")
   --log-color-disabled            Disable colorful log output
-  --rpc-retry-count int           Retry count for rpc request (default 5)
-  --rpc-retry-interval duration   Retry interval for rpc request (default 5s)
-  --rpc-timeout duration          Timeout for single rpc request (default 30s)
+  --rpc-retry-count int           Retry count for RPC request (default 5)
+  --rpc-retry-interval duration   Retry interval for RPC request (default 5s)
+  --rpc-timeout duration          Timeout for single RPC request (default 30s)
   --web3-log-enabled              Enable Web3 RPC logging
 ```
 

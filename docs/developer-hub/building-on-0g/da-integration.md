@@ -228,7 +228,7 @@ cargo run -r -p server --features grpc/parallel,grpc/cuda -- --config run/config
 If you do not have a CUDA environment, remove the cuda feature.
 :::
 
-DA Encoder will serve on port 34000 with specified gRPC interface.
+DA Encoder will serve on port 34000 with the specified gRPC interface.
 
 ## Using the Verification Logic
 
@@ -364,7 +364,7 @@ docker run -d --name 0g-da-retriever -p 34005:34005 0g-da-retriever
 - Verify NVIDIA drivers are installed: `nvidia-smi`
 - Check CUDA installation: `nvcc --version`
 - Ensure Docker has GPU access if using containers
-- Try running without cuda feature if GPU is not available
+- Try running without cuda feature if the GPU is not available
 </details>
 
 <details>

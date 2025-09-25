@@ -158,7 +158,7 @@ Yes! The erasure coding system ensures your data survives node failures. The net
 <summary><b>How fast can I retrieve large files?</b></summary>
 
 - Parallel retrieval from multiple nodes
-- Bandwidth limited only by your connection
+- Bandwidth is limited only by your connection
 - 200 MBPS retrieval speed even at network congestion
 - CDN-like performance through geographic distribution
 </details>

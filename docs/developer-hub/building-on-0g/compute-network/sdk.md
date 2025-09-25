@@ -35,7 +35,7 @@ GPU owners offering AI services:
 - Run specific models
 
 ### 3. Prepaid Accounts
-- Fund account before usage
+- Fund the account before usage
 - Automatic micropayments
 - No surprise bills
 
