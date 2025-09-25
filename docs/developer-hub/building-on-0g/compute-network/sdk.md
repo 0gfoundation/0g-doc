@@ -1,26 +1,73 @@
 ---
 id: sdk
-title: Inference SDK
+title: Inference & CLI Tools
 sidebar_position: 3
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# 0G Compute SDK
+# 0G Compute Network Tools
+
+The 0G Compute Network provides multiple ways to interact with inference services. You can use the CLI for quick setup and testing, or integrate the SDK for programmatic access in your applications.
+
+## Quick Start (CLI)
+
+The 0G Compute CLI provides a simple way to get started with inference services in just a few steps.
+
+### Installation
+
+```bash
+pnpm install -g @0glabs/0g-serving-broker
+```
+
+### Step 1: Add Funds
+
+> **Note:** For normal use on the 0G testnet, you only need to set your private key as an environment variable. All other parameters are pre-configured for the testnet.
+
+```bash
+export ZG_PRIVATE_KEY=your_private_key
+
+# Add funds to your account
+0g-compute-cli deposit --amount 0.5
+```
+
+### Start Local Inference Service
+
+### Step 2: Start Service
+
+```bash
+0g-compute-cli serve \
+  --provider 0x70997970C51812dc3A010C7d01b50e0d17dc79C8 \
+  --ledger-ca=0x8A791620dd6260079BF849Dc5567aDC3F2FdC318 \
+  --inference-ca=0x0165878A594ca255338adfa4d48449f69242Eb8F \
+  --rpc=http://localhost:8545 \
+  --key=your_private_key_here
+```
+
+That's it! Your inference service is now running and ready to accept requests.
+
+### Available Commands
+
+- `deposit --amount <amount>`: Add funds to your account
+- `serve`: Start local inference service
+- `list-models`: List available models
+- `get-account`: Check account balance
+- `--help`: Show all available commands
+
+## Programmatic Usage (SDK)
 
 The 0G Compute Network SDK enables developers to integrate AI inference services from the 0G Compute Network into their applications. Currently, the 0G Compute Network SDK supports Large Language Model (LLM) inference services, with fine-tuning and additional features planned for future releases.
 
 In just five minutes, you can initialize your broker to manage operations, set up and fund your account to pay for inference services, and learn how to send inference requests and handle responses.
-
-## Quick Start
 
 ### Installation
 
 ```bash
 pnpm add @0glabs/0g-serving-broker @types/crypto-js@4.2.2 crypto-js@4.2.0
 ```
-## Core Concepts
+
+### Core Concepts
 
 ### 1. The Broker
 Your interface to the 0G Compute Network:
@@ -39,7 +86,7 @@ GPU owners offering AI services:
 - Automatic micropayments
 - No surprise bills
 
-## Step-by-Step Guide
+### Step-by-Step Guide
 
 ### Initialize the Broker
 
@@ -225,7 +272,37 @@ await broker.ledger.retrieveFund("inference", "0.1");
 
 ## Troubleshooting
 
-### Common Issues
+### CLI Issues
+
+<details>
+<summary><b>Error: Chalk compatibility issue</b></summary>
+
+If you encounter this error:
+```
+Error [ERR_REQUIRE_ESM]: require() of ES Module chalk@5.x
+```
+
+**Solution**: Install chalk@4 globally
+```bash
+pnpm add -g chalk@4
+```
+</details>
+
+<details>
+<summary><b>Error: CLI command not found</b></summary>
+
+Make sure the CLI is installed globally:
+```bash
+pnpm install -g @0glabs/0g-serving-broker
+```
+
+If using npm:
+```bash
+npm install -g @0glabs/0g-serving-broker
+```
+</details>
+
+### SDK Issues
 
 <details>
 <summary><b>Error: Insufficient balance</b></summary>
