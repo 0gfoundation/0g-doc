@@ -11,6 +11,3 @@ Below is a list of community-maintained Docker images for 0G DA. Please note tha
 
 ### All Node Types
 [Ember Stake](https://docs.emberstake.xyz/networks/zero-gravity/nodes-guide/getting-started)
-
-### Validator Node
-[CryptoWarden](https://medium.com/@CryptoWarden/guide-to-running-a-node-in-the-0g-labs-project-0g-ai-1bee56ea53ca)
