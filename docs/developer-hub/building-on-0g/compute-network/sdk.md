@@ -72,18 +72,44 @@ const signer = await provider.getSigner();
 const broker = await createZGComputeNetworkBroker(signer);
 ```
 
+:::caution Browser Compatibility
+`@0glabs/0g-serving-broker` relies on several Node.js built-in modules (`crypto`, `stream`, `util`, `buffer`, `process`), so polyfills are necessary for browser compatibility.
+
+**Example with Vite:**
+
+```bash
+pnpm add -D vite-plugin-node-polyfills
+```
+
+```javascript
+// vite.config.js
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
+
+export default {
+  plugins: [
+    nodePolyfills({
+      include: ['crypto', 'stream', 'util', 'buffer', 'process'],
+      globals: { Buffer: true, global: true, process: true }
+    })
+  ]
+};
+```
+
+For other build tools (Webpack, Rollup, etc.), configure the appropriate polyfills for these Node.js modules.
+:::
+
 </TabItem>
 </Tabs>
 
 ### Fund Your Account
 
 ```typescript
-// Add 0.1 OG tokens (~10,000 requests)
-await broker.ledger.addLedger("0.1");
+// Add 10 OG tokens
+await broker.ledger.addLedger(10);
 
 // Check balance
 const account = await broker.ledger.getLedger();
-console.log(`Balance: ${ethers.formatEther(account.totalbalance)} OG`);
+console.log(`Balance: ${ethers.formatEther(account.totalBalance)} OG`);
 ```
 
 ### Discover Available Services
@@ -95,7 +121,7 @@ The 0G Compute Network hosts multiple AI service providers. The service discover
 
 | Model | Provider Address | Description | Verification |
 |-------|-----------------|-------------|--------------|
-| **llama-3.3-70b-instruct** | `0xf07240Efa67755B5311bc75784a061eDB47165Dd` | State-of-the-art 70B parameter model for general AI tasks | TEE (TeeML) |
+| **gpt-oss-120b** | `0xf07240Efa67755B5311bc75784a061eDB47165Dd` | State-of-the-art 70B parameter model for general AI tasks | TEE (TeeML) |
 | **deepseek-r1-70b** | `0x3feE5a4dd5FDb8a32dDA97Bed899830605dBD9D3` | Advanced reasoning model optimized for complex problem solving | TEE (TeeML) |
 
 </details>
@@ -138,10 +164,12 @@ Service usage in the 0G Network involves two key steps:
 ```typescript
   
   // Get service details
-  const { endpoint, model } = await broker.inference.getServiceMetadata(provider);
+  const { endpoint, model } = await broker.inference.getServiceMetadata(providerAddress);
   
   // Generate auth headers (single use)
-  const headers = await broker.inference.getRequestHeaders(provider, question);
+  // For chat requests, pass JSON stringified messages array
+  const messages = [{ role: "user", content: question }];
+  const headers = await broker.inference.getRequestHeaders(providerAddress, JSON.stringify(messages));
   
 ```
 
@@ -151,35 +179,43 @@ Service usage in the 0G Network involves two key steps:
 <TabItem value="fetch" label="Using Fetch API" default>
 
 ```typescript
+const messages = [{ role: "user", content: question }];
+
 const response = await fetch(`${endpoint}/chat/completions`, {
     method: "POST",
     headers: { "Content-Type": "application/json", ...headers },
     body: JSON.stringify({
-      messages: [{ role: "user", content: question }],
+      messages: messages,
       model: model,
     }),
   });
   
 const data = await response.json();
 const answer = data.choices[0].message.content;
+const chatID = data.id; // Save for verification
 
 ```
 </TabItem>
 <TabItem value="openai" label="Using OpenAI SDK">
 
 ```typescript
+const messages = [{ role: "user", content: question }];
+
 const openai = new OpenAI({
     baseURL: endpoint,
     apiKey: "", // Empty string
     defaultHeaders: headers
   });
   
-const completion = await openai.chat.completions.create({
-    messages: [{ role: "user", content: question }],
+const completion = await openai.chat.completions.create(
+  {
+    messages: messages,
     model: model,
-  });
+  },
+);
   
 const answer = completion.choices[0].message.content!;
+const chatID = completion.id; // Save for verification
 ```
 
 </TabItem>
@@ -189,9 +225,9 @@ const answer = completion.choices[0].message.content!;
 This function is used to verify the response. If it is a verifiable service, it will return whether the response is valid.
 
 ```typescript
-const valid = await broker.inference.processResponse(
+const isValid = await broker.inference.processResponse(
   providerAddress,
-  content,
+  receivedContent,
   chatID // Optional: Only for verifiable services
 );
 ```
@@ -203,24 +239,23 @@ Fee settlement by the broker service occurs at scheduled intervals.
 
 ### Check Balance
 ```typescript
-const ledger = await broker.ledger.getLedger();
+const account = await broker.ledger.getLedger();
 console.log(`
-  Balance: ${ethers.formatEther(ledger.balance)} OG
-  Locked: ${ethers.formatEther(ledger.locked)} OG
-  Available: ${ethers.formatEther(ledger.balance - ledger.locked)} OG
+  Balance: ${ethers.formatEther(account.totalBalance)} OG
 `);
 ```
 
 ### Add Funds
 ```typescript
-// Add more funds
-await broker.ledger.depositFund("0.5");
+// Add more funds (amount in OG tokens)
+await broker.ledger.depositFund(10);
 ```
 
 ### Request Refund
 ```typescript
-// Withdraw unused funds
-await broker.ledger.retrieveFund("inference", "0.1");
+// Withdraw unused funds from inference sub-account
+// Parameters: service type ("inference" or "fine-tuning")
+await broker.ledger.retrieveFund("inference");
 ```
 
 ## Troubleshooting
@@ -232,7 +267,8 @@ await broker.ledger.retrieveFund("inference", "0.1");
 
 Your account doesn't have enough funds. Add more:
 ```typescript
-await broker.ledger.addLedger(ethers.parseEther("0.1"));
+// Amount in OG tokens
+await broker.ledger.addLedger(1);
 ```
 </details>
 
@@ -242,14 +278,15 @@ await broker.ledger.addLedger(ethers.parseEther("0.1"));
 Request headers are single-use. Generate new ones for each request:
 ```typescript
 // ❌ Wrong
-const headers = await broker.inference.getRequestHeaders(provider, content);
+const messages = [{role: "user", content: "Hello"}];
+const headers = await broker.inference.getRequestHeaders(provider, JSON.stringify(messages));
 await makeRequest(headers);
 await makeRequest(headers); // Will fail!
 
 // ✅ Correct
-const headers1 = await broker.inference.getRequestHeaders(provider, content);
+const headers1 = await broker.inference.getRequestHeaders(provider, JSON.stringify(messages));
 await makeRequest(headers1);
-const headers2 = await broker.inference.getRequestHeaders(provider, content);
+const headers2 = await broker.inference.getRequestHeaders(provider, JSON.stringify(messages));
 await makeRequest(headers2);
 ```
 </details>
