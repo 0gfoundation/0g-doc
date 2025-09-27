@@ -75,15 +75,6 @@ These are standard models available across all providers:
 | Model Name | Type | Description |
 |------------|------|-------------|
 | `distilbert-base-uncased` | Text Classification | DistilBERT is a transformers model, smaller and faster than BERT, which was pretrained on the same corpus in a self-supervised fashion, using the BERT base model as a teacher. More details: [HuggingFace](https://huggingface.co/distilbert/distilbert-base-uncased) |
-| `cocktailsgd-opt-1.3b` | Language Generation | CocktailSGD-opt-1.3B finetunes the Opt-1.3B language model with CocktailSGD, a novel distributed finetuning framework. More details: [GitHub](https://github.com/DS3Lab/CocktailSGD) |
-
-#### Provider-Specific Models
-These models are hosted by specific providers and may have different availability:
-
-| Model Name | Type | Description |
-|------------|------|------------------|
-| `deepseek-r1-distill-qwen-1.5b` | Reasoning Tasks  | DeepSeek-R1-Zero, a model trained via large-scale reinforcement learning (RL) without supervised fine-tuning (SFT) as a preliminary step, demonstrated remarkable performance on reasoning tasks |
-| `mobilenet_v2` | Image Classification | MobileNet V2 model pre-trained on ImageNet-1k at resolution 224x224, optimized for mobile and edge devices |
 
 </details>
 
@@ -233,7 +224,7 @@ Training model for task beb6f0d8-4660-4c62-988d-00246ce913d2 completed successfu
 Use the [Check Task](#monitor-progress) command to view task status. When the status changes to `Delivered`, it indicates that the provider has completed the fine-tuning task and uploaded the result to storage. The corresponding root hash has also been saved to the contract. You can download the model with the following command; CLI will download the model based on the root hash submitted by the provider. If the download is successful, CLI updates the contract information to confirm the model is downloaded.
 
 ```bash
-0g-compute-cli acknowledge-model --provider <PROVIDER_ADDRESS>  --data-path <PATH_TO_SAVE_MODEL>
+0g-compute-cli acknowledge-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --data-path <PATH_TO_SAVE_MODEL>
 ```
 
 **Note:** The model file downloaded with the above command is encrypted, and additional steps are required for decryption.
@@ -243,7 +234,7 @@ Use the [Check Task](#monitor-progress) command to view task status. When the st
 The provider will check the contract to verify if the user has confirmed the download, enabling the provider to settle fees successfully on the contract subsequently. Once the provider confirms the download, it uploads the key required for decryption to the contract, encrypted with the user's public key, and collects the fee. You can again use the `get-task` command to view the task status. When the status changes to `Finished`, it means the provider has uploaded the key. At this point, you can decrypt the model with the following command:
 
 ```bash
-0g-compute-cli decrypt-model --provider <PROVIDER_ADDRESS> --encrypted-model <PATH_TO_ENCRYPTED_MODEL> --output <PATH_TO_SAVE_DECRYPTED_MODEL>
+0g-compute-cli decrypt-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --encrypted-model <PATH_TO_ENCRYPTED_MODEL> --output <PATH_TO_SAVE_DECRYPTED_MODEL>
 ```
 
 The above command performs the following operations:
