@@ -28,7 +28,7 @@ Test your applications on 0G's infrastructure without real costs or risks.
 - [QuickNode](https://www.quicknode.com/chains/0g)
 - [ThirdWeb](https://thirdweb.com/0g-galileo-testnet-16601)
 - [Ankr](https://www.ankr.com/rpc/0g/)
-- [DRPC](https://drpc.org/chainlist/0g-galileo-testnet-rpc)
+- [dRPC NodeCloud](https://drpc.org/chainlist/0g-galileo-testnet-rpc)
 
 
 
