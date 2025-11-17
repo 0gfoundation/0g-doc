@@ -66,9 +66,9 @@ The network consists of:
 
 ### 👨‍💻 "I want to use AI services"
 Build AI-powered applications without infrastructure:
-1. [Install SDK](./sdk) - 5 minute setup
-2. [Fund your account](./sdk#account-management) - Pre-pay for usage
-3. [Send requests](./sdk#service-requests) - **OpenAI SDK compatible**
+1. [Install SDK](./inference#sdk) - 5 minute setup
+2. [Fund your account](./account-management) - Pre-pay for usage
+3. [Send requests](./inference#direct-api-access) - **OpenAI SDK compatible**
 
 ### 🖥️ "I have GPUs to monetize"
 Turn idle hardware into revenue:
@@ -77,9 +77,9 @@ Turn idle hardware into revenue:
 
 ### 🎯 "I need to fine-tune AI models"
 Fine-tune models with your data:
-1. [Install CLI tools](./cli#install-cli)
-2. [Prepare your dataset](./cli#prepare-your-data)
-3. [Start fine-tuning](./cli#create-task)
+1. [Install CLI tools](./fine-tuning#install-cli)
+2. [Prepare your dataset](./fine-tuning#prepare-your-data)
+3. [Start fine-tuning](./fine-tuning#create-task)
 
 
 

@@ -6,6 +6,7 @@ title: 0G Compute Network
 # 0G Compute Network: Decentralized AI Computing
 
 In today's world, AI models are transforming industries, driving innovation, and powering new applications. However, running advanced AI models for your application faces several obstacles:
+
 - **High Costs**: Enterprise AI services require significant monthly commitments
 - **Complex Setup**: Cloud GPU configuration requires technical expertise
 - **Vendor Lock-in**: Limited flexibility when switching providers
@@ -13,6 +14,7 @@ In today's world, AI models are transforming industries, driving innovation, and
 **The result?** AI computing remains inaccessible for many developers and startups.
 
 ## What is 0G Compute?
+
 0G Compute is a decentralized framework that provides AI computing capabilities to our community. It forms a crucial part of deAIOS. 0G Compute is a decentralized marketplace where GPU owners sell computing power to developers who need it - think Uber for AI computing.
 
 **Key difference**: Instead of renting from AWS/Google with high costs and lock-in, you access a global GPU network that's 90% cheaper with pay-per-use pricing.
@@ -34,6 +36,7 @@ In today's world, AI models are transforming industries, driving innovation, and
 4. **Instant Earnings**: Get paid immediately upon completion
 
 ### Technical Implementation
+
 - **Smart Contract Escrow**: Funds secured until service delivery
 - **Signed Transactions**: Cryptographic verification of all interactions
 - **ZK-Proof Settlement**: 100x lower transaction costs through compressed proofs
@@ -42,8 +45,9 @@ In today's world, AI models are transforming industries, driving innovation, and
 <summary>**What makes it trustless?**</summary>
 
 Like eBay with automatic escrow - the smart contract ensures:
+
 - Payment only after service delivery
-- Both parties must fulfill obligations  
+- Both parties must fulfill obligations
 - No intermediary can interfere
 
 This means no one can censor your AI usage, freeze your account, or change terms suddenly.
@@ -53,16 +57,19 @@ This means no one can censor your AI usage, freeze your account, or change terms
 ## Why Choose 0G Compute?
 
 ### 💰 Key Advantages
-| Feature | Traditional Cloud | 0G Compute |
-|---------|------------------|------------|
-| Pricing Model | Fixed monthly costs | Pay-per-use |
-| Provider Options | Limited vendors | Global GPU network |
+
+| Feature          | Traditional Cloud   | 0G Compute         |
+| ---------------- | ------------------- | ------------------ |
+| Pricing Model    | Fixed monthly costs | Pay-per-use        |
+| Provider Options | Limited vendors     | Global GPU network |
 
 ### 🌐 Access From Anywhere
+
 - **Blockchains**: Direct integration with Ethereum, Solana, any chain
 - **Traditional Apps**: Simple REST API using 0G SDK
 
 ### 🔐 Your Data, Your Control
+
 - No data retention by providers
 - Verifiable computation proofs - Supports TEEML, OPML & ZKML
 
@@ -72,6 +79,7 @@ This means no one can censor your AI usage, freeze your account, or change terms
 <summary>**What about reliability?**</summary>
 
 Built-in redundancy:
+
 - Automatic failover to next provider
 - Thousands of providers globally
 
@@ -88,6 +96,7 @@ Yes. Upload any model, set requirements and pricing, start serving requests. Per
 <summary>**How does pricing work?**</summary>
 
 Pure pay-per-use:
+
 - No subscriptions
 - Competitive market-driven pricing
 - Transparent costs visible upfront
@@ -97,17 +106,19 @@ Pure pay-per-use:
 ## Get Started
 
 ### 📚 Technical Deep Dive
+
 Architecture and implementation details  
 → [Technical Documentation](/developer-hub/building-on-0g/compute-network/overview)
 
 ### 🚀 For Developers
-Start using AI compute in 5 minutes  
-→ [Quick Start Guide](/developer-hub/building-on-0g/compute-network/sdk)
 
-### 💎 For GPU Owners  
+Start using AI compute in 5 minutes  
+→ [Quick Start Guide](/developer-hub/building-on-0g/compute-network/inference)
+
+### 💎 For GPU Owners
+
 Turn idle hardware into income  
 → [Become a Provider](/developer-hub/building-on-0g/compute-network/inference-provider)
-
 
 ---
 

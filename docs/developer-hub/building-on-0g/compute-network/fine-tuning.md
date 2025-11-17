@@ -1,12 +1,12 @@
 ---
-id: cli
-title: Fine-tuning CLI
+id: fine-tuning
+title: Fine-tuning
 sidebar_position: 5
 ---
 
-# Fine-tuning CLI
+# Fine-tuning
 
-Customize AI models with your own data using 0G's distributed GPU network.
+Customize AI models with your own data using 0G's distributed GPU network (currently available on testnet only).
 
 ## Quick Start
 
@@ -21,22 +21,37 @@ pnpm install @0glabs/0g-serving-broker -g
 
 ### Set Environment
 
+#### Choose Network
 ```bash
-export RPC_ENDPOINT=https://evmrpc-testnet.0g.ai  # Optional, this is default
-export ZG_PRIVATE_KEY=your_private_key_here
+# Setup network (fine-tuning currently supports testnet only)
+0g-compute-cli setup-network
+```
+
+**Important**: Fine-tuning services are currently available on **testnet only**. Mainnet support will be added in future releases.
+
+#### Login with Wallet
+Enter your wallet private key when prompted.
+```bash
+# Login with your wallet private key
+0g-compute-cli login
 ```
 
 ### Create Account & Add Funds
-The Fine-tuning CLI requires an account to pay for service fees via the 0G Compute Network. You can create an account with the following command:
+The Fine-tuning CLI requires an account to pay for service fees via the 0G Compute Network.
+
+**For detailed account management instructions, see [Account Management](./account-management).**
 
 ```bash
-# Create account with 0.1 0G
-0g-compute-cli add-account --amount 0.1
+# Deposit funds to your account
+0g-compute-cli deposit --amount 0.1
+
+# Transfer funds to a provider for fine-tuning
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 0.1
 ```
 
 ### List Providers
 ```bash
-0g-compute-cli list-providers
+0g-compute-cli fine-tuning list-providers
 ```
 The output will be like:
 ```bash
@@ -61,7 +76,7 @@ The output will be like:
 
 ```bash
 # List available models
-0g-compute-cli list-models
+0g-compute-cli fine-tuning list-models
 ```
 
 <details>
@@ -92,7 +107,7 @@ Please download the parameter file template for the model you wish to fine-tune 
 *Note:* For custom models provided by third-party Providers, you can download the usage template including instructions on how to construct the dataset and training configuration using the following command:
 
 ```bash
-0g-compute-cli model-usage --provider <PROVIDER_ADDRESS>  --model <MODEL_NAME>   --output <PATH_TO_SAVE_MODEL_USAGE>
+0g-compute-cli fine-tuning model-usage --provider <PROVIDER_ADDRESS>  --model <MODEL_NAME>   --output <PATH_TO_SAVE_MODEL_USAGE>
 ```
 
 ### Prepare Your Data
@@ -103,7 +118,7 @@ Please download the dataset format specification and verification script from th
 
 ```bash
 # Upload to 0G Storage
-0g-compute-cli upload --data-path <PATH_TO_DATASET>
+0g-compute-cli fine-tuning upload --data-path <PATH_TO_DATASET>
 
 # Output: Root hash: 0xabc123... (save this!)
 ```
@@ -114,7 +129,7 @@ Please download the dataset format specification and verification script from th
 After uploading the dataset to storage, you can calculate its size by running the following command:
 
 ```bash
-0g-compute-cli calculate-token \
+0g-compute-cli fine-tuning calculate-token \
   --model <MODEL_NAME> \
   --dataset-path <PATH_TO_DATASET> \
   --provider <PROVIDER_ADDRESS>
@@ -125,7 +140,7 @@ After uploading the dataset to storage, you can calculate its size by running th
 After calculating the dataset size, you can create a task by running the following command:
 
 ```bash
-0g-compute-cli create-task \
+0g-compute-cli fine-tuning create-task \
   --provider <PROVIDER_ADDRESS> \
   --model <MODEL_NAME> \
   --dataset <DATASET_ROOT_HASH> \
@@ -159,7 +174,7 @@ Created Task ID: 6b607314-88b0-4fef-91e7-43227a54de57
 You can monitor the progress of your task by running the following command:
 
 ```bash
-0g-compute-cli get-task --provider <PROVIDER_ADDRESS> --task <TASK_ID>
+0g-compute-cli fine-tuning get-task --provider <PROVIDER_ADDRESS> --task <TASK_ID>
 ```
 
 The output will be like:
@@ -207,7 +222,7 @@ The output will be like:
 You can view the logs of your task by running the following command:
 
 ```bash
-0g-compute-cli get-log --provider <PROVIDER_ADDRESS> --task <TASK_ID>
+0g-compute-cli fine-tuning get-log --provider <PROVIDER_ADDRESS> --task <TASK_ID>
 ```
 
 The output will be like:
@@ -224,7 +239,7 @@ Training model for task beb6f0d8-4660-4c62-988d-00246ce913d2 completed successfu
 Use the [Check Task](#monitor-progress) command to view task status. When the status changes to `Delivered`, it indicates that the provider has completed the fine-tuning task and uploaded the result to storage. The corresponding root hash has also been saved to the contract. You can download the model with the following command; CLI will download the model based on the root hash submitted by the provider. If the download is successful, CLI updates the contract information to confirm the model is downloaded.
 
 ```bash
-0g-compute-cli acknowledge-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --data-path <PATH_TO_SAVE_MODEL>
+0g-compute-cli fine-tuning acknowledge-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --data-path <PATH_TO_SAVE_MODEL>
 ```
 
 **Note:** The model file downloaded with the above command is encrypted, and additional steps are required for decryption.
@@ -234,7 +249,7 @@ Use the [Check Task](#monitor-progress) command to view task status. When the st
 The provider will check the contract to verify if the user has confirmed the download, enabling the provider to settle fees successfully on the contract subsequently. Once the provider confirms the download, it uploads the key required for decryption to the contract, encrypted with the user's public key, and collects the fee. You can again use the `get-task` command to view the task status. When the status changes to `Finished`, it means the provider has uploaded the key. At this point, you can decrypt the model with the following command:
 
 ```bash
-0g-compute-cli decrypt-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --encrypted-model <PATH_TO_ENCRYPTED_MODEL> --output <PATH_TO_SAVE_DECRYPTED_MODEL>
+0g-compute-cli fine-tuning decrypt-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --encrypted-model <PATH_TO_ENCRYPTED_MODEL> --output <PATH_TO_SAVE_DECRYPTED_MODEL>
 ```
 
 The above command performs the following operations:
@@ -247,131 +262,19 @@ The above command performs the following operations:
 
 ### Account Management
 
-#### View Account
+For comprehensive account management, including viewing balances, managing sub-accounts, and handling refunds, see [Account Management](./account-management).
 
+Quick CLI commands:
 ```bash
+# Check balance
 0g-compute-cli get-account
-```
 
-Possible output:
-
-```
-  Overview
-┌──────────────────────────────────────────────────┬─────────────────────────────────────────────────────────────────────────────────┐
-│ Balance                                          │ Value (0G)                                                                      │
-├──────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ Total                                            │ 0.999999999820331942                                                            │
-├──────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ Locked (transferred to sub-accounts)             │ 0.000000000179668154                                                            │
-└──────────────────────────────────────────────────┴─────────────────────────────────────────────────────────────────────────────────┘
-
-  Fine-tuning sub-accounts (Dynamically Created per Used Provider)
-┌──────────────────────────────────────────────────┬──────────────────────────────┬──────────────────────────────────────────────────┐
-│ Provider                                         │ Balance (0G)                 │ Requested Return to Main Account (0G)            │
-├──────────────────────────────────────────────────┼──────────────────────────────┼──────────────────────────────────────────────────┤
-│ 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC       │ 0.000000000179668154         │ 0.000000000000000000                             │
-├──────────────────────────────────────────────────┼──────────────────────────────┼──────────────────────────────────────────────────┤
-│ ......                                           │ ......                       │ ......                                           │
-└──────────────────────────────────────────────────┴──────────────────────────────┴──────────────────────────────────────────────────┘
-```
-
-**Overview:** Provides a general overview of the account's balance.
-
-- **Total:** The current balance of the account
-- **Locked:** The cumulative amount locked in all sub-accounts
-
-**Fine-tuning sub-accounts:** Information about sub-accounts, with each sub-account corresponding to a provider for paying the provider's service fee. Each sub-account is dynamically created when tasks are submitted.
-
-- **Provider:** Address of the provider corresponding to the sub-account
-- **Balance:** Balance of the sub-account, which is an amount transferred from the main account to the sub-account based on the task fee whenever a task is created.
-- **Requested Return to Main Account:** Amount requested to be returned from sub-accounts to the main account. If the amount in the sub-account goes unspent for any reason, such as a task failure, you can use the return-funds command to return the balance to the main account. However, it won't return immediately and will only be available after a lock-in period. For details, refer to [Retrieving Funds](#retrieve-funds).
-
-**Note:** For more information about sub-accounts, refer to [View Sub-Account](#view-sub-account).
-
-#### Deposit
-
-You can deposit into your account using the following command.
-
-```bash
-0g-compute-cli deposit --amount <AMOUNT>
-```
-
-#### Withdrawal
-
-You can withdraw to your wallet with the following command:
-
-```bash
-0g-compute-cli refund --amount <AMOUNT>
-```
-
-**Note:** You can't withdraw the "Lock" amount in the account; only the "Total-Lock" portion can be withdrawn.
-
-#### View Sub-Account
-
-Sub-accounts are dynamically created when tasks are submitted and used to pay provider service fees. You can view sub-account information with the following command:
-
-```bash
+# View sub-account for a provider
 0g-compute-cli get-sub-account --provider <PROVIDER_ADDRESS>
-```
 
-Possible output:
-
-```
-  Overview
-┌──────────────────────────────────────────────────┬──────────────────────────────────────────────────┐
-│ Field                                            │ Value                                            │
-├──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
-│ Provider                                         │ 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC       │
-├──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
-│ Balance (0G)                                     │ 0.000000000179668154                             │
-├──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
-│ Funds Applied for Return to Main Account (0G)    │ 0.000000000179668154                             │
-└──────────────────────────────────────────────────┴──────────────────────────────────────────────────┘
-
-  Details of Each Amount Applied for Return to Main Account
-┌──────────────────────────────────────────────────┬──────────────────────────────────────────────────┐
-│ Amount (0G)                                      │ Remaining Locked Time                            │
-├──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
-│ 0.000000000179668154                             │ 23h 58min 34s                                    │
-└──────────────────────────────────────────────────┴──────────────────────────────────────────────────┘
-
-  Deliverables
-┌───────────────────────────────────────────────────────────────────────────┬─────────────────────────┐
-│ Root Hash                                                                 │ Access Confirmed         │
-├───────────────────────────────────────────────────────────────────────────┼─────────────────────────┤
-│ 0x24951e897b1203e8aa1692736837f089a95b70390cc02723505e41ebf9              │ ✓                       │
-│ cac70c                                                                    │                         │
-├───────────────────────────────────────────────────────────────────────────┼─────────────────────────┤
-│ 0x85b3869bcf14569bb41c3d7d499c9a8eb441e6d606bbe3e10e0fac90e5              │                         │
-│ 7d36a4                                                                    │                         │
-└───────────────────────────────────────────────────────────────────────────┴─────────────────────────┘
-```
-
-**Overview:** An overview of the account
-
-- **Provider:** Address of the provider corresponding to the sub-account
-- **Balance:** Balance of the sub-account. The main account transfers a certain amount to the sub-account based on the task fee every time a task is created.
-- **Funds Applied for Return to Main Account:** Amount in the sub-account requested to be returned to the main account
-
-**Details of Each Amount Applied for Return to Main Account:** Detailed information about amounts requested to be returned to the main account
-
-- **Amount:** Amount requested to be returned to the main account
-- **Remaining Locked Time:** Remaining locked time for the return amount to be available in the main account
-
-**Deliverables:** Deliverables issued by the provider after task completion
-
-- **Root Hash:** Root hash of the model uploaded to storage
-- **Access Confirmed:** Indicates whether the user has confirmed download access to the model based on the root hash
-
-#### Retrieve Funds
-
-The retrieve funds operation returns the balance from sub-accounts to the main account. This operation is asynchronous and will execute after a specific locking period of 24 hours. The lock time ensures provider rights protection, preventing the user from immediately returning the balance to the main account after provider services are rendered and stopping the provider from getting paid.
-
-```bash
+# Request refund from sub-accounts
 0g-compute-cli retrieve-fund
 ```
-
-The above command requests the balance from all sub-accounts to be returned to the main account. After the lock-in period elapses, execute the retrieve-fund command again to refund all the amounts whose locking period has concluded to the main account. Check the refund status using the View Sub-Account command.
 
 ### Other Commands
 
@@ -380,7 +283,7 @@ The above command requests the balance from all sub-accounts to be returned to t
 You can view the list of tasks submitted to a specific provider using the following command:
 
 ```bash
-0g-compute-cli list-tasks  --provider <PROVIDER_ADDRESS>
+0g-compute-cli fine-tuning list-tasks  --provider <PROVIDER_ADDRESS>
 ```
 
 #### Download Data
@@ -388,7 +291,7 @@ You can view the list of tasks submitted to a specific provider using the follow
 You can download previously uploaded datasets using the command below:
 
 ```bash
-0g-compute-cli download --data-path <PATH_TO_SAVE_DATASET> --data-root <DATASET_ROOT_HASH>
+0g-compute-cli fine-tuning download --data-path <PATH_TO_SAVE_DATASET> --data-root <DATASET_ROOT_HASH>
 ```
 
 #### Cancel a Task
@@ -396,7 +299,7 @@ You can download previously uploaded datasets using the command below:
 You can cancel a task before it starts running using the following command:
 
 ```bash
-0g-compute-cli cancel-task --provider <PROVIDER_ADDRESS> --task <TASK_ID>
+0g-compute-cli fine-tuning cancel-task --provider <PROVIDER_ADDRESS> --task <TASK_ID>
 ```
 
 **Note:** Tasks that are already in progress or completed cannot be canceled.
@@ -408,7 +311,7 @@ You can cancel a task before it starts running using the following command:
 
 The provider is processing another task. Options:
 1. Wait and retry later
-2. Use a different provider: `0g-compute-cli list-providers`
+2. Use a different provider: `0g-compute-cli fine-tuning list-providers`
 3. Queue your task (you'll be prompted)
 </details>
 

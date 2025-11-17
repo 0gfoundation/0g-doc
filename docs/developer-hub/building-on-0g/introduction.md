@@ -26,7 +26,7 @@ Based on your needs, dive into:
 
 - **Dapp Migration?** → [Deploy on 0G Chain](/developer-hub/building-on-0g/contracts-on-0g/deploy-contracts)
 - **Need Storage?** → [Storage SDK Guide](/developer-hub/building-on-0g/storage/sdk)
-- **Need Compute?** → [Compute Integration](/developer-hub/building-on-0g/compute-network/sdk)
+- **Need Compute?** → [Compute Integration](/developer-hub/building-on-0g/compute-network/inference)
 - **Building a Rollup?** → [DA Integration](/developer-hub/building-on-0g/da-integration)
 - **Creating INFTs?** → [INFT Overview](/developer-hub/building-on-0g/inft/inft-overview)
 

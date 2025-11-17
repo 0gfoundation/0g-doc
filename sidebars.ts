@@ -100,8 +100,9 @@ const sidebars: SidebarsConfig = {
                   type: 'category',
                   label: 'For Developers',
                   items: [
-                    'developer-hub/building-on-0g/compute-network/sdk',
-                    'developer-hub/building-on-0g/compute-network/cli',
+                    'developer-hub/building-on-0g/compute-network/account-management',
+                    'developer-hub/building-on-0g/compute-network/inference',
+                    'developer-hub/building-on-0g/compute-network/fine-tuning',
                   ],
                 },
                 {

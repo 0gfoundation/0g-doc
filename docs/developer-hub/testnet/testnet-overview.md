@@ -94,7 +94,7 @@ Visit the [0G Faucet](https://faucet.0g.ai) to receive free testnet tokens. **Da
 Choose your integration:
 - [Deploy Smart Contracts](/developer-hub/building-on-0g/contracts-on-0g/deploy-contracts)
 - [Use Storage SDK](/developer-hub/building-on-0g/storage/sdk)
-- [Access Compute Network](/developer-hub/building-on-0g/compute-network/sdk)
+- [Access Compute Network](/developer-hub/building-on-0g/compute-network/inference)
 - [Integrate DA Layer](/developer-hub/building-on-0g/da-integration)
 
 

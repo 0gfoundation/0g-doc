@@ -20,7 +20,7 @@ Transform your AI services into verifiable, revenue-generating endpoints on the 
 ## Prerequisites
 - Docker Compose 1.27+
 - OpenAI-compatible model service
-- Wallet with 0G tokens for gas fees (see [Testnet Details](/docs/developer-hub/testnet/testnet-overview.md))
+- Wallet with 0G tokens for gas fees
 
 ## Setup Process
 
@@ -46,36 +46,33 @@ These attestations should include the public key of the signing key, verifying i
 - **CPU**: Intel TDX (Trusted Domain Extensions) enabled
 - **GPU**: NVIDIA H100 or H200 with TEE support
 
-### Implementation
+### TEE Node Setup
 
-#### 1. Attestation Download Interface
+There are two ways to start a TEE node for your inference service:
 
-Expose this endpoint:
+#### Method 1: Using Dstack
+
+Follow the [Dstack Getting Started Guide](https://github.com/Dstack-TEE/dstack?tab=readme-ov-file#-getting-started) to prepare your TEE node using Dstack.
+
+#### Method 2: Using Cryptopilot
+
+Follow the [0G-TAPP README](https://github.com/0gfoundation/0g-tapp/blob/main/README.md) to set up your TEE node using Cryptopilot.
+
+### Download and Configure Inference Broker
+
+To register and manage TEE services, handle user request proxies, and perform settlements, you need to use the Inference Broker.
+
+Please visit the [releases page](https://github.com/0gfoundation/0g-serving-broker/releases) to download and extract the latest version of the installation package. After extracting, use the executable `config` file to generate the configuration file and docker-compose.yml file according to your setup.
+
+```bash
+# Download from releases page
+tar -xzf inference-broker.tar.gz
+cd inference-broker
+
+# Generate configuration files
+./config
 ```
-GET https://{PUBLIC_IP}/attestation/report
-```
 
-Return format:
-```json
-{
-  "signing_address": "0x...",
-  "nvidia_payload": "..."
-}
-```
-
-> *Note*: The nvidia_payload must be verifiable via NVIDIA's GPU Attestation API. Support for decentralized TEE attestation is planned for the future, and relevant interfaces will be provided. Stay tuned.
-
-#### 2. Signature Download Interface
-
-For each response with a unique ID:
-```
-GET https://{PUBLIC_IP}/signature/{response_id}
-```
-
-Requirements:
-- Use ECDSA algorithm for signatures
-- Signatures must be verifiable with the signing address
-- Include both request and response content in signature
 
 </TabItem>
 <TabItem value="future" label="OPML, ZKML (Coming Soon)">
@@ -88,57 +85,9 @@ Stay tuned for updates.
 </Tabs>
 
 
-
-### Download and Configure Inference Broker
-To register and manage services, handle user request proxies, and perform settlements, you need to use the Inference Broker.
-
-Please visit the [releases page](https://github.com/0gfoundation/0g-serving-broker/releases) to download and extract the latest version of the installation package.
-
-```bash
-# Download from releases page
-wget https://github.com/0gfoundation/0g-serving-broker/releases/download/v0.2.0/inference-broker.tar.gz
-tar -xzf inference-broker.tar.gz
-cd inference-broker
-
-# Copy configuration template
-cp config.example.yaml config.local.yaml
-```
-
-Edit `config.local.yaml`:
-```yaml
-servingUrl: "https://your-public-ip:8080"    # Public endpoint
-privateKeys: "YOUR_WALLET_PRIVATE_KEY"       # For settlements
-targetUrl: "http://localhost:8000"           # Your model service
-model: "llama-3.3-70b-instruct"              # Model identifier
-```
-:::info Serving URL
-Serving URL must be publically accessible from the internet.
-:::
-
-### Configure Docker Port
-
-Configure the Docker port to match your `servingUrl` port from `config.local.yaml`. Replace `#PORT#` in the `docker-compose.yml` file with the same port you specified in your `servingUrl`.
-
-For example, if your `servingUrl` is `"https://your-public-ip:8080"`, use port `8080`:
-
-```bash
-# Replace #PORT# with your service port (must match servingUrl)
-sed -i 's/#PORT#/8080/g' docker-compose.yml
-```
-
-:::warning Port Consistency
-Ensure the port in `docker-compose.yml` matches the port in your `servingUrl` from `config.local.yaml`. Mismatched ports will prevent the service from being accessible.
-:::
-
 ### Launch Provider Broker
 
-```bash
-# Start the broker service
-docker compose -f docker-compose.yml up -d
-
-# Monitor logs
-docker compose logs -f
-```
+Follow the instructions in [Dstack](https://github.com/Dstack-TEE/dstack?tab=readme-ov-file#-getting-started) or [0G-TAPP](https://github.com/0gfoundation/0g-tapp/blob/main/README.md) documentation to start the service using the config file and docker-compose.yml file generated in the previous step.
 
 The broker will:
 - Register your service on the network
@@ -175,4 +124,4 @@ The automatic settlement engine handles payments. If issues occur:
 
 ## Next Steps
 - **Join Community** → [Discord](https://discord.gg/0glabs) for support
-- **Explore SDK** → [SDK Documentation](./sdk) for integration details
+- **Explore Inference** → [Inference Documentation](./inference) for integration details

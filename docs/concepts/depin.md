@@ -35,6 +35,7 @@ Traditional infrastructure is expensive and centralized. DePIN democratizes acce
 io.net operates the world's largest decentralized GPU network, specifically designed for machine learning and AI workloads. The network aggregates over 300,000 verified GPUs from independent data centers, crypto miners, and consumer hardware across 139 countries.
 
 **Key Capabilities:**
+
 - 6,000+ cluster-ready GPUs including NVIDIA H100s
 - 90% cost savings compared to traditional cloud providers
 - 90-second cluster deployment
@@ -45,6 +46,7 @@ io.net operates the world's largest decentralized GPU network, specifically desi
 Aethir provides enterprise-grade GPU-as-a-Service through its decentralized cloud infrastructure. Focused on AI, gaming, and virtualized computing, Aethir maintains over 43,000 enterprise-grade GPUs across 25 global locations.
 
 **Key Capabilities:**
+
 - 3,000+ NVIDIA H100s and H200s for advanced AI workloads
 - 99.99% uptime with enterprise-grade reliability
 - Ultra-low latency for real-time applications
@@ -90,10 +92,11 @@ The integration of 0G with DePIN infrastructure creates a comprehensive Web3 com
 ## Getting Started
 
 Ready to build with decentralized infrastructure? Explore these resources:
+
 - [0G Compute Network](/developer-hub/building-on-0g/compute-network/overview) - Learn about 0G's compute layer
-- [Developer SDK](/developer-hub/building-on-0g/compute-network/sdk) - Start building with 0G Compute
+- [Developer SDK](/developer-hub/building-on-0g/compute-network/inference) - Start building with 0G Compute
 - [Developer Hub](/developer-hub/getting-started) - Get started building on 0G
 
 ---
 
-*Powering the future of AI with decentralized infrastructure.*
+_Powering the future of AI with decentralized infrastructure._
