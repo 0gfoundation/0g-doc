@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Developer Hub
 
-### 🚀 The Problem We Solve
+### The Problem We Solve
 
 Your AI application needs:
 
@@ -21,7 +21,7 @@ Your AI application needs:
 
 ## 0G Services
 
-### ⛓️ 0G Chain
+### 0G Chain
 
 EVM-compatible blockchain optimized for AI
 
@@ -37,7 +37,7 @@ Decentralized GPU marketplace for AI workloads
 - [SDK Reference](/developer-hub/building-on-0g/compute-network/inference)
 - [Become a Provider](/developer-hub/building-on-0g/compute-network/inference-provider)
 
-### 💾 0G Storage
+### 0G Storage
 
 High-performance storage for massive datasets
 
@@ -45,7 +45,7 @@ High-performance storage for massive datasets
 - [CLI Commands](/developer-hub/building-on-0g/storage/storage-cli)
 - [Architecture Details](/concepts/storage)
 
-### 📊 0G DA
+### 0G DA
 
 Scalable data availability for any chain
 
