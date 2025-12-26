@@ -572,12 +572,12 @@ if (data.usage) {
 }
 
 // For verifiable TEE services with chatID
-// First try to get chatID from response body
-let chatID = data.id || data.chatID;
+// Check response headers first
+let chatID = response.headers.get("ZG-Res-Key") || response.headers.get("zg-res-key");
 
-// If not found in response body, check response headers
+// If not found in response headers, check response body
 if (!chatID) {
-  chatID = response.headers.get("ZG-Res-Key") || response.headers.get("zg-res-key");
+  chatID = data.id || data.chatID;
 }
 
 if (chatID) {
