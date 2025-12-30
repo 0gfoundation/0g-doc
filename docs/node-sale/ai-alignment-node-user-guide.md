@@ -221,11 +221,11 @@ The token id is the token id of the NFT you purchased. The private key is the pr
 :::
 
 **Configuration Details:**
-- **Chain ID**: `42161` (Arbitrum Mainnet)
-- **RPC URL**: Use a reliable Arbitrum RPC endpoint such as:
-  - `https://arb1.arbitrum.io/rpc` (Public endpoint)
-  - Or your preferred Arbitrum RPC provider
-- **Alignment manager contract address**: `0xdD158B8A76566bC0c342893568e8fd3F08A9dAac` (Arbitrum Mainnet)
+- **Chain ID**: `16661` (0G Mainnet)
+- **RPC URL**: Use a reliable 0G RPC endpoint such as:
+  - `https://evmrpc.0g.ai` (Public endpoint)
+  - Or your preferred 0G RPC provider
+- **Alignment manager contract address**: `0x7BDc2aECC3CDaF0ce5a975adeA1C8d84Fd9Be3D9` (0G Mainnet)
 
 3. Start the node:
 ```bash
