@@ -54,7 +54,7 @@ All testnet services feature TeeML verifiability and are ideal for development a
 
 | # | Model | Type | Provider | Input Price (per token) | Output Price (per token) |
 |---|-------|------|----------|-------------------------|--------------------------|
-| 1 | `deepseek-ai/DeepSeek-V3.1` | Chatbot | `0xd9966e...` | 0.00000049 0G | 0.00000015 0G |
+| 1 | `deepseek-ai/DeepSeek-V3.1` | Chatbot | `0xd9966e...` | 0.00000049 0G | 0.0000015 0G |
 | 2 | `openai/whisper-large-v3` | Speech-to-Text | `0x36aCff...` | 0.000000049 0G | 0.000000114 0G |
 | 3 | `openai/gpt-oss-120b` | Chatbot | `0xBB3f5b...` | 0.0000001 0G | 0.00000049 0G |
 | 4 | `qwen/qwen2.5-vl-72b-instruct` | Chatbot | `0x4415ef...` | 0.00000049 0G | 0.00000049 0G |
@@ -804,7 +804,7 @@ for (const line of rawBody.split('\n')) {
 }
 
 // Use chatID from stream data if available, otherwise use header
-const finalChatID = streamChatID || chatID;
+const finalChatID = chatID || streamChatID;
 
 // Process with chatID for verification if available
 if (finalChatID) {
@@ -889,7 +889,7 @@ if (chatID) {
 - The SDK automatically handles fund transfers to prevent service interruptions
 - For verifiable TEE services, the method also validates response integrity
 - **chatID retrieval varies by service type:**
-  - **Chatbot**: First try `response.id` or `data.chatID`, then check `ZG-Res-Key` header as fallback
+  - **Chatbot**: First try `ZG-Res-Key` header, then check `response.id` or `data.chatID` as fallback
   - **Text-to-Image & Speech-to-Text**: Always get chatID from `ZG-Res-Key` response header
   - **Streaming responses**:
     - **Chatbot streaming**: Check headers first, then try to get `id` or `chatID` from stream data
