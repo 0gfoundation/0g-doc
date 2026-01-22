@@ -54,7 +54,7 @@ All testnet services feature TeeML verifiability and are ideal for development a
 
 | # | Model | Type | Provider | Input (per 1M tokens) | Output (per 1M tokens) |
 |---|-------|------|----------|----------------------|------------------------|
-| 1 | `DeepSeek-V3.1` | Chatbot | `0xd9966e...` | 0.49 0G | 1.50 0G |
+| 1 | `DeepSeek-V3.2` | Chatbot | `0xd9966e...` | 0.3 0G | 0.48 0G |
 | 2 | `deepseek-chat-v3-0324` | Chatbot | `0x1B3AAe...` | 0.30 0G | 1.00 0G |
 | 3 | `gpt-oss-120b` | Chatbot | `0xBB3f5b...` | 0.10 0G | 0.49 0G |
 | 4 | `qwen2.5-vl-72b-instruct` | Chatbot | `0x4415ef...` | 0.49 0G | 0.49 0G |
@@ -65,7 +65,7 @@ All testnet services feature TeeML verifiability and are ideal for development a
 **Available Models by Type:**
 
 **Chatbots (5 models):**
-- **DeepSeek V3.1**: Latest high-performance reasoning model
+- **DeepSeek V3.2**: Latest high-performance reasoning model
 - **GPT-OSS-120B**: Large-scale open-source GPT model
 - **Qwen 2.5 VL 72B**: Vision-language multimodal model
 - **DeepSeek Chat V3**: Optimized conversational model
