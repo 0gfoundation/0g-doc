@@ -60,7 +60,7 @@ All testnet services feature TeeML verifiability and are ideal for development a
 | 4 | `qwen3-vl-30b-a3b-instruct` | Chatbot | `0x4415ef...` | 0.49 0G | 0.49 0G |
 | 5 | `gpt-oss-20b` | Chatbot | `0x44ba50...` | 0.05 0G | 0.11 0G |
 | 6 | `whisper-large-v3` | Speech-to-Text | `0x36aCff...` | 0.05 0G | 0.11 0G |
-| 7 | `flux-turbo` | Text-to-Image | `0xE29a72...` | - | 0.003 0G/image |
+| 7 | `z-image` | Text-to-Image | `0xE29a72...` | - | 0.003 0G/image |
 
 **Available Models by Type:**
 
@@ -75,7 +75,7 @@ All testnet services feature TeeML verifiability and are ideal for development a
 - **Whisper Large V3**: OpenAI's state-of-the-art transcription model
 
 **Text-to-Image (1 model):**
-- **Flux Turbo**: Fast high-quality image generation
+- **Z-Image**: Fast high-quality image generation
 
 All mainnet services feature TeeML verifiability for trusted execution in production environments.
 
