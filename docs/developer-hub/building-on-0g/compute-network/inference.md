@@ -803,7 +803,7 @@ for (const line of rawBody.split('\n')) {
   } catch {}
 }
 
-// Use chatID from stream data if available, otherwise use header
+// Use chatID from header if available, otherwise use chatID from stream data
 const finalChatID = chatID || streamChatID;
 
 // Process with chatID for verification if available
@@ -888,11 +888,12 @@ if (chatID) {
 - Always call `processResponse` after receiving responses to maintain proper fee management
 - The SDK automatically handles fund transfers to prevent service interruptions
 - For verifiable TEE services, the method also validates response integrity
+- **chatID retrieval principle**: Always prioritize `ZG-Res-Key` from response headers. Only use fallback methods when header is not present.
 - **chatID retrieval varies by service type:**
-  - **Chatbot**: First try `ZG-Res-Key` header, then check `response.id` or `data.chatID` as fallback
+  - **Chatbot**: First try `ZG-Res-Key` header, then check `data.id` (completion ID from response body) as fallback
   - **Text-to-Image & Speech-to-Text**: Always get chatID from `ZG-Res-Key` response header
   - **Streaming responses**:
-    - **Chatbot streaming**: Check headers first, then try to get `id` or `chatID` from stream data
+    - **Chatbot streaming**: Check headers first, then try to get `id` from stream data as fallback
     - **Speech-to-text streaming**: Get chatID from `ZG-Res-Key` header immediately
 - Usage data format varies by service type but typically includes token counts or request metrics
 
