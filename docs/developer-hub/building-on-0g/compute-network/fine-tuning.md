@@ -144,70 +144,16 @@ Your dataset should be in JSONL format. Each line is a JSON object representing 
 
 You can also download the dataset format specification and verification script from the [releases page](https://github.com/0gfoundation/0g-serving-broker/releases) to validate your dataset.
 
-### Upload Dataset
-
-You have two options for providing your dataset:
-
-#### Option A: Upload to 0G Storage (Recommended for large datasets)
-
-```bash
-# Upload to 0G Storage
-0g-compute-cli fine-tuning upload --data-path <PATH_TO_DATASET>
-
-# Output: Root hash: 0xabc123... (save this!)
-```
-> Record the root hash of the dataset; it will be needed when creating the task.
-
-#### Option B: Direct Upload to TEE (Simpler for small datasets)
-
-You can skip the 0G Storage upload and provide the dataset directly when creating a task:
-
-```bash
-0g-compute-cli fine-tuning create-task \
-  --provider <PROVIDER_ADDRESS> \
-  --model <MODEL_NAME> \
-  --dataset-path <PATH_TO_DATASET> \
-  --config-path <PATH_TO_CONFIG_FILE> \
-  --data-size <DATASET_SIZE>
-```
-
-This method uploads the dataset directly to the TEE (Trusted Execution Environment) during task creation. Use `--dataset-path` instead of `--dataset` when using this option.
-
-### Calculate Dataset Size
-
-After uploading the dataset to storage, you can calculate its size by running the following command:
-
-```bash
-0g-compute-cli fine-tuning calculate-token \
-  --model <MODEL_NAME> \
-  --dataset-path <PATH_TO_DATASET> \
-  --provider <PROVIDER_ADDRESS>
-```
-
 ### Create Task
 
-After calculating the dataset size, you can create a task by running the following command:
-
-#### Using 0G Storage (with root hash)
+Create a fine-tuning task by providing your dataset and configuration file. The dataset will be uploaded directly to the TEE (Trusted Execution Environment) and the fee will be automatically calculated by the broker based on the actual token count.
 
 ```bash
 0g-compute-cli fine-tuning create-task \
   --provider <PROVIDER_ADDRESS> \
   --model <MODEL_NAME> \
-  --dataset <DATASET_ROOT_HASH> \
-  --config-path <PATH_TO_CONFIG_FILE> \
-  --data-size <DATASET_SIZE>
-```
-
-#### Using Direct Upload (with local file)
-
-```bash
-0g-compute-cli fine-tuning create-task \
-  --provider <PROVIDER_ADDRESS> \
-  --model <MODEL_NAME> \
-  --dataset-path <PATH_TO_LOCAL_DATASET> \
-  --config-path <PATH_TO_CONFIG_FILE> \
-  --data-size <DATASET_SIZE>
+  --dataset-path <PATH_TO_DATASET> \
+  --config-path <PATH_TO_CONFIG_FILE>
 ```
 
 **Parameters:**
@@ -216,10 +162,8 @@ After calculating the dataset size, you can create a task by running the followi
 |-----------|-------------|
 | `--provider` | Address of the service provider |
 | `--model` | Name of the pretrained model |
-| `--dataset` | Root hash of the dataset on 0G Storage (use this OR `--dataset-path`) |
-| `--dataset-path` | Path to local dataset file for direct TEE upload (use this OR `--dataset`) |
+| `--dataset-path` | Path to local dataset file (JSONL format) |
 | `--config-path` | Path to the parameter file |
-| `--data-size` | Size of the dataset |
 | `--gas-price` | Gas price (optional) |
 
 The output will be like:
@@ -264,8 +208,8 @@ The output will be like:
 
 **Field Descriptions:**
 - **ID**: Unique identifier for your fine-tuning task
-- **Pre-trained Model Hash**: Storage reference for the base model being fine-tuned
-- **Dataset Hash**: Storage reference for your training dataset
+- **Pre-trained Model Hash**: Hash identifier for the base model being fine-tuned
+- **Dataset Hash**: Hash identifier for your training dataset
 - **Training Params**: Configuration parameters used during fine-tuning
 - **Fee (neuron)**: Total cost for the fine-tuning task
 - **Progress**: Task status. Possible values are Init, SettingUp, SetUp, Training, Trained, Delivering, Delivered, UserAcknowledged, Finished, Failed. These represent the following states, respectively:
@@ -273,10 +217,10 @@ The output will be like:
   - `SettingUp`: Provider is preparing the environment to run the task
   - `SetUp`: Provider is ready to start training the model
   - `Training`: Provider is training the model
-  - `Trained`: provider has finished the training
-  - `Delivering`: Provider is uploading the fine-tuning result to storage
-  - `Delivered`: provider has uploaded the fine-tuning result
-  - `UserAcknowledged`: User has confirmed the result is downloadable
+  - `Trained`: Provider has finished the training
+  - `Delivering`: Provider is preparing the fine-tuning result
+  - `Delivered`: Fine-tuning result is ready for download
+  - `UserAcknowledged`: User has confirmed the result is downloaded
   - `Finished`: Task is completed
   - `Failed`: Task failed
 
@@ -299,7 +243,7 @@ Training model for task beb6f0d8-4660-4c62-988d-00246ce913d2 completed successfu
 
 ### Confirm Task Result
 
-Use the [Check Task](#monitor-progress) command to view task status. When the status changes to `Delivered`, it indicates that the provider has completed the fine-tuning task and uploaded the result to storage. The corresponding root hash has also been saved to the contract. You can download the model with the following command; CLI will download the model based on the root hash submitted by the provider. If the download is successful, CLI updates the contract information to confirm the model is downloaded.
+Use the [Check Task](#monitor-progress) command to view task status. When the status changes to `Delivered`, it indicates that the provider has completed the fine-tuning task and the result is ready. You can download and acknowledge the model with the following command:
 
 ```bash
 0g-compute-cli fine-tuning acknowledge-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --data-path <PATH_TO_SAVE_MODEL>
@@ -309,7 +253,7 @@ Use the [Check Task](#monitor-progress) command to view task status. When the st
 
 ### Decrypt Model
 
-The provider will check the contract to verify if the user has confirmed the download, enabling the provider to settle fees successfully on the contract subsequently. Once the provider confirms the download, it uploads the key required for decryption to the contract, encrypted with the user's public key, and collects the fee. You can again use the `get-task` command to view the task status. When the status changes to `Finished`, it means the provider has uploaded the key. At this point, you can decrypt the model with the following command:
+After acknowledging the model, the provider settles the fees and uploads the decryption key to the contract (encrypted with your public key). Use the `get-task` command to check the task status. When the status changes to `Finished`, you can decrypt the model:
 
 ```bash
 0g-compute-cli fine-tuning decrypt-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --encrypted-model <PATH_TO_ENCRYPTED_MODEL> --output <PATH_TO_SAVE_DECRYPTED_MODEL>
@@ -353,23 +297,14 @@ After fine-tuning, you receive a **LoRA adapter** (Low-Rank Adaptation), not a f
 
 ### Step 1: Download Base Model
 
-Download the same base model that was used for fine-tuning:
+Download the same base model that was used for fine-tuning from HuggingFace:
 
-**Option A: From HuggingFace (Recommended)**
 ```bash
 # Install huggingface-cli if not already installed
 pip install huggingface_hub
 
 # Download the model
 huggingface-cli download Qwen/Qwen2.5-0.5B-Instruct --local-dir ./base_model
-```
-
-**Option B: From 0G Storage**
-```bash
-# Use the model root hash from the task details
-0g-compute-cli fine-tuning download \
-  --data-path ./base_model \
-  --data-root <MODEL_ROOT_HASH>
 ```
 
 ### Step 2: Load LoRA with Base Model
@@ -505,14 +440,6 @@ You can view the list of tasks submitted to a specific provider using the follow
 
 ```bash
 0g-compute-cli fine-tuning list-tasks  --provider <PROVIDER_ADDRESS>
-```
-
-#### Download Data
-
-You can download previously uploaded datasets using the command below:
-
-```bash
-0g-compute-cli fine-tuning download --data-path <PATH_TO_SAVE_DATASET> --data-root <DATASET_ROOT_HASH>
 ```
 
 #### Cancel a Task
