@@ -46,8 +46,13 @@ The Fine-tuning CLI requires an account to pay for service fees via the 0G Compu
 0g-compute-cli deposit --amount 3
 
 # Transfer funds to a provider for fine-tuning
-0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 1
+# IMPORTANT: You must specify --service fine-tuning, otherwise funds go to the inference sub-account
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 2 --service fine-tuning
 ```
+
+:::tip
+If you see `MinimumDepositRequired` when creating a task, it means you haven't transferred funds to the provider's **fine-tuning** sub-account. Make sure to include `--service fine-tuning` in the `transfer-fund` command.
+:::
 
 ### List Providers
 ```bash
@@ -59,18 +64,11 @@ The output will be like:
 │ Provider 1                                       │ 0xf07240Efa67755B5311bc75784a061eDB47165Dd       │
 ├──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
 │ Available                                        │ ✓                                                │
-├──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
-│ Price Per Byte in Dataset (0G)                   │ 0.000000000000000001                             │
-├──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
-│ Provider 2                                       │ ......                                           │
-├──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
-│ ......                                           │ ......                                           │
 └──────────────────────────────────────────────────┴──────────────────────────────────────────────────┘
 ```
 
-- **Provider x:** The address of the provider. The address of the official provider is ```0xf07240Efa67755B5311bc75784a061eDB47165Dd```.
-- **Available:** Indicates if the provider is available. If ```✓```, the provider is available. If ```✗```, the provider is occupied.
-- **Price Per Byte in Dataset (0G):** The service fee charged by the provider. The fee is currently based on the byte count of the dataset. Future versions may charge more accurately based on the token count of the dataset.
+- **Provider x:** The address of the provider.
+- **Available:** Indicates if the provider is available. If `✓`, the provider is available. If `✗`, the provider is occupied.
 
 ### List Models
 
@@ -89,20 +87,41 @@ These are standard models available across all providers:
 
 | Model Name | Type | Description |
 |------------|------|-------------|
-| `distilbert-base-uncased` | Text Classification | DistilBERT is a transformers model, smaller and faster than BERT, which was pretrained on the same corpus in a self-supervised fashion, using the BERT base model as a teacher. More details: [HuggingFace](https://huggingface.co/distilbert/distilbert-base-uncased) |
+| `distilbert-base-uncased` | Text Classification | DistilBERT model, smaller and faster than BERT. More details: [HuggingFace](https://huggingface.co/distilbert/distilbert-base-uncased) |
+| `Qwen2.5-0.5B-Instruct` | Causal LM | Qwen 2.5 instruction-tuned model (0.5B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) |
+| `Qwen3-32B` | Causal LM | Qwen 3 large language model (32B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen3-32B) |
 
 </details>
 
 The output consists of two main sections:
 
-- **Predefined Models:** These are models that are provided by the system as predefined options. They are typically built-in, curated, and maintained to ensure quality, reliability, and broad applicability across common use cases.
+- **Predefined Models:** Models provided by the system as predefined options. They are built-in, curated, and maintained to ensure quality and reliability.
 
-- **Provider's Model:** These models are offered by external service providers. Providers may customize or fine-tune models to address specific needs, industries, or advanced use cases. The availability and quality of these models may vary depending on the provider.
+- **Provider's Model:** Models offered by external service providers. Providers may customize or fine-tune models to address specific needs.
 
-*Note:* We currently offer the models listed above as presets. You can choose one of these models for fine-tuning. More models will be provided in future versions.
+:::caution Model Name Format
+Use model names **without** the `Qwen/` prefix when specifying the `--model` parameter. For example:
+- ✅ `--model "Qwen2.5-0.5B-Instruct"`
+- ❌ `--model "Qwen/Qwen2.5-0.5B-Instruct"`
+:::
 
 ### Prepare Configuration File
 Please download the parameter file template for the model you wish to fine-tune from the [releases page](https://github.com/0gfoundation/0g-serving-broker/releases) and modify it according to your needs.
+
+Example training configuration (`config.json`):
+```json
+{
+  "neftune_noise_alpha": 5,
+  "num_train_epochs": 1,
+  "per_device_train_batch_size": 2,
+  "learning_rate": 0.0002,
+  "max_steps": 3
+}
+```
+
+:::tip
+Use decimal notation for `learning_rate` (e.g., `0.0002` instead of `2e-4`). Some JSON parsers may not accept scientific notation.
+:::
 
 *Note:* For custom models provided by third-party Providers, you can download the usage template including instructions on how to construct the dataset and training configuration using the following command:
 
@@ -144,9 +163,40 @@ Your dataset should be in JSONL format. Each line is a JSON object representing 
 
 You can also download the dataset format specification and verification script from the [releases page](https://github.com/0gfoundation/0g-serving-broker/releases) to validate your dataset.
 
+### Upload Dataset
+
+Upload your dataset to 0G Storage. The returned root hash will be used when creating a task.
+
+```bash
+0g-compute-cli fine-tuning upload --data-path <PATH_TO_DATASET>
+```
+
+Output:
+```bash
+Root hash: 0xabc123...
+```
+
+> **Save the root hash** — you will need it in the next step.
+
 ### Create Task
 
-Create a fine-tuning task by providing your dataset and configuration file. The dataset will be uploaded directly to the TEE (Trusted Execution Environment) and the fee will be automatically calculated by the broker based on the actual token count.
+Create a fine-tuning task. The fee will be **automatically calculated** by the broker based on the actual token count of your dataset.
+
+**Option A: Using dataset root hash (recommended)**
+
+If you already uploaded your dataset with the `upload` command:
+
+```bash
+0g-compute-cli fine-tuning create-task \
+  --provider <PROVIDER_ADDRESS> \
+  --model <MODEL_NAME> \
+  --dataset <DATASET_ROOT_HASH> \
+  --config-path <PATH_TO_CONFIG_FILE>
+```
+
+**Option B: Using local dataset file**
+
+The CLI will automatically upload the dataset to 0G Storage and create the task in one step:
 
 ```bash
 0g-compute-cli fine-tuning create-task \
@@ -161,9 +211,10 @@ Create a fine-tuning task by providing your dataset and configuration file. The 
 | Parameter | Description |
 |-----------|-------------|
 | `--provider` | Address of the service provider |
-| `--model` | Name of the pretrained model |
-| `--dataset-path` | Path to local dataset file (JSONL format) |
-| `--config-path` | Path to the parameter file |
+| `--model` | Name of the pretrained model (without `Qwen/` prefix) |
+| `--dataset` | Root hash of the dataset on 0G Storage (Option A) |
+| `--dataset-path` | Path to local dataset file — mutually exclusive with `--dataset` (Option B) |
+| `--config-path` | Path to the training configuration file |
 | `--gas-price` | Gas price (optional) |
 
 The output will be like:
@@ -171,7 +222,8 @@ The output will be like:
 ```bash
 Verify provider...
 Provider verified
-Creating task...
+Creating task (fee will be calculated automatically)...
+Fee will be automatically calculated by the broker based on actual token count
 Created Task ID: 6b607314-88b0-4fef-91e7-43227a54de57
 ```
 
@@ -200,7 +252,7 @@ The output will be like:
 ├───────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
 │ Training Params                   │ {......}                                                                            │
 ├───────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
-│ Fee (neuron)                      │ 179668154                                                                           │
+│ Fee (neuron)                      │ 82                                                                                  │
 ├───────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
 │ Progress                          │ Delivered                                                                           │
 └───────────────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
@@ -209,19 +261,19 @@ The output will be like:
 **Field Descriptions:**
 - **ID**: Unique identifier for your fine-tuning task
 - **Pre-trained Model Hash**: Hash identifier for the base model being fine-tuned
-- **Dataset Hash**: Hash identifier for your training dataset
+- **Dataset Hash**: Hash identifier for your training dataset (0G Storage root hash)
 - **Training Params**: Configuration parameters used during fine-tuning
-- **Fee (neuron)**: Total cost for the fine-tuning task
-- **Progress**: Task status. Possible values are Init, SettingUp, SetUp, Training, Trained, Delivering, Delivered, UserAcknowledged, Finished, Failed. These represent the following states, respectively:
+- **Fee (neuron)**: Total cost for the fine-tuning task (automatically calculated based on token count)
+- **Progress**: Task status. Possible values are:
   - `Init`: Task submitted
-  - `SettingUp`: Provider is preparing the environment to run the task
-  - `SetUp`: Provider is ready to start training the model
+  - `SettingUp`: Provider is preparing the environment (downloading dataset, etc.)
+  - `SetUp`: Provider is ready to start training
   - `Training`: Provider is training the model
-  - `Trained`: Provider has finished the training
-  - `Delivering`: Provider is preparing the fine-tuning result
+  - `Trained`: Provider has finished training
+  - `Delivering`: Provider is encrypting and uploading the model to 0G Storage
   - `Delivered`: Fine-tuning result is ready for download
-  - `UserAcknowledged`: User has confirmed the result is downloaded
-  - `Finished`: Task is completed
+  - `UserAcknowledged`: User has downloaded and confirmed the result
+  - `Finished`: Provider has settled fees and shared decryption key — task is completed
   - `Failed`: Task failed
 
 ### View Task Logs
@@ -241,22 +293,35 @@ Step: 0, Logs: {'loss': ..., 'accuracy': ...}
 Training model for task beb6f0d8-4660-4c62-988d-00246ce913d2 completed successfully
 ```
 
-### Confirm Task Result
+### Download and Acknowledge Model
 
-Use the [Check Task](#monitor-progress) command to view task status. When the status changes to `Delivered`, it indicates that the provider has completed the fine-tuning task and the result is ready. You can download and acknowledge the model with the following command:
+Use the [Check Task](#monitor-progress) command to view task status. When the status changes to `Delivered`, the provider has completed fine-tuning and the encrypted model is ready. Download and acknowledge the model:
 
 ```bash
-0g-compute-cli fine-tuning acknowledge-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --data-path <PATH_TO_SAVE_MODEL>
+0g-compute-cli fine-tuning acknowledge-model \
+  --provider <PROVIDER_ADDRESS> \
+  --task-id <TASK_ID> \
+  --data-path <PATH_TO_SAVE_MODEL>
 ```
+
+The CLI will automatically download the encrypted model from 0G Storage. If 0G Storage download fails, it will fall back to downloading directly from the provider's TEE.
+
+:::tip
+`--data-path` can be either a file path or a directory. If you provide a directory, the CLI will automatically create a file named `model_<TASK_ID>.bin` inside it.
+:::
 
 **Note:** The model file downloaded with the above command is encrypted, and additional steps are required for decryption.
 
 ### Decrypt Model
 
-After acknowledging the model, the provider settles the fees and uploads the decryption key to the contract (encrypted with your public key). Use the `get-task` command to check the task status. When the status changes to `Finished`, you can decrypt the model:
+After acknowledging the model, the provider automatically settles the fees and uploads the decryption key to the contract (encrypted with your public key). Use the `get-task` command to check the task status. **When the status changes to `Finished`**, you can decrypt the model:
 
 ```bash
-0g-compute-cli fine-tuning decrypt-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --encrypted-model <PATH_TO_ENCRYPTED_MODEL> --output <PATH_TO_SAVE_DECRYPTED_MODEL>
+0g-compute-cli fine-tuning decrypt-model \
+  --provider <PROVIDER_ADDRESS> \
+  --task-id <TASK_ID> \
+  --encrypted-model <PATH_TO_ENCRYPTED_MODEL> \
+  --output <PATH_TO_SAVE_DECRYPTED_MODEL>
 ```
 
 The above command performs the following operations:
@@ -264,6 +329,10 @@ The above command performs the following operations:
 - Gets the encrypted key from the contract uploaded by the provider
 - Decrypts the key using the user's private key
 - Decrypts the model with the decrypted key
+
+:::caution Wait for Settlement
+After `acknowledge-model`, the provider needs about **1 minute** to settle fees and upload the decryption key. If you decrypt too early (status is still `UserAcknowledged` instead of `Finished`), you may see an error like `second arg must be public key`. Simply wait and retry.
+:::
 
 **Note:** The decrypted result will be saved as a zip file. Ensure that the `<PATH_TO_SAVE_DECRYPTED_MODEL>` ends with .zip (e.g., model_output.zip). After downloading, unzip the file to access the decrypted model.
 
@@ -303,7 +372,7 @@ Download the same base model that was used for fine-tuning from HuggingFace:
 # Install huggingface-cli if not already installed
 pip install huggingface_hub
 
-# Download the model
+# Download the model (use the full HuggingFace model name with Qwen/ prefix)
 huggingface-cli download Qwen/Qwen2.5-0.5B-Instruct --local-dir ./base_model
 ```
 
@@ -434,6 +503,22 @@ Quick CLI commands:
 
 ### Other Commands
 
+#### Upload Dataset Separately
+
+You can upload a dataset to 0G Storage before creating a task:
+
+```bash
+0g-compute-cli fine-tuning upload --data-path <PATH_TO_DATASET>
+```
+
+#### Download Data
+
+You can download previously uploaded datasets from 0G Storage:
+
+```bash
+0g-compute-cli fine-tuning download --data-path <PATH_TO_SAVE_DATASET> --data-root <DATASET_ROOT_HASH>
+```
+
 #### View Task List
 
 You can view the list of tasks submitted to a specific provider using the following command:
@@ -455,6 +540,17 @@ You can cancel a task before it starts running using the following command:
 ## Troubleshooting
 
 <details>
+<summary><b>Error: MinimumDepositRequired</b></summary>
+
+This means the provider's fine-tuning sub-account has insufficient funds. Make sure to include `--service fine-tuning` when transferring funds:
+
+```bash
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 2 --service fine-tuning
+```
+
+</details>
+
+<details>
 <summary><b>Error: Provider busy</b></summary>
 
 The provider is processing another task. Options:
@@ -468,6 +564,28 @@ The provider is processing another task. Options:
 
 Add more funds:
 ```bash
-0g-compute-cli deposit --amount 0.1
+0g-compute-cli deposit --amount 3
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 2 --service fine-tuning
 ```
+</details>
+
+<details>
+<summary><b>Error: "second arg must be public key" when decrypting</b></summary>
+
+This means the provider hasn't finished settlement yet. Wait about 1 minute after `acknowledge-model`, then check the task status:
+
+```bash
+0g-compute-cli fine-tuning get-task --provider <PROVIDER_ADDRESS> --task <TASK_ID>
+```
+
+When `Progress` shows `Finished`, retry the `decrypt-model` command.
+</details>
+
+<details>
+<summary><b>Error: "Unexpected non-whitespace character after JSON" when creating task</b></summary>
+
+Check your training configuration JSON file:
+- Ensure valid JSON format
+- Use decimal notation for numbers (e.g., `0.0002` instead of `2e-4`)
+- Verify no trailing commas
 </details>
