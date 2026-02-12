@@ -28,18 +28,16 @@ import TabItem from '@theme/TabItem';
 :::info Testnet Services
 
 <details>
-<summary><b>View Testnet Services (3 Available)</b></summary>
+<summary><b>View Testnet Services (2 Available)</b></summary>
 
 | # | Model | Type | Provider | Input (per 1M tokens) | Output (per 1M tokens) |
 |---|-------|------|----------|----------------------|------------------------|
 | 1 | `qwen-2.5-7b-instruct` | Chatbot | `0xa48f01...` | 0.05 0G | 0.10 0G |
-| 2 | `gpt-oss-20b` | Chatbot | `0x8e60d4...` | 0.05 0G | 0.10 0G |
-| 3 | `gemma-3-27b-it` | Chatbot | `0x69Eb5a...` | 0.15 0G | 0.40 0G |
+| 2 | `qwen-image-edit-2511` | Image-Edit | `0x4b2a9...` | - | 0.005 0G/image |
 
 **Available Models:**
 - **Qwen 2.5 7B Instruct**: Fast and efficient conversational model
-- **GPT-OSS-20B**: Mid-size open-source GPT alternative
-- **Gemma 3 27B IT**: Google's instruction-tuned model
+- **Qwen Image Edit 2511**: Advanced image editing and manipulation model
 
 All testnet services feature TeeML verifiability and are ideal for development and testing.
 
@@ -50,26 +48,24 @@ All testnet services feature TeeML verifiability and are ideal for development a
 :::tip Mainnet Services
 
 <details>
-<summary><b>View Mainnet Services (7 Available)</b></summary>
+<summary><b>View Mainnet Services (6 Available)</b></summary>
 
 | # | Model | Type | Provider | Input (per 1M tokens) | Output (per 1M tokens) |
 |---|-------|------|----------|----------------------|------------------------|
-| 1 | `DeepSeek-V3.2` | Chatbot | `0xd9966e...` | 0.3 0G | 0.48 0G |
+| 1 | `GLM-5` | Chatbot | `0xd9966e...` | 1 0G | 3.2 0G |
 | 2 | `deepseek-chat-v3-0324` | Chatbot | `0x1B3AAe...` | 0.30 0G | 1.00 0G |
 | 3 | `gpt-oss-120b` | Chatbot | `0xBB3f5b...` | 0.10 0G | 0.49 0G |
 | 4 | `qwen3-vl-30b-a3b-instruct` | Chatbot | `0x4415ef...` | 0.49 0G | 0.49 0G |
-| 5 | `gpt-oss-20b` | Chatbot | `0x44ba50...` | 0.05 0G | 0.11 0G |
-| 6 | `whisper-large-v3` | Speech-to-Text | `0x36aCff...` | 0.05 0G | 0.11 0G |
-| 7 | `z-image` | Text-to-Image | `0xE29a72...` | - | 0.003 0G/image |
+| 5 | `whisper-large-v3` | Speech-to-Text | `0x36aCff...` | 0.05 0G | 0.11 0G |
+| 6 | `z-image` | Text-to-Image | `0xE29a72...` | - | 0.003 0G/image |
 
 **Available Models by Type:**
 
-**Chatbots (5 models):**
-- **DeepSeek V3.2**: Latest high-performance reasoning model
+**Chatbots (4 models):**
+- **GLM-5**: Latest high-performance reasoning model
 - **GPT-OSS-120B**: Large-scale open-source GPT model
 - **Qwen 2.5 VL 72B**: Vision-language multimodal model
 - **DeepSeek Chat V3**: Optimized conversational model
-- **GPT-OSS-20B**: Efficient mid-size model
 
 **Speech-to-Text (1 model):**
 - **Whisper Large V3**: OpenAI's state-of-the-art transcription model
