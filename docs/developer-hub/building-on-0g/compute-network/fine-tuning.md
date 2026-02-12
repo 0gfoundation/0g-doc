@@ -6,7 +6,7 @@ sidebar_position: 5
 
 # Fine-tuning
 
-Customize AI models with your own data using 0G's distributed GPU network (currently available on testnet only).
+Customize AI models with your own data using 0G's distributed GPU network.
 
 ## Quick Start
 
@@ -23,11 +23,9 @@ pnpm install @0glabs/0g-serving-broker -g
 
 #### Choose Network
 ```bash
-# Setup network (fine-tuning currently supports testnet only)
+# Setup network
 0g-compute-cli setup-network
 ```
-
-**Important**: Fine-tuning services are currently available on **testnet only**. Mainnet support will be added in future releases.
 
 #### Login with Wallet
 Enter your wallet private key when prompted.
@@ -61,7 +59,7 @@ If you see `MinimumDepositRequired` when creating a task, it means you haven't t
 The output will be like:
 ```bash
 ┌──────────────────────────────────────────────────┬──────────────────────────────────────────────────┐
-│ Provider 1                                       │ 0xf07240Efa67755B5311bc75784a061eDB47165Dd       │
+│ Provider 1                                       │ 0x940b4a101CaBa9be04b16A7363cafa29C1660B0d       │
 ├──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
 │ Available                                        │ ✓                                                │
 └──────────────────────────────────────────────────┴──────────────────────────────────────────────────┘
@@ -85,11 +83,10 @@ The CLI displays two categories of models: predefined models available across al
 #### Predefined Models
 These are standard models available across all providers:
 
-| Model Name | Type | Description |
-|------------|------|-------------|
-| `distilbert-base-uncased` | Text Classification | DistilBERT model, smaller and faster than BERT. More details: [HuggingFace](https://huggingface.co/distilbert/distilbert-base-uncased) |
-| `Qwen2.5-0.5B-Instruct` | Causal LM | Qwen 2.5 instruction-tuned model (0.5B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) |
-| `Qwen3-32B` | Causal LM | Qwen 3 large language model (32B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen3-32B) |
+| Model Name | Type | Price per Million Tokens | Description |
+|------------|------|--------------------------|-------------|
+| `Qwen2.5-0.5B-Instruct` | Causal LM | 0.5 0G | Qwen 2.5 instruction-tuned model (0.5B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) |
+| `Qwen3-32B` | Causal LM | 4 0G | Qwen 3 large language model (32B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen3-32B) |
 
 </details>
 
@@ -106,9 +103,11 @@ Use model names **without** the `Qwen/` prefix when specifying the `--model` par
 :::
 
 ### Prepare Configuration File
-Please download the parameter file template for the model you wish to fine-tune from the [releases page](https://github.com/0gfoundation/0g-serving-broker/releases) and modify it according to your needs.
 
-Example training configuration (`config.json`):
+Use the standard configuration template below and **only modify the parameter values** as needed. Do not add additional parameters.
+
+#### Standard Configuration Template
+
 ```json
 {
   "neftune_noise_alpha": 5,
@@ -119,8 +118,32 @@ Example training configuration (`config.json`):
 }
 ```
 
-:::tip
-Use decimal notation for `learning_rate` (e.g., `0.0002` instead of `2e-4`). Some JSON parsers may not accept scientific notation.
+:::caution Important Configuration Rules
+1. **Use the template above** - Copy the entire template
+2. **Only modify parameter values** - Do not add or remove parameters
+3. **Use decimal notation** - Write `0.0002` instead of `2e-4` for `learning_rate`
+
+**Common mistakes to avoid:**
+- ❌ Adding extra parameters (e.g., `"fp16": true`, `"bf16": false`)
+- ❌ Removing existing parameters
+- ❌ Using scientific notation like `2e-4`
+:::
+
+#### Adjustable Parameters
+
+You can modify these parameter values based on your training needs:
+
+| Parameter | Description | Notes |
+|-----------|-------------|-------|
+| `neftune_noise_alpha` | Noise injection for fine-tuning | 0-10 (0 = disabled), typical: 5 |
+| `num_train_epochs` | Number of complete passes through the dataset | Positive integer, typical: 1-3 for fine-tuning |
+| `per_device_train_batch_size` | Training batch size | 1-4, reduce to 1 if out of memory |
+| `learning_rate` | Learning rate (use decimal notation) | 0.00001-0.001, typical: 0.0002 |
+| `max_steps` | Maximum training steps | -1 (use epochs) or positive integer |
+
+:::tip GPU Memory Management
+- If you encounter out-of-memory errors, **reduce batch size to 1**
+- The provider automatically handles mixed precision training with `bf16`
 :::
 
 *Note:* For custom models provided by third-party Providers, you can download the usage template including instructions on how to construct the dataset and training configuration using the following command:
@@ -131,7 +154,7 @@ Use decimal notation for `learning_rate` (e.g., `0.0002` instead of `2e-4`). Som
 
 ### Prepare Your Data
 
-Your dataset should be in JSONL format. Each line is a JSON object representing one training example.
+Your dataset must be in **JSONL format** with a **`.jsonl` file extension**. Each line is a JSON object representing one training example.
 
 #### Supported Dataset Formats
 
@@ -156,45 +179,17 @@ Your dataset should be in JSONL format. Each line is a JSON object representing 
 
 #### Dataset Guidelines
 
+- **File format**: Must be a `.jsonl` file (JSONL format)
 - **Minimum examples**: At least 10 examples recommended for meaningful fine-tuning
 - **Quality**: Ensure examples are accurate and representative of your use case
 - **Consistency**: Use the same format throughout the dataset
 - **Encoding**: UTF-8 encoding required
 
-You can also download the dataset format specification and verification script from the [releases page](https://github.com/0gfoundation/0g-serving-broker/releases) to validate your dataset.
-
-### Upload Dataset
-
-Upload your dataset to 0G Storage. The returned root hash will be used when creating a task.
-
-```bash
-0g-compute-cli fine-tuning upload --data-path <PATH_TO_DATASET>
-```
-
-Output:
-```bash
-Root hash: 0xabc123...
-```
-
-> **Save the root hash** — you will need it in the next step.
-
 ### Create Task
 
 Create a fine-tuning task. The fee will be **automatically calculated** by the broker based on the actual token count of your dataset.
 
-**Option A: Using dataset root hash (recommended)**
-
-If you already uploaded your dataset with the `upload` command:
-
-```bash
-0g-compute-cli fine-tuning create-task \
-  --provider <PROVIDER_ADDRESS> \
-  --model <MODEL_NAME> \
-  --dataset <DATASET_ROOT_HASH> \
-  --config-path <PATH_TO_CONFIG_FILE>
-```
-
-**Option B: Using local dataset file**
+**Option A: Using local dataset file (Recommended)**
 
 The CLI will automatically upload the dataset to 0G Storage and create the task in one step:
 
@@ -206,14 +201,39 @@ The CLI will automatically upload the dataset to 0G Storage and create the task 
   --config-path <PATH_TO_CONFIG_FILE>
 ```
 
+**Option B: Using dataset root hash**
+
+If you prefer to upload the dataset separately first, or need to reuse the same dataset:
+
+1. Upload your dataset to 0G Storage:
+
+```bash
+0g-compute-cli fine-tuning upload --data-path <PATH_TO_DATASET>
+```
+
+Output:
+```bash
+Root hash: 0xabc123...
+```
+
+2. Create the task using the root hash:
+
+```bash
+0g-compute-cli fine-tuning create-task \
+  --provider <PROVIDER_ADDRESS> \
+  --model <MODEL_NAME> \
+  --dataset <DATASET_ROOT_HASH> \
+  --config-path <PATH_TO_CONFIG_FILE>
+```
+
 **Parameters:**
 
 | Parameter | Description |
 |-----------|-------------|
 | `--provider` | Address of the service provider |
 | `--model` | Name of the pretrained model (without `Qwen/` prefix) |
-| `--dataset` | Root hash of the dataset on 0G Storage (Option A) |
-| `--dataset-path` | Path to local dataset file — mutually exclusive with `--dataset` (Option B) |
+| `--dataset-path` | Path to local dataset file — automatically uploads to 0G Storage (Option A) |
+| `--dataset` | Root hash of the dataset on 0G Storage — mutually exclusive with `--dataset-path` (Option B) |
 | `--config-path` | Path to the training configuration file |
 | `--gas-price` | Gas price (optional) |
 
@@ -228,6 +248,41 @@ Created Task ID: 6b607314-88b0-4fef-91e7-43227a54de57
 ```
 
 *Note:* When creating a task for the same provider, you must wait for the previous task to be completed (status `Finished`) before creating a new task. If the provider is currently running other tasks, you will be prompted to choose between adding your task to the waiting queue or canceling the request.
+
+### Fee Calculation
+
+The fine-tuning service fee is **automatically calculated** based on your dataset size and training configuration. The fee consists of two components:
+
+#### Formula
+
+```
+Total Fee = Training Fee + Storage Reserve Fee
+```
+
+Where:
+- **Training Fee** = `(tokenSize / 1,000,000) × pricePerMillionTokens × trainEpochs`
+- **Storage Reserve Fee** = Fixed amount based on model size
+
+#### Components Explained
+
+| Component | Description |
+|-----------|-------------|
+| `tokenSize` | Total number of tokens in your dataset (automatically counted) |
+| `pricePerMillionTokens` | Price per million tokens (model-specific, see [Predefined Models](#predefined-models)) |
+| `trainEpochs` | Number of training epochs (from your config) |
+| `Storage Reserve Fee` | Fixed fee to reserve storage for the fine-tuned model:<br/>• Qwen3-32B (~900 MB LoRA): 0.09 0G<br/>• Qwen2.5-0.5B-Instruct (~100 MB LoRA): 0.01 0G |
+
+#### Example
+
+For a dataset with 10,000 tokens, trained for 3 epochs on Qwen2.5-0.5B-Instruct:
+- Price per million tokens = 0.5 0G (see [Predefined Models](#predefined-models))
+- Training Fee = (10,000 / 1,000,000) × 0.5 × 3 = 0.015 0G
+- Storage Reserve Fee = 0.01 0G (for Qwen2.5-0.5B-Instruct)
+- **Total Fee = 0.025 0G**
+
+:::tip
+The actual fee is calculated during the setup phase after your dataset is analyzed. You can view the final fee using the [`get-task`](#monitor-progress) command before training begins.
+:::
 
 ### Monitor Progress
 You can monitor the progress of your task by running the following command:
@@ -301,13 +356,36 @@ Use the [Check Task](#monitor-progress) command to view task status. When the st
 0g-compute-cli fine-tuning acknowledge-model \
   --provider <PROVIDER_ADDRESS> \
   --task-id <TASK_ID> \
-  --data-path <PATH_TO_SAVE_MODEL>
+  --data-path <PATH_TO_SAVE_MODEL_FILE>
 ```
 
 The CLI will automatically download the encrypted model from 0G Storage. If 0G Storage download fails, it will fall back to downloading directly from the provider's TEE.
 
-:::tip
-`--data-path` can be either a file path or a directory. If you provide a directory, the CLI will automatically create a file named `model_<TASK_ID>.bin` inside it.
+:::danger 48-Hour Deadline
+**You must download and acknowledge the model within 48 hours after the task status changes to `Delivered`.**
+
+If you fail to acknowledge within 48 hours:
+- The provider will **force settlement** automatically
+- You will **lose access to the fine-tuned model**
+- **30% of the total task fee** will be deducted as compensation for the provider's compute resources
+
+**Action required:** Monitor your task status and download promptly when it reaches `Delivered`.
+:::
+
+:::caution File Path Required
+`--data-path` **must be a file path**, not a directory.
+
+**Example:**
+```bash
+0g-compute-cli fine-tuning acknowledge-model \
+  --provider <PROVIDER_ADDRESS> \
+  --task-id 0e91ef3d-ac0d-422e-a38c-9d42a28c4412 \
+  --data-path /workspace/output/encrypted_model.bin
+```
+:::
+
+:::tip Data Integrity Verification
+The `acknowledge-model` command performs automatic data integrity verification to ensure the downloaded model matches the root hash that the provider submitted to the blockchain contract. This guarantees you receive the authentic model without corruption or tampering.
 :::
 
 **Note:** The model file downloaded with the above command is encrypted, and additional steps are required for decryption.
@@ -320,8 +398,18 @@ After acknowledging the model, the provider automatically settles the fees and u
 0g-compute-cli fine-tuning decrypt-model \
   --provider <PROVIDER_ADDRESS> \
   --task-id <TASK_ID> \
-  --encrypted-model <PATH_TO_ENCRYPTED_MODEL> \
+  --encrypted-model <PATH_TO_ENCRYPTED_MODEL_FILE> \
   --output <PATH_TO_SAVE_DECRYPTED_MODEL>
+```
+
+**Example:**
+```bash
+# Use the same file path you specified in acknowledge-model
+0g-compute-cli fine-tuning decrypt-model \
+  --provider <PROVIDER_ADDRESS> \
+  --task-id 0e91ef3d-ac0d-422e-a38c-9d42a28c4412 \
+  --encrypted-model /workspace/output/encrypted_model.bin \
+  --output /workspace/output/model_output.zip
 ```
 
 The above command performs the following operations:
@@ -372,13 +460,18 @@ Download the same base model that was used for fine-tuning from HuggingFace:
 # Install huggingface-cli if not already installed
 pip install huggingface_hub
 
-# Download the model (use the full HuggingFace model name with Qwen/ prefix)
+# For Qwen2.5-0.5B-Instruct
 huggingface-cli download Qwen/Qwen2.5-0.5B-Instruct --local-dir ./base_model
+
+# For Qwen3-32B (requires ~65GB disk space)
+# huggingface-cli download Qwen/Qwen3-32B --local-dir ./base_model
 ```
 
 ### Step 2: Load LoRA with Base Model
 
-Use the following Python code to combine the LoRA adapter with the base model:
+Use the following Python code to combine the LoRA adapter with the base model.
+
+**For Qwen2.5-0.5B-Instruct:**
 
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -402,11 +495,55 @@ base_model = AutoModelForCausalLM.from_pretrained(
 # Load LoRA adapter
 model = PeftModel.from_pretrained(base_model, lora_adapter_path)
 
-# For inference (optional: merge for faster inference)
-# model = model.merge_and_unload()
+print("Model loaded successfully!")
+```
+
+**For Qwen3-32B (requires 40GB+ VRAM):**
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
+import torch
+
+# Paths
+base_model_path = "./base_model"  # or "Qwen/Qwen3-32B"
+lora_adapter_path = "./lora_adapter/output_model"
+
+# Load tokenizer
+tokenizer = AutoTokenizer.from_pretrained(lora_adapter_path)
+
+# Load base model with optimizations for large models
+base_model = AutoModelForCausalLM.from_pretrained(
+    base_model_path,
+    torch_dtype=torch.float16,      # Use fp16 to reduce memory
+    device_map="auto",               # Automatically distribute across GPUs
+    low_cpu_mem_usage=True,          # Reduce CPU memory usage during loading
+    trust_remote_code=True           # Required for some Qwen models
+)
+
+# Load LoRA adapter
+model = PeftModel.from_pretrained(base_model, lora_adapter_path)
 
 print("Model loaded successfully!")
 ```
+
+:::tip Memory Optimization for Large Models
+If you encounter out-of-memory errors with Qwen3-32B, you can use quantization:
+
+```python
+# 8-bit quantization (requires bitsandbytes)
+from transformers import BitsAndBytesConfig
+
+quantization_config = BitsAndBytesConfig(load_in_8bit=True)
+
+base_model = AutoModelForCausalLM.from_pretrained(
+    base_model_path,
+    quantization_config=quantization_config,
+    device_map="auto",
+    trust_remote_code=True
+)
+```
+:::
 
 ### Step 3: Run Inference
 
@@ -474,9 +611,28 @@ print("Merged model saved to ./merged_model")
 
 Install the required Python packages:
 
+#### For GPU Environments (Recommended)
+
+If you have an NVIDIA GPU, install PyTorch with CUDA support. **Important:** Match the CUDA version to your environment.
+
+```bash
+# For CUDA 12.1 (check your CUDA version with: nvidia-smi)
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# For CUDA 11.8
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Install other ML libraries
+pip install transformers peft accelerate
+```
+
+#### For CPU-Only Environments
+
 ```bash
 pip install torch transformers peft accelerate
 ```
+
+#### Package Requirements
 
 | Package | Minimum Version | Purpose |
 |---------|-----------------|---------|
@@ -484,6 +640,14 @@ pip install torch transformers peft accelerate
 | `transformers` | >= 4.40.0 | Model loading and inference |
 | `peft` | >= 0.10.0 | LoRA adapter support |
 | `accelerate` | >= 0.27.0 | Device management |
+
+:::tip Verify GPU Support
+After installation, verify that PyTorch can detect your GPU:
+```bash
+python3 -c "import torch; print('PyTorch version:', torch.__version__); print('CUDA available:', torch.cuda.is_available())"
+```
+If `CUDA available: False`, you may need to reinstall PyTorch with the correct CUDA version.
+:::
 
 ### Account Management
 
