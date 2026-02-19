@@ -94,13 +94,21 @@ All mainnet services feature TeeML verifiability for trusted execution in produc
 
 **Best for:** Quick testing, experimentation and direct frontend integration.
 
-### Installation
+### Option 1: Use the Hosted Web UI
+
+Visit the official 0G Compute Marketplace directly — no installation required:
+
+**[https://compute-marketplace.0g.ai/inference](https://compute-marketplace.0g.ai/inference)**
+
+### Option 2: Run Locally
+
+#### Installation
 
 ```bash
 pnpm add @0glabs/0g-serving-broker -g
 ```
 
-### Launch Web UI
+#### Launch Web UI
 
 ```bash
 0g-compute-cli ui start-web
