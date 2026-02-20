@@ -66,6 +66,9 @@ This page provides comprehensive context about 0G infrastructure to help AI codi
 | **DAEntrance** | `0xE75A073dA5bb7b0eC622170Fd268f35E675a957B` | DA blob submission |
 | **DASigners** | `0x0000000000000000000000000000000000001000` | DA signer management (precompile) |
 | **WrappedOGBase** | `0x0000000000000000000000000000000000001001` | Wrapped native token (precompile) |
+| **Compute Ledger** | `0xE70830508dAc0A97e6c087c75f402f9Be669E406` | Compute network payment ledger |
+| **Compute Inference** | `0xa79F4c8311FF93C06b8CfB403690cc987c93F91E` | Compute inference service |
+| **Compute FineTuning** | `0xaC66eBd174435c04F1449BBa08157a707B6fa7b1` | Compute fine-tuning service |
 
 ### Mainnet Contracts
 
@@ -76,6 +79,9 @@ This page provides comprehensive context about 0G infrastructure to help AI codi
 | **Reward** | `0x457aC76B58ffcDc118AABD6DbC63ff9072880870` | Reward distribution |
 | **DASigners** | `0x0000000000000000000000000000000000001000` | DA signer management (precompile) |
 | **WrappedOGBase** | `0x0000000000000000000000000000000000001001` | Wrapped native token (precompile) |
+| **Compute Ledger** | `0x2dE54c845Cd948B72D2e32e39586fe89607074E3` | Compute network payment ledger |
+| **Compute Inference** | `0x47340d900bdFec2BD393c626E12ea0656F938d84` | Compute inference service |
+| **Compute FineTuning** | `0x4e3474095518883744ddf135b7E0A23301c7F9c0` | Compute fine-tuning service |
 
 ## 0G Services Overview
 
@@ -369,7 +375,7 @@ response = client.chat.completions.create(
 
 # Create fine-tuning task
 0g-compute-cli fine-tuning create-task \
-  --model meta-llama/Llama-3.2-3B \
+  --model Qwen2.5-0.5B-Instruct \
   --dataset <DATASET_ID> \
   --provider <PROVIDER_ADDRESS>
 

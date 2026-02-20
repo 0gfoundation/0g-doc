@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { createZGServingNetworkBroker } from "@0glabs/0g-serving-broker";
+import { createZGComputeNetworkBroker } from "@0glabs/0g-serving-broker";
 import OpenAI from "openai";
 
 async function main() {
@@ -12,11 +12,11 @@ async function main() {
 
   // Step 2: Initialize the broker
   try {
-    const broker = await createZGServingNetworkBroker(wallet);
+    const broker = await createZGComputeNetworkBroker(wallet);
 
     // Step 3: List available services
     console.log("Listing available services...");
-    const services = await broker.listService();
+    const services = await broker.inference.listService();
     services.forEach((service: any) => {
       console.log(
         `Service: ${service.name}, Provider: ${service.provider}, Type: ${service.serviceType}, Model: ${service.model}, URL: ${service.url}`
@@ -34,38 +34,26 @@ async function main() {
     const providerAddress = service.provider;
 
     // Step 4: Manage Accounts
-    const initialBalance = 0.00000001;
-    // Step 4.1: Create a new account
-    console.log("Creating a new account...");
-    await broker.addAccount(providerAddress, initialBalance);
-    console.log("Account created successfully.");
-
-    // Step 4.2: Deposit funds into the account
-    const depositAmount = 0.00000002;
     console.log("Depositing funds...");
-    await broker.depositFund(providerAddress, depositAmount);
+    await broker.ledger.depositFund(10);
     console.log("Funds deposited successfully.");
 
-    // Step 4.3: Get the account
-    const account = await broker.getAccount(providerAddress);
+    // Step 4.1: Get the account
+    const account = await broker.ledger.getLedger();
     console.log(account);
 
     // Step 5: Use the Provider's Services
     console.log("Processing a request...");
-    const serviceName = service.name;
     const content = "Please input your message here";
 
     // Step 5.1: Get the request metadata
-    const { endpoint, model } = await broker.getServiceMetadata(
-      providerAddress,
-      serviceName
+    const { endpoint, model } = await broker.inference.getServiceMetadata(
+      providerAddress
     );
 
     // Step 5.2: Get the request headers
-    const headers = await broker.getRequestHeaders(
-      providerAddress,
-      serviceName,
-      content
+    const headers = await broker.inference.getRequestHeaders(
+      providerAddress
     );
 
     // Step 6: Send a request to the service
@@ -94,11 +82,10 @@ async function main() {
 
     // Step 7: Process the response
     console.log("Processing a response...");
-    const isValid = await broker.processResponse(
+    const isValid = await broker.inference.processResponse(
       providerAddress,
-      serviceName,
-      receivedContent,
-      chatID
+      chatID,
+      JSON.stringify(completion.usage)
     );
     console.log(`Response validity: ${isValid ? "Valid" : "Invalid"}`);
   } catch (error) {
