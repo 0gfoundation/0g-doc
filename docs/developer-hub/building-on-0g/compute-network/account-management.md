@@ -41,7 +41,7 @@ The account system provides a secure and flexible way to manage funds across dif
 
 ## Prerequisites
 
-- Node.js >= 22.0.0
+- Node.js >= 20.0.0
 - A wallet with 0G tokens (for testnet or mainnet)
 - EVM compatible wallet (for Web UI)
 

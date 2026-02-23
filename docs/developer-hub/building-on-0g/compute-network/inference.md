@@ -13,7 +13,7 @@ import TabItem from '@theme/TabItem';
 
 ## Prerequisites
 
-- Node.js >= 22.0.0
+- Node.js >= 20.0.0
 - A wallet with 0G tokens (either testnet or mainnet)
 - EVM compatible wallet (for Web UI)
 
