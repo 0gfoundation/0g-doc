@@ -186,7 +186,7 @@ Decentralized storage offering 95% lower costs than AWS with instant retrieval.
 
 TypeScript/JavaScript:
 ```bash
-npm install @0glabs/0g-ts-sdk ethers
+npm install @0gfoundation/0g-ts-sdk ethers
 ```
 
 Python:
@@ -203,7 +203,7 @@ go get github.com/0gfoundation/0g-storage-client
 
 TypeScript - Upload File:
 ```typescript
-import { ZgFile, Indexer } from "@0glabs/0g-ts-sdk";
+import { ZgFile, Indexer } from "@0gfoundation/0g-ts-sdk";
 import { ethers } from "ethers";
 
 const provider = new ethers.JsonRpcProvider("https://evmrpc-testnet.0g.ai");
@@ -659,10 +659,10 @@ response = client.chat.completions.create(
 ### Storage Starter Kit
 **TypeScript Example**:
 ```bash
-npm install @0glabs/0g-ts-sdk ethers
+npm install @0gfoundation/0g-ts-sdk ethers
 ```
 ```typescript
-import { ZgFile, Indexer } from "@0glabs/0g-ts-sdk";
+import { ZgFile, Indexer } from "@0gfoundation/0g-ts-sdk";
 import { ethers } from "ethers";
 
 const provider = new ethers.JsonRpcProvider("https://evmrpc-testnet.0g.ai");

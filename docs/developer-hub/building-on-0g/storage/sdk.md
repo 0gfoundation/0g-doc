@@ -179,7 +179,7 @@ if err != nil {
 Install the SDK and its peer dependency:
 
 ```bash
-npm install @0glabs/0g-ts-sdk ethers
+npm install @0gfoundation/0g-ts-sdk ethers
 ```
 
 :::note
@@ -191,7 +191,7 @@ npm install @0glabs/0g-ts-sdk ethers
 ### Import Required Modules
 
 ```javascript
-import { ZgFile, Indexer, Batcher, KvClient } from '@0glabs/0g-ts-sdk';
+import { ZgFile, Indexer, Batcher, KvClient } from '@0gfoundation/0g-ts-sdk';
 import { ethers } from 'ethers';
 ```
 

@@ -35,7 +35,7 @@ This step-by-step guide shows you how to integrate INFTs into your applications 
 
 ```bash
 # Install dependencies
-npm install @0glabs/0g-ts-sdk ethers hardhat
+npm install @0gfoundation/0g-ts-sdk ethers hardhat
 
 # Set environment variables
 export PRIVATE_KEY="your-private-key"
@@ -71,7 +71,7 @@ mkdir my-inft-project && cd my-inft-project
 npm init -y
 
 # Install required dependencies
-npm install @0glabs/0g-ts-sdk @openzeppelin/contracts ethers hardhat
+npm install @0gfoundation/0g-ts-sdk @openzeppelin/contracts ethers hardhat
 npm install --save-dev @nomicfoundation/hardhat-toolbox
 
 # Initialize Hardhat
