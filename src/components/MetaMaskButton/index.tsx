@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import RemoveNewtonModal from '../RemoveNewtonModal';
+import React from 'react';
 
 declare global {
   interface Window {
@@ -28,8 +27,6 @@ export default function MetaMaskButton({
   rpcUrls = ["https://evmrpc.0g.ai"],
   blockExplorerUrls = ["https://chainscan.0g.ai/"]
 }: MetaMaskButtonProps): JSX.Element {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const getChainID = (networkId: string | number): string => {
     const numeric = typeof networkId === 'string' ? parseInt(networkId) : networkId;
     return '0x' + Number(numeric).toString(16);
@@ -43,52 +40,6 @@ export default function MetaMaskButton({
 
     const desiredChainHex = getChainID(inputChainId);
 
-    // For Galileo Testnet specifically, keep the legacy migration helper
-    if (String(inputChainId) === '16601') {
-      const changedToGalileo = await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: desiredChainHex }] }).catch(async () => {
-        const changedToOldGalileo = await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: getChainID('80087') }] }).catch(async () => {
-          const params = [{
-            chainId: desiredChainHex,
-            chainName,
-            nativeCurrency: {
-              name: tokenName,
-              symbol: tokenSymbol,
-              decimals: tokenDecimals
-            },
-            rpcUrls,
-            blockExplorerUrls
-          }];
-  
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params
-          }).catch((error: any) => {
-            console.log(error);
-          });
-          return true;
-        });
-
-        if (changedToOldGalileo) {
-          return false;
-        }
-
-        setIsModalOpen(true);
-        return true;
-      });
-
-      if (changedToGalileo) {
-        return false;
-      }
-
-      const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
-      if (currentChainId === desiredChainHex) {
-        alert('0G Testnet added');
-        return;
-      }
-      return;
-    }
-
-    // Generic flow for other networks (e.g., Mainnet)
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
@@ -147,10 +98,6 @@ export default function MetaMaskButton({
         />
         {label}
       </button>
-      <RemoveNewtonModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-      />
     </div>
   );
 }
