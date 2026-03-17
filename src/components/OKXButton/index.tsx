@@ -18,14 +18,14 @@ interface OKXButtonProps {
 }
 
 export default function OKXButton({
-  label = "Add 0G Testnet",
-  chainId: inputChainId = '16602',
-  chainName = '0G-Testnet-Galileo',
-  tokenSymbol = '0G',
-  tokenName = '0G',
+  label = "Add 0G Mainnet",
+  chainId: inputChainId = 16661,
+  chainName = "0G Mainnet",
+  tokenSymbol = "0G",
+  tokenName = "0G",
   tokenDecimals = 18,
-  rpcUrls = ['https://evmrpc-testnet.0g.ai'],
-  blockExplorerUrls = ['https://chainscan-galileo.0g.ai/']
+  rpcUrls = ["https://evmrpc.0g.ai"],
+  blockExplorerUrls = ["https://chainscan.0g.ai/"]
 }: OKXButtonProps): JSX.Element {
   const getChainID = (networkId: string | number): string => {
     const numeric = typeof networkId === 'string' ? parseInt(networkId) : networkId;
