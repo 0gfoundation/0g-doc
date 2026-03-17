@@ -19,14 +19,14 @@ interface MetaMaskButtonProps {
 }
 
 export default function MetaMaskButton({
-  label = "Add 0G Testnet",
-  chainId: inputChainId = '16602',
-  chainName = '0G-Testnet-Galileo',
-  tokenSymbol = '0G',
-  tokenName = '0G',
+  label = "Add 0G Mainnet",
+  chainId: inputChainId = 16661,
+  chainName = "0G Mainnet",
+  tokenSymbol = "0G",
+  tokenName = "0G",
   tokenDecimals = 18,
-  rpcUrls = ['https://evmrpc-testnet.0g.ai'],
-  blockExplorerUrls = ['https://chainscan-galileo.0g.ai/']
+  rpcUrls = ["https://evmrpc.0g.ai"],
+  blockExplorerUrls = ["https://chainscan.0g.ai/"]
 }: MetaMaskButtonProps): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -153,4 +153,4 @@ export default function MetaMaskButton({
       />
     </div>
   );
-} 
+}
