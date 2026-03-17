@@ -59,8 +59,26 @@ export const AddNetworkSection = () => {
       </div>
 
       <div className="wallet-buttons">
-        <MetaMaskButton label="Add to MetaMask" />
-        <OKXButton label="Add to OKX Wallet" />
+        <MetaMaskButton
+          label="Add to MetaMask"
+          chainId={16602}
+          chainName="0G-Galileo-Testnet"
+          tokenName="0G"
+          tokenSymbol="0G"
+          tokenDecimals={18}
+          rpcUrls={["https://evmrpc-testnet.0g.ai"]}
+          blockExplorerUrls={["https://chainscan-galileo.0g.ai/"]}
+        />
+        <OKXButton
+          label="Add to OKX Wallet"
+          chainId={16602}
+          chainName="0G-Galileo-Testnet"
+          tokenName="0G"
+          tokenSymbol="0G"
+          tokenDecimals={18}
+          rpcUrls={["https://evmrpc-testnet.0g.ai"]}
+          blockExplorerUrls={["https://chainscan-galileo.0g.ai/"]}
+        />
       </div>
 
       <RemoveNewtonModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
