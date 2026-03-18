@@ -55,14 +55,14 @@ All testnet services feature TeeML verifiability and are ideal for development a
 <details>
 <summary><b>View Mainnet Services (6 Available)</b></summary>
 
-| # | Model | Type | Provider | Input (per 1M tokens) | Output (per 1M tokens) |
-|---|-------|------|----------|----------------------|------------------------|
-| 1 | `GLM-5-FP8` | Chatbot | `0xd9966e...` | 1 0G | 3.2 0G |
-| 2 | `deepseek-chat-v3-0324` | Chatbot | `0x1B3AAe...` | 0.30 0G | 1.00 0G |
-| 3 | `gpt-oss-120b` | Chatbot | `0xBB3f5b...` | 0.10 0G | 0.49 0G |
-| 4 | `qwen3-vl-30b-a3b-instruct` | Chatbot | `0x4415ef...` | 0.49 0G | 0.49 0G |
-| 5 | `whisper-large-v3` | Speech-to-Text | `0x36aCff...` | 0.05 0G | 0.11 0G |
-| 6 | `z-image` | Text-to-Image | `0xE29a72...` | - | 0.003 0G/image |
+| # | Model | Type | Provider | Input (per 1M tokens) | Cached Input (per 1M tokens) | Output (per 1M tokens) |
+|---|-------|------|----------|----------------------|------------------------------|------------------------|
+| 1 | `GLM-5-FP8` | Chatbot | `0xd9966e...` | 0.7 0G | 0.175 0G | 3.2 0G |
+| 2 | `deepseek-chat-v3-0324` | Chatbot | `0x1B3AAe...` | 0.30 0G | - | 1.00 0G |
+| 3 | `gpt-oss-120b` | Chatbot | `0xBB3f5b...` | 0.10 0G | - | 0.49 0G |
+| 4 | `qwen3-vl-30b-a3b-instruct` | Chatbot | `0x4415ef...` | 0.49 0G | - | 0.49 0G |
+| 5 | `whisper-large-v3` | Speech-to-Text | `0x36aCff...` | 0.05 0G | - | 0.11 0G |
+| 6 | `z-image` | Text-to-Image | `0xE29a72...` | - | - | 0.003 0G/image |
 
 **Available Models by Type:**
 
@@ -175,7 +175,7 @@ Before using inference services, you need to fund your account. For detailed acc
 ```bash
 0g-compute-cli deposit --amount 10
 0g-compute-cli get-account
-0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 5
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 1
 ```
 
 ### CLI Commands
@@ -193,8 +193,8 @@ Check provider's TEE attestation and reliability before using:
 
 This command outputs the provider's report and verifies their Trusted Execution Environment (TEE) status.
 
-#### Acknowledge Provider
-Before using a provider, acknowledge them on-chain:
+#### Acknowledge Provider (Optional)
+If you already used `transfer-fund` to fund a provider, acknowledgement happens automatically. This command is only needed if you want to acknowledge without transferring funds:
 ```bash
 0g-compute-cli inference acknowledge-provider --provider <PROVIDER_ADDRESS>
 ```
@@ -514,6 +514,16 @@ export default {
 ```
 :::
 
+:::warning Browser Auto-Funding Disabled
+In browser environments, the SDK's automatic balance top-up (`topUpAccountIfNeeded`) is **disabled by design**. Auto-funding requires a wallet signature for each transfer, which would trigger unexpected wallet popups (e.g. MetaMask) during active chat sessions — a poor user experience.
+
+**For browser dApps, you must manage funds manually:**
+1. Deposit to your main account: `await broker.ledger.depositFund(10)`
+2. Transfer to the provider sub-account: `await broker.ledger.transferFund(providerAddress, 'inference', amount)`
+
+In Node.js environments (server-side), auto-funding works automatically — the SDK will transfer funds from your main account to the provider sub-account as needed.
+:::
+
 </TabItem>
 </Tabs>
 
@@ -529,16 +539,83 @@ const imageServices = services.filter(s => s.serviceType === 'text-to-image');
 const speechServices = services.filter(s => s.serviceType === 'speech-to-text');
 ```
 
+### Verify Provider (Optional)
+
+All providers listed on the 0G Compute Network have already been verified by the 0G team. This step is optional and intended for users who want to independently verify a provider's TEE attestation.
+
+The SDK performs automated checks and provides guidance for manual verification steps.
+
+**Automated checks:**
+- TEE signer address match (contract vs attestation report)
+- Docker Compose hash verification (calculated vs event log)
+
+**Manual steps** (instructions included in output):
+- Docker image integrity verification via [sigstore](https://search.sigstore.dev/)
+- Full quote verification using [dstack-verifier](https://github.com/Dstack-TEE/dstack)
+
+```typescript
+// Verify with real-time step output
+const result = await broker.inference.verifyService(
+  providerAddress,
+  './reports',              // directory to save attestation reports
+  (step) => console.log(step.message)  // optional: print each step as it happens
+);
+
+// Check automated verification results programmatically
+if (result.signerVerification.allMatch && result.composeVerification.passed) {
+  console.log('Automated checks passed');
+} else {
+  console.warn('Automated checks failed — review result for details');
+}
+
+// Access structured data
+console.log('Signer match:', result.signerVerification.allMatch);
+console.log('Compose hash:', result.composeVerification.passed);
+console.log('Docker images:', result.dockerImages);
+console.log('Reports saved to:', result.outputDirectory);
+```
+
+:::caution Automated checks are not a full verification
+`verifyService` can only verify signer address and compose hash automatically. To fully verify a provider's TEE environment, you must also follow the manual steps in the output — including running dstack-verifier and checking image integrity via sigstore.
+:::
+
 ### Account Management
 
 For detailed account operations, see [Account Management](./account-management).
 
+:::info Minimum Balance Requirements
+- **Ledger creation** (`depositFund`): Requires a minimum of **3 0G** for initial deposit
+- **Provider sub-account**: Each provider requires a minimum locked balance of **1 0G** to serve requests. Transfers below this amount may result in rejected requests.
+
+In Node.js environments, the SDK automatically manages sub-account balances — it tracks accumulated usage fees (via `processResponse`) and tops up the sub-account when balance is insufficient. **You must call `processResponse` after each response for auto-funding to work.** In browser environments, you must transfer funds manually.
+:::
+
+<Tabs>
+<TabItem value="nodejs-account" label="Node.js" default>
+
 ```typescript
-const account = await broker.ledger.getLedger();
+// Deposit to main account
 await broker.ledger.depositFund(10);
-// Required before first use of a provider
-await broker.inference.acknowledgeProviderSigner(providerAddress);
+
+// Node.js: SDK auto-manages provider sub-accounts.
+// Call processResponse() after each response so the SDK can track usage fees
+// and automatically top up the sub-account when balance is insufficient.
 ```
+
+</TabItem>
+<TabItem value="browser-account" label="Browser">
+
+```typescript
+// Deposit to main account
+await broker.ledger.depositFund(10);
+
+// Browser: manually transfer funds to provider sub-account (minimum 1 0G).
+// This also auto-acknowledges the provider's TEE signer on-chain.
+await broker.ledger.transferFund(providerAddress, 'inference', BigInt(1) * BigInt(10 ** 18));
+```
+
+</TabItem>
+</Tabs>
 
 ### Make Inference Requests
 
@@ -551,7 +628,7 @@ const messages = [{ role: "user", content: "Hello!" }];
 // Get service metadata
 const { endpoint, model } = await broker.inference.getServiceMetadata(providerAddress);
 
-// Generate auth headers
+// Generate auth headers (also triggers auto-funding on first request)
 const headers = await broker.inference.getRequestHeaders(
   providerAddress
 );
@@ -565,6 +642,16 @@ const response = await fetch(`${endpoint}/chat/completions`, {
 
 const data = await response.json();
 const answer = data.choices[0].message.content;
+
+// IMPORTANT: Report usage so the SDK can track fees and auto-fund your sub-account.
+// Without this call, automatic balance top-ups will stop working after the first request.
+if (data.usage) {
+  await broker.inference.processResponse(
+    providerAddress,
+    undefined,                    // chatID — pass for TEE verification (see below)
+    JSON.stringify(data.usage)    // usage data for fee tracking
+  );
+}
 ```
 
 </TabItem>
@@ -603,6 +690,9 @@ const response = await fetch(`${endpoint}/images/generations`, {
 
 const data = await response.json();
 const imageUrl = data.data[0].url;
+
+// Report usage for auto-funding
+await broker.inference.processResponse(providerAddress);
 ```
 
 </TabItem>
@@ -631,17 +721,34 @@ const response = await fetch(`${endpoint}/audio/transcriptions`, {
 
 const data = await response.json();
 const transcription = data.text;
+
+// Report usage for auto-funding
+if (data.usage) {
+  await broker.inference.processResponse(
+    providerAddress,
+    undefined,
+    JSON.stringify(data.usage)
+  );
+}
 ```
 
 </TabItem>
 </Tabs>
 
-### Response Verification
+### Response Processing & Verification
 
-The `processResponse` method handles response verification and automatic fee management. Both parameters are optional:
+:::warning processResponse is required for auto-funding
+You **must** call `processResponse` after each inference response. The SDK uses it to track accumulated usage fees — without it, automatic balance top-ups stop working after the first request, and subsequent requests may fail with "insufficient balance" errors.
+:::
 
-- **`receivedContent`**: The usage data from the service response. When provided, the SDK caches accumulated usage and automatically transfers funds from your main account to the provider's sub-account to prevent service interruptions.
-- **`chatID`**: Response identifier for verifiable TEE services. Different service types handle this differently.
+The `processResponse` method has two roles:
+
+1. **Fee tracking (required)**: Caches accumulated usage so the SDK knows when to top up your sub-account balance. Pass the response's `usage` data in the `content` parameter.
+2. **TEE verification (optional)**: Verifies response integrity via the provider's TEE signature. Pass the `chatID` from the response header (`ZG-Res-Key`) to enable this.
+
+**Parameters:**
+- **`content`**: Usage data from the response (JSON string). Required for fee tracking. For chatbot/speech-to-text: `JSON.stringify(data.usage)`. For text-to-image: can be omitted (fee is calculated from the request).
+- **`chatID`**: Response identifier for TEE verification. Get from `ZG-Res-Key` response header, or fall back to `data.id` for chatbot responses.
 
 <Tabs>
 <TabItem value="chatbot-verify" label="Chatbot" default>
@@ -894,17 +1001,13 @@ if (chatID) {
 </Tabs>
 
 **Key Points:**
-- Always call `processResponse` after receiving responses to maintain proper fee management
-- The SDK automatically handles fund transfers to prevent service interruptions
-- For verifiable TEE services, the method also validates response integrity
-- **chatID retrieval principle**: Always prioritize `ZG-Res-Key` from response headers. Only use fallback methods when header is not present.
-- **chatID retrieval varies by service type:**
-  - **Chatbot**: First try `ZG-Res-Key` header, then check `data.id` (completion ID from response body) as fallback
-  - **Text-to-Image & Speech-to-Text**: Always get chatID from `ZG-Res-Key` response header
-  - **Streaming responses**:
-    - **Chatbot streaming**: Check headers first, then try to get `id` from stream data as fallback
-    - **Speech-to-text streaming**: Get chatID from `ZG-Res-Key` header immediately
-- Usage data format varies by service type but typically includes token counts or request metrics
+- **Always call `processResponse`** after each response — this is required for the SDK to track fees and trigger automatic balance top-ups. Without it, auto-funding stops working after the first request.
+- Pass `usage` data in the `content` parameter for accurate fee tracking (chatbot/speech-to-text). For text-to-image, fee is calculated from the request so `content` can be omitted.
+- For TEE verification, pass the `chatID` parameter (optional but recommended for verifiable services).
+- **chatID retrieval**: Always prioritize `ZG-Res-Key` from response headers. Only use fallback methods when header is not present.
+  - **Chatbot**: First try `ZG-Res-Key` header, then check `data.id` as fallback
+  - **Text-to-Image & Speech-to-Text**: Get chatID from `ZG-Res-Key` response header
+  - **Streaming**: Check headers first, then try to get `id` from stream data as fallback
 
 </TabItem>
 </Tabs>
@@ -918,39 +1021,45 @@ if (chatID) {
 <details>
 <summary><b>Error: Insufficient balance</b></summary>
 
-Your account doesn't have enough funds. Add more using CLI or SDK:
+Your provider sub-account doesn't have enough funds. Each provider requires a minimum locked balance of **1 0G** to serve requests.
 
 CLI:
 
 #### Deposit to Main Account
 ```bash
-0g-compute-cli deposit --amount 5
+0g-compute-cli deposit --amount 10
 ```
 
-#### Transfer to Provider Sub-Account
+#### Transfer to Provider Sub-Account (minimum 1 0G recommended)
 ```bash
-0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 5
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 1
 ```
 
 SDK:
 ```typescript
-await broker.ledger.depositFund(1);
+// Deposit to main account
+await broker.ledger.depositFund(10);
+// Transfer to provider sub-account (minimum 1 0G recommended)
+await broker.ledger.transferFund(providerAddress, 'inference', BigInt(1) * BigInt(10 ** 18));
 ```
+
+> **Note:** In Node.js, the SDK automatically tops up sub-accounts when balance is insufficient — but only if you call `processResponse()` after each response so the SDK can track usage. In browser environments, you must transfer funds manually.
 </details>
 
 <details>
 <summary><b>Error: Provider not acknowledged</b></summary>
 
-You need to acknowledge the provider before using their service:
+You need to acknowledge the provider before using their service. The easiest way is to transfer funds, which auto-acknowledges:
 
 CLI:
 ```bash
-0g-compute-cli inference acknowledge-provider --provider <PROVIDER_ADDRESS>
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 1
 ```
 
 SDK:
 ```typescript
-await broker.inference.acknowledgeProviderSigner(providerAddress);
+// transferFund auto-acknowledges the provider's TEE signer
+await broker.ledger.transferFund(providerAddress, 'inference', BigInt(1) * BigInt(10 ** 18));
 ```
 </details>
 
@@ -959,7 +1068,7 @@ await broker.inference.acknowledgeProviderSigner(providerAddress);
 
 Transfer funds to the specific provider sub-account:
 ```bash
-0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 5
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 1
 ```
 
 Check your account balance:
