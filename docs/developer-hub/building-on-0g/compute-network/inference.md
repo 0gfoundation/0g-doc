@@ -55,14 +55,14 @@ All testnet services feature TeeML verifiability and are ideal for development a
 <details>
 <summary><b>View Mainnet Services (6 Available)</b></summary>
 
-| # | Model | Type | Provider | Input (per 1M tokens) | Cached Input (per 1M tokens) | Output (per 1M tokens) |
-|---|-------|------|----------|----------------------|------------------------------|------------------------|
-| 1 | `GLM-5-FP8` | Chatbot | `0xd9966e...` | 0.7 0G | 0.175 0G | 3.2 0G |
-| 2 | `deepseek-chat-v3-0324` | Chatbot | `0x1B3AAe...` | 0.30 0G | - | 1.00 0G |
-| 3 | `gpt-oss-120b` | Chatbot | `0xBB3f5b...` | 0.10 0G | - | 0.49 0G |
-| 4 | `qwen3-vl-30b-a3b-instruct` | Chatbot | `0x4415ef...` | 0.49 0G | - | 0.49 0G |
-| 5 | `whisper-large-v3` | Speech-to-Text | `0x36aCff...` | 0.05 0G | - | 0.11 0G |
-| 6 | `z-image` | Text-to-Image | `0xE29a72...` | - | - | 0.003 0G/image |
+| # | Model | Type | Provider | Input (per 1M tokens) | Output (per 1M tokens) |
+|---|-------|------|----------|----------------------|------------------------|
+| 1 | `GLM-5-FP8` | Chatbot | `0xd9966e...` | 1 0G | 3.2 0G |
+| 2 | `deepseek-chat-v3-0324` | Chatbot | `0x1B3AAe...` | 0.30 0G | 1.00 0G |
+| 3 | `gpt-oss-120b` | Chatbot | `0xBB3f5b...` | 0.10 0G | 0.49 0G |
+| 4 | `qwen3-vl-30b-a3b-instruct` | Chatbot | `0x4415ef...` | 0.49 0G | 0.49 0G |
+| 5 | `whisper-large-v3` | Speech-to-Text | `0x36aCff...` | 0.05 0G | 0.11 0G |
+| 6 | `z-image` | Text-to-Image | `0xE29a72...` | - | 0.003 0G/image |
 
 **Available Models by Type:**
 
@@ -514,14 +514,14 @@ export default {
 ```
 :::
 
-:::warning Browser Auto-Funding Disabled
-In browser environments, the SDK's automatic balance top-up (`topUpAccountIfNeeded`) is **disabled by design**. Auto-funding requires a wallet signature for each transfer, which would trigger unexpected wallet popups (e.g. MetaMask) during active chat sessions — a poor user experience.
+:::warning Manual Fund Management Required in Browser
+In browser environments, the SDK does **not** auto-fund provider sub-accounts. Auto-funding requires a wallet signature for each transfer, which would trigger unexpected wallet popups (e.g. MetaMask) during active chat sessions — a poor user experience.
 
 **For browser dApps, you must manage funds manually:**
 1. Deposit to your main account: `await broker.ledger.depositFund(10)`
 2. Transfer to the provider sub-account: `await broker.ledger.transferFund(providerAddress, 'inference', amount)`
 
-In Node.js environments (server-side), auto-funding works automatically — the SDK will transfer funds from your main account to the provider sub-account as needed.
+In Node.js environments (server-side), the SDK provides background auto-funding that periodically checks provider sub-account balances and tops up from the ledger as needed.
 :::
 
 </TabItem>
@@ -587,7 +587,7 @@ For detailed account operations, see [Account Management](./account-management).
 - **Ledger creation** (`depositFund`): Requires a minimum of **3 0G** for initial deposit
 - **Provider sub-account**: Each provider requires a minimum locked balance of **1 0G** to serve requests. Transfers below this amount may result in rejected requests.
 
-In Node.js environments, the SDK automatically manages sub-account balances — it tracks accumulated usage fees (via `processResponse`) and tops up the sub-account when balance is insufficient. **You must call `processResponse` after each response for auto-funding to work.** In browser environments, you must transfer funds manually.
+In Node.js environments, the SDK provides background auto-funding that periodically checks provider sub-account balances and tops up from the ledger when insufficient. In browser environments, you must transfer funds manually.
 :::
 
 <Tabs>
@@ -597,9 +597,8 @@ In Node.js environments, the SDK automatically manages sub-account balances — 
 // Deposit to main account
 await broker.ledger.depositFund(10);
 
-// Node.js: SDK auto-manages provider sub-accounts.
-// Call processResponse() after each response so the SDK can track usage fees
-// and automatically top up the sub-account when balance is insufficient.
+// Node.js: SDK provides background auto-funding that periodically checks
+// provider sub-account balances and tops up from the ledger when needed.
 ```
 
 </TabItem>
@@ -628,7 +627,7 @@ const messages = [{ role: "user", content: "Hello!" }];
 // Get service metadata
 const { endpoint, model } = await broker.inference.getServiceMetadata(providerAddress);
 
-// Generate auth headers (also triggers auto-funding on first request)
+// Generate auth headers
 const headers = await broker.inference.getRequestHeaders(
   providerAddress
 );
@@ -643,13 +642,12 @@ const response = await fetch(`${endpoint}/chat/completions`, {
 const data = await response.json();
 const answer = data.choices[0].message.content;
 
-// IMPORTANT: Report usage so the SDK can track fees and auto-fund your sub-account.
-// Without this call, automatic balance top-ups will stop working after the first request.
-if (data.usage) {
-  await broker.inference.processResponse(
+// Optional: verify response integrity via TEE signature (see Response Processing below)
+const chatID = response.headers.get("ZG-Res-Key") || data.id;
+if (chatID) {
+  const isValid = await broker.inference.processResponse(
     providerAddress,
-    undefined,                    // chatID — pass for TEE verification (see below)
-    JSON.stringify(data.usage)    // usage data for fee tracking
+    chatID
   );
 }
 ```
@@ -660,20 +658,12 @@ if (data.usage) {
 ```typescript
 const prompt = "A cute baby sea otter";
 
-const body = JSON.stringify({
-    model,
-    prompt,
-    n: 1,
-    size: "1024x1024"
-  });
-
 // Get service metadata
 const { endpoint, model } = await broker.inference.getServiceMetadata(providerAddress);
 
 // Generate auth headers
 const headers = await broker.inference.getRequestHeaders(
-  providerAddress,
-  body
+  providerAddress
 );
 
 // Make request
@@ -691,8 +681,11 @@ const response = await fetch(`${endpoint}/images/generations`, {
 const data = await response.json();
 const imageUrl = data.data[0].url;
 
-// Report usage for auto-funding
-await broker.inference.processResponse(providerAddress);
+// Optional: verify response integrity via TEE signature
+const chatID = response.headers.get("ZG-Res-Key");
+if (chatID) {
+  const isValid = await broker.inference.processResponse(providerAddress, chatID);
+}
 ```
 
 </TabItem>
@@ -722,12 +715,12 @@ const response = await fetch(`${endpoint}/audio/transcriptions`, {
 const data = await response.json();
 const transcription = data.text;
 
-// Report usage for auto-funding
-if (data.usage) {
-  await broker.inference.processResponse(
+// Optional: verify response integrity via TEE signature
+const chatID = response.headers.get("ZG-Res-Key");
+if (chatID) {
+  const isValid = await broker.inference.processResponse(
     providerAddress,
-    undefined,
-    JSON.stringify(data.usage)
+    chatID
   );
 }
 ```
@@ -737,26 +730,22 @@ if (data.usage) {
 
 ### Response Processing & Verification
 
-:::warning processResponse is required for auto-funding
-You **must** call `processResponse` after each inference response. The SDK uses it to track accumulated usage fees — without it, automatic balance top-ups stop working after the first request, and subsequent requests may fail with "insufficient balance" errors.
+:::tip processResponse is optional
+Use `processResponse` when you want to **verify response integrity** via the provider's TEE signature. Pass the `chatID` from the response header (`ZG-Res-Key`) to enable verification.
 :::
 
-The `processResponse` method has two roles:
-
-1. **Fee tracking (required)**: Caches accumulated usage so the SDK knows when to top up your sub-account balance. Pass the response's `usage` data in the `content` parameter.
-2. **TEE verification (optional)**: Verifies response integrity via the provider's TEE signature. Pass the `chatID` from the response header (`ZG-Res-Key`) to enable this.
+The `processResponse` method verifies that an inference response came from a genuine TEE environment by checking the provider's signature for the given `chatID`.
 
 **Parameters:**
-- **`content`**: Usage data from the response (JSON string). Required for fee tracking. For chatbot/speech-to-text: `JSON.stringify(data.usage)`. For text-to-image: can be omitted (fee is calculated from the request).
-- **`chatID`**: Response identifier for TEE verification. Get from `ZG-Res-Key` response header, or fall back to `data.id` for chatbot responses.
+- **`providerAddress`**: The address of the provider.
+- **`chatID`**: Response identifier for TEE verification. Get from `ZG-Res-Key` response header, or fall back to `data.id` for chatbot responses. Returns `null` if omitted (verification skipped).
 
 <Tabs>
 <TabItem value="chatbot-verify" label="Chatbot" default>
 
-For chatbot services, pass the usage data from the response to enable automatic fee management:
+For chatbot services, verify the response using the `chatID` from headers or response body:
 
 ```typescript
-// Standard chat completion
 const response = await fetch(`${endpoint}/chat/completions`, {
   method: "POST",
   headers: { "Content-Type": "application/json", ...headers },
@@ -765,37 +754,26 @@ const response = await fetch(`${endpoint}/chat/completions`, {
 
 const data = await response.json();
 
-// Process response for automatic fee management
-if (data.usage) {
-  await broker.inference.processResponse(
-    providerAddress,
-    undefined,              // chatID is undefined for non-verifiable responses
-    JSON.stringify(data.usage)  // Pass usage data for fee calculation
-  );
-}
-
-// For verifiable TEE services with chatID
-// Check response headers first
+// Get chatID: prioritize ZG-Res-Key header, fall back to response body
 let chatID = response.headers.get("ZG-Res-Key") || response.headers.get("zg-res-key");
-
-// If not found in response headers, check response body
 if (!chatID) {
   chatID = data.id || data.chatID;
 }
 
+// Verify response integrity via TEE signature
 if (chatID) {
   const isValid = await broker.inference.processResponse(
     providerAddress,
-    chatID,           // Verify the response integrity
-    JSON.stringify(data.usage)  // Also manage fees
+    chatID
   );
+  console.log("Response valid:", isValid);
 }
 ```
 
 </TabItem>
 <TabItem value="text-to-image-verify" label="Text-to-Image">
 
-For text-to-image services, pass the original request data for input-based fee calculation:
+For text-to-image services, verify using the `chatID` from response headers:
 
 ```typescript
 const requestBody = {
@@ -817,25 +795,18 @@ const data = await response.json();
 const chatID = response.headers.get("ZG-Res-Key") || response.headers.get("zg-res-key");
 
 if (chatID) {
-  // Process response with chatID for verification and fee calculation
   const isValid = await broker.inference.processResponse(
     providerAddress,
-    chatID                        // Verify the response integrity
+    chatID
   );
   console.log("Response valid:", isValid);
-} else {
-  // Fallback: process without verification if no chatID
-  await broker.inference.processResponse(
-    providerAddress,
-    undefined                     // No chatID available
-  );
 }
 ```
 
 </TabItem>
 <TabItem value="speech-to-text-verify" label="Speech-to-Text">
 
-For speech-to-text services, pass the usage data if available:
+For speech-to-text services, verify using the `chatID` from response headers:
 
 ```typescript
 const formData = new FormData();
@@ -854,20 +825,11 @@ const data = await response.json();
 const chatID = response.headers.get("ZG-Res-Key") || response.headers.get("zg-res-key");
 
 if (chatID) {
-  // Process response with chatID for verification and fee calculation
   const isValid = await broker.inference.processResponse(
     providerAddress,
-    chatID,                      // Verify the response integrity
-    JSON.stringify(data.usage || {}) // Pass usage for fee calculation
+    chatID
   );
   console.log("Response valid:", isValid);
-} else if (data.usage) {
-  // Fallback: process without verification if no chatID but usage available
-  await broker.inference.processResponse(
-    providerAddress,
-    undefined,                   // No chatID available
-    JSON.stringify(data.usage)   // Pass usage for fee calculation
-  );
 }
 ```
 
@@ -883,8 +845,7 @@ For streaming responses, handle chatID differently based on service type:
 // For chatbot streaming, first check headers then try to get ID from stream
 let chatID = response.headers.get("ZG-Res-Key") || response.headers.get("zg-res-key");
 
-let usage = null;
-let streamChatID = null; // Will try to get from stream data
+let streamChatID = null;
 const decoder = new TextDecoder();
 const reader = response.body.getReader();
 
@@ -897,7 +858,7 @@ while (true) {
   rawBody += decoder.decode(value, { stream: true });
 }
 
-// Parse usage and chatID from stream data
+// Parse chatID from stream data as fallback
 for (const line of rawBody.split('\n')) {
   const trimmed = line.trim();
   if (!trimmed || trimmed === 'data: [DONE]') continue;
@@ -908,35 +869,21 @@ for (const line of rawBody.split('\n')) {
       : trimmed;
     const message = JSON.parse(jsonStr);
 
-    // For chatbot, try to get ID from stream data
     if (!streamChatID && (message.id || message.chatID)) {
       streamChatID = message.id || message.chatID;
-    }
-
-    if (message.usage) {
-      usage = message.usage;
     }
   } catch {}
 }
 
-// Use chatID from header if available, otherwise use chatID from stream data
+// Use chatID from header if available, otherwise from stream data
 const finalChatID = chatID || streamChatID;
 
-// Process with chatID for verification if available
 if (finalChatID) {
   const isValid = await broker.inference.processResponse(
     providerAddress,
-    finalChatID,
-    JSON.stringify(usage || {})
+    finalChatID
   );
   console.log("Chatbot streaming response valid:", isValid);
-} else if (usage) {
-  // Fallback: process without verification
-  await broker.inference.processResponse(
-    providerAddress,
-    undefined,
-    JSON.stringify(usage)
-  );
 }
 ```
 
@@ -947,50 +894,12 @@ if (finalChatID) {
 // For speech-to-text streaming, get chatID from headers
 const chatID = response.headers.get("ZG-Res-Key") || response.headers.get("zg-res-key");
 
-let usage = null;
-const decoder = new TextDecoder();
-const reader = response.body.getReader();
-
-// Process stream
-let rawBody = '';
-while (true) {
-  const { done, value } = await reader.read();
-  if (done) break;
-
-  rawBody += decoder.decode(value, { stream: true });
-}
-
-// Parse usage from stream data
-for (const line of rawBody.split('\n')) {
-  const trimmed = line.trim();
-  if (!trimmed || trimmed === 'data: [DONE]') continue;
-
-  try {
-    const jsonStr = trimmed.startsWith('data:')
-      ? trimmed.slice(5).trim()
-      : trimmed;
-    const message = JSON.parse(jsonStr);
-    if (message.usage) {
-      usage = message.usage;
-    }
-  } catch {}
-}
-
-// Process with chatID for verification if available
 if (chatID) {
   const isValid = await broker.inference.processResponse(
     providerAddress,
-    chatID,
-    JSON.stringify(usage || {})
+    chatID
   );
   console.log("Audio streaming response valid:", isValid);
-} else if (usage) {
-  // Fallback: process without verification
-  await broker.inference.processResponse(
-    providerAddress,
-    undefined,
-    JSON.stringify(usage)
-  );
 }
 ```
 
@@ -1001,9 +910,8 @@ if (chatID) {
 </Tabs>
 
 **Key Points:**
-- **Always call `processResponse`** after each response — this is required for the SDK to track fees and trigger automatic balance top-ups. Without it, auto-funding stops working after the first request.
-- Pass `usage` data in the `content` parameter for accurate fee tracking (chatbot/speech-to-text). For text-to-image, fee is calculated from the request so `content` can be omitted.
-- For TEE verification, pass the `chatID` parameter (optional but recommended for verifiable services).
+- **`processResponse` is optional.** Use it when you want to verify response integrity via TEE signature.
+- Pass the `chatID` parameter to enable verification. Without `chatID`, the method returns `null` (verification skipped).
 - **chatID retrieval**: Always prioritize `ZG-Res-Key` from response headers. Only use fallback methods when header is not present.
   - **Chatbot**: First try `ZG-Res-Key` header, then check `data.id` as fallback
   - **Text-to-Image & Speech-to-Text**: Get chatID from `ZG-Res-Key` response header
@@ -1043,7 +951,7 @@ await broker.ledger.depositFund(10);
 await broker.ledger.transferFund(providerAddress, 'inference', BigInt(1) * BigInt(10 ** 18));
 ```
 
-> **Note:** In Node.js, the SDK automatically tops up sub-accounts when balance is insufficient — but only if you call `processResponse()` after each response so the SDK can track usage. In browser environments, you must transfer funds manually.
+> **Note:** In Node.js, the SDK provides background auto-funding that periodically checks sub-account balances and tops up when insufficient. In browser environments, you must transfer funds manually.
 </details>
 
 <details>
