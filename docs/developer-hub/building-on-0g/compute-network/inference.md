@@ -69,7 +69,7 @@ All testnet services feature TeeML verifiability and are ideal for development a
 **Chatbots (4 models):**
 - **GLM-5-FP8**: High-performance reasoning model (FP8 quantized)
 - **GPT-OSS-120B**: Large-scale open-source GPT model
-- **Qwen3 VL 30B A3B Instruct**: Vision-language multimodal model
+- **Qwen3 VL 30B A3B Instruct**: Efficient conversational model (text-only; image input is not yet supported)
 - **DeepSeek Chat V3**: Optimized conversational model
 
 **Speech-to-Text (1 model):**
@@ -922,9 +922,51 @@ if (chatID) {
 
 ---
 
+## Understanding Delayed Fee Settlement
+
+:::info How Fee Settlement Works
+
+0G Compute Network uses **delayed (batch) settlement** for provider fees. This means:
+
+- **Fees are not deducted immediately** after each inference request. Instead, the provider accumulates usage fees and settles them on-chain in batches.
+- **Your sub-account balance may appear to drop suddenly** when a batch settlement occurs. For example, if you make 10 requests and the provider settles all at once, you'll see a single larger deduction rather than 10 small ones.
+- **You are only charged for actual usage** — no extra fees are deducted. The total amount settled always matches the sum of your individual request costs.
+- **This is by design** to reduce on-chain transaction costs and improve efficiency for both users and providers.
+
+**What this means in practice:**
+- After making requests, your provider sub-account balance may temporarily appear higher than your "true" available balance
+- When settlement occurs, the balance updates to reflect all accumulated fees at once
+- If you see a sudden balance decrease, check your usage history — the total will match your actual usage
+
+This behavior is visible in the Web UI (provider sub-account balances), CLI (`get-account`), and SDK (`getAccount()`).
+:::
+
+## Rate Limits
+
+:::info Per-User Rate Limits
+Each provider enforces per-user rate limits to ensure fair resource sharing across all users. The default limits are:
+
+- **30 requests per minute** per user (sustained)
+- **Burst allowance of 5** requests (short spikes allowed)
+- **5 concurrent requests** per user
+
+If you exceed these limits, the provider will return HTTP `429 Too Many Requests`. Wait briefly and retry. These limits are set by individual providers and may vary.
+:::
+
 ## Troubleshooting
 
 ### Common Issues
+
+<details>
+<summary><b>Error: Too many requests (429)</b></summary>
+
+You are sending requests too quickly. Each provider enforces per-user rate limits (default: 30 requests/min, 5 concurrent).
+
+- **Wait a few seconds** and retry
+- **Reduce request frequency** — for batch workloads, add a delay between requests
+- **Check concurrent requests** — ensure you are not sending more than 5 simultaneous requests
+
+</details>
 
 <details>
 <summary><b>Error: Insufficient balance</b></summary>
