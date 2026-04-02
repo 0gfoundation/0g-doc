@@ -88,6 +88,7 @@ const sidebars: SidebarsConfig = {
                   label: 'Indexing',
                   items: [
                     'developer-hub/building-on-0g/indexing/goldsky',
+                    'developer-hub/building-on-0g/indexing/zerion-api',
                   ],
                 },
               ],

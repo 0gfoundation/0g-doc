@@ -517,6 +517,17 @@ enum OracleType { TEE, ZKP }
 
 **Documentation**: [https://docs.0g.ai/developer-hub/building-on-0g/indexing/goldsky](https://docs.0g.ai/developer-hub/building-on-0g/indexing/goldsky)
 
+### Wallet Data with Zerion API
+
+**Website**: https://developers.zerion.io
+
+**Products**:
+- **Wallet Portfolios**: Token balances and portfolio values with real-time prices
+- **DeFi Positions**: Decoded LP, staking, and lending positions across protocols
+- **Transaction History**: Human-readable, enriched transaction data
+
+**Documentation**: [https://docs.0g.ai/developer-hub/building-on-0g/indexing/zerion-api](https://docs.0g.ai/developer-hub/building-on-0g/indexing/zerion-api)
+
 ### Rollup-as-a-Service
 
 **Caldera on 0G DA**: [https://docs.0g.ai/developer-hub/building-on-0g/rollup-as-a-service/caldera-on-0g-da](https://docs.0g.ai/developer-hub/building-on-0g/rollup-as-a-service/caldera-on-0g-da)
