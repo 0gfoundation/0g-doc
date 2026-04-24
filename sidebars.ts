@@ -101,9 +101,52 @@ const sidebars: SidebarsConfig = {
                   type: 'category',
                   label: 'For Developers',
                   items: [
-                    'developer-hub/building-on-0g/compute-network/account-management',
-                    'developer-hub/building-on-0g/compute-network/inference',
-                    'developer-hub/building-on-0g/compute-network/fine-tuning',
+                    {
+                      type: 'category',
+                      label: 'Router',
+                      link: {
+                        type: 'doc',
+                        id: 'developer-hub/building-on-0g/compute-network/router/overview',
+                      },
+                      items: [
+                        'developer-hub/building-on-0g/compute-network/router/quickstart',
+                        'developer-hub/building-on-0g/compute-network/router/principles',
+                        'developer-hub/building-on-0g/compute-network/router/models',
+                        {
+                          type: 'category',
+                          label: 'Features',
+                          items: [
+                            'developer-hub/building-on-0g/compute-network/router/features/chat-completions',
+                            'developer-hub/building-on-0g/compute-network/router/features/image-generation',
+                            'developer-hub/building-on-0g/compute-network/router/features/audio',
+                            'developer-hub/building-on-0g/compute-network/router/features/verifiable-execution',
+                          ],
+                        },
+                        'developer-hub/building-on-0g/compute-network/router/routing',
+                        'developer-hub/building-on-0g/compute-network/router/authentication',
+                        'developer-hub/building-on-0g/compute-network/router/account/deposits',
+                        'developer-hub/building-on-0g/compute-network/router/rate-limits',
+                        'developer-hub/building-on-0g/compute-network/router/errors',
+                        'developer-hub/building-on-0g/compute-network/router/comparison',
+                        'developer-hub/building-on-0g/compute-network/router/faq',
+                      ],
+                    },
+                    {
+                      type: 'category',
+                      label: 'Direct',
+                      link: {
+                        type: 'generated-index',
+                        title: 'Direct Integration',
+                        description:
+                          'Integrate with 0G Compute directly via the @0glabs/0g-serving-broker SDK: inference and fine-tuning, backed by the shared per-provider account system.',
+                        slug: '/developer-hub/building-on-0g/compute-network/direct',
+                      },
+                      items: [
+                        'developer-hub/building-on-0g/compute-network/inference',
+                        'developer-hub/building-on-0g/compute-network/fine-tuning',
+                        'developer-hub/building-on-0g/compute-network/account-management',
+                      ],
+                    },
                   ],
                 },
                 {

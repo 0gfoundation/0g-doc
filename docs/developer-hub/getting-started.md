@@ -35,7 +35,8 @@ EVM-compatible blockchain optimized for AI
 Decentralized GPU marketplace for AI workloads
 
 - [Overview & Architecture](/developer-hub/building-on-0g/compute-network/overview)
-- [SDK Reference](/developer-hub/building-on-0g/compute-network/inference)
+- [Router API (recommended)](/developer-hub/building-on-0g/compute-network/router/overview)
+- [Direct (SDK + per-provider accounts)](/developer-hub/building-on-0g/compute-network/direct)
 - [Become a Provider](/developer-hub/building-on-0g/compute-network/inference-provider)
 
 ### 💾 0G Storage

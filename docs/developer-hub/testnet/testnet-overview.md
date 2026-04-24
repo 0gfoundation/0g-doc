@@ -96,7 +96,7 @@ Visit the [0G Faucet](https://faucet.0g.ai) or the [Google Cloud Faucet](https:/
 Choose your integration:
 - [Deploy Smart Contracts](/developer-hub/building-on-0g/contracts-on-0g/deploy-contracts)
 - [Use Storage SDK](/developer-hub/building-on-0g/storage/sdk)
-- [Access Compute Network](/developer-hub/building-on-0g/compute-network/inference)
+- [Access Compute Network](/developer-hub/building-on-0g/compute-network/router/overview)
 - [Integrate DA Layer](/developer-hub/building-on-0g/da-integration)
 
 

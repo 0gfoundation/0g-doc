@@ -318,86 +318,77 @@ Decentralized GPU marketplace offering 90% cheaper AI workloads with OpenAI SDK 
 - **io.net**: 300,000+ GPUs across 139 countries
 - **Aethir**: 43,000+ enterprise-grade GPUs, 3,000+ H100s/H200s
 
-**Quick Start (5 minutes)**:
+**Two Integration Paths**:
+1. **Router (recommended)** — a single OpenAI-compatible API endpoint (`https://router-api.0g.ai/v1`) with one unified balance, automatic provider failover, and an API key. Best for server-side apps, agents, prototypes. Web UI: [pc.0g.ai](https://pc.0g.ai).
+2. **Direct** — connect to individual providers via the `@0glabs/0g-serving-broker` SDK, manage per-provider sub-accounts, sign each request with your wallet. Best for browser dApps with wallet signing or direct on-chain control. Web UI: [compute-marketplace.0g.ai](https://compute-marketplace.0g.ai) (or **Advanced** mode on pc.0g.ai).
 
-Install CLI:
+The two balance pools are independent — a Router deposit does not fund Direct sub-accounts and vice versa.
+
+**Quick Start — Router (Recommended)**:
+
 ```bash
-pnpm add @0glabs/0g-serving-broker -g
-```
+# 1. Visit https://pc.0g.ai, connect wallet, deposit 0G tokens
+# 2. Dashboard → API Keys → create a key with 'inference' permission (starts with sk-)
+# 3. Send a request — any OpenAI-compatible client works:
 
-Option 1 - Web UI (Easiest):
-```bash
-# Launch Web UI
-0g-compute-cli ui start-web
-
-# Open http://localhost:3090
-# Connect wallet, deposit tokens, start using AI services
-```
-
-Option 2 - CLI:
-```bash
-# Setup network
-0g-compute-cli setup-network
-
-# Login with wallet
-0g-compute-cli login
-
-# Fund account
-0g-compute-cli deposit --amount 10
-
-# List available providers
-0g-compute-cli inference list-providers
-
-# Transfer funds to provider
-0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 5
-
-# Acknowledge provider
-0g-compute-cli inference acknowledge-provider --provider <PROVIDER_ADDRESS>
-
-# Get API key for direct access
-0g-compute-cli inference get-secret --provider <PROVIDER_ADDRESS>
-```
-
-Option 3 - Direct API (OpenAI Compatible):
-```bash
-curl <service_url>/v1/proxy/chat/completions \
+curl https://router-api.0g.ai/v1/chat/completions \
+  -H "Authorization: Bearer sk-YOUR_API_KEY" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer app-sk-<YOUR_SECRET>" \
   -d '{
-    "model": "<model_name>",
-    "messages": [
-      {"role": "system", "content": "You are a helpful assistant."},
-      {"role": "user", "content": "Hello!"}
-    ]
+    "model": "zai-org/GLM-5-FP8",
+    "messages": [{"role": "user", "content": "Hello!"}]
   }'
 ```
 
-**OpenAI SDK Integration**:
+**OpenAI SDK Integration (Router)**:
 ```python
 from openai import OpenAI
 
 client = OpenAI(
-    api_key="app-sk-<YOUR_SECRET>",
-    base_url="<service_url>/v1/proxy"
+    base_url="https://router-api.0g.ai/v1",
+    api_key="sk-YOUR_API_KEY"
 )
 
 response = client.chat.completions.create(
-    model="<model_name>",
-    messages=[
-        {"role": "user", "content": "Hello!"}
-    ]
+    model="zai-org/GLM-5-FP8",
+    messages=[{"role": "user", "content": "Hello!"}]
 )
 ```
 
-**Fine-tuning Models**:
-```bash
-# Prepare dataset (JSONL format)
-# Each line: {"prompt": "...", "completion": "..."}
+**Router also supports**: image generation via `POST /v1/images/generations` (OpenAI-compatible, sync) or `POST /v1/async/images/generations` + `GET /v1/async/jobs/{jobId}?provider_address=...` (recommended for production) — both paths must pass `"response_format": "b64_json"` today; URL responses will be added later. Also `/v1/audio/transcriptions`, provider routing (`provider.sort`: `latency` / `price`, or `provider.address` to pin), `GET /v1/models` (no auth), `GET /v1/account/balance`, `GET /v1/account/usage/{stats,history}`.
 
-# Upload dataset
+**Quick Start — Direct (SDK)**:
+
+```bash
+# Install CLI
+pnpm add @0glabs/0g-serving-broker -g
+
+# Setup + fund
+0g-compute-cli setup-network
+0g-compute-cli login                                    # prompts for wallet private key
+0g-compute-cli deposit --amount 10
+0g-compute-cli inference list-providers
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 5  # auto-acknowledges
+
+# Get a per-provider secret key
+0g-compute-cli inference get-secret --provider <PROVIDER_ADDRESS>
+```
+
+With the per-provider secret, you call the provider's proxy directly:
+```python
+from openai import OpenAI
+client = OpenAI(
+    base_url="<service_url>/v1/proxy",
+    api_key="app-sk-<YOUR_SECRET>",
+)
+```
+
+**Fine-tuning Models** (uses the Direct account system; not available via Router):
+```bash
+# Prepare dataset (JSONL format, one {"prompt": "...", "completion": "..."} per line)
 0g-compute-cli fine-tuning upload-data --file dataset.jsonl
 
-# Create fine-tuning task
+# Create fine-tuning task (fund the fine-tuning sub-account first: transfer-fund --service fine-tuning)
 0g-compute-cli fine-tuning create-task \
   --model Qwen2.5-0.5B-Instruct \
   --dataset <DATASET_ID> \
@@ -409,9 +400,18 @@ response = client.chat.completions.create(
 
 **Documentation Links**:
 - Overview: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/overview](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/overview)
-- Inference: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/inference](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/inference)
+- Router (recommended):
+  - Overview: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/overview](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/overview)
+  - Quickstart: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/quickstart](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/quickstart)
+  - Models: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/models](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/models)
+  - Chat Completions: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/features/chat-completions](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/features/chat-completions)
+  - Provider Routing: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/routing](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/routing)
+  - Deposits & Billing: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/account/deposits](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/account/deposits)
+  - Router vs Direct: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/comparison](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/comparison)
+- Direct (SDK):
+  - Inference: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/inference](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/inference)
+  - Account: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/account-management](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/account-management)
 - Fine-tuning: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/fine-tuning](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/fine-tuning)
-- Account Management: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/account-management](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/account-management)
 - Provider Setup: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/inference-provider](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/inference-provider)
 
 ### 0G DA (Data Availability)

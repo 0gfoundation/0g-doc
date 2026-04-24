@@ -3,7 +3,7 @@ id: account-management
 title: Account
 sidebar_position: 2
 sidebar_label: Account
-description: "Manage your 0G Compute Network account. Deposit, transfer, and withdraw funds across provider sub-accounts via Web UI, CLI, or SDK."
+description: "Main account + per-provider sub-accounts used by 0G Compute's SDK-based services (Direct Inference and Fine-tuning). Deposit, transfer, refund, and withdraw via Web UI, CLI, or SDK."
 ---
 
 import Tabs from '@theme/Tabs';
@@ -11,7 +11,11 @@ import TabItem from '@theme/TabItem';
 
 # Account
 
-The 0G Compute Network uses a unified account system for managing funds across services. This guide covers how to manage your accounts using different interfaces: Web UI, CLI, and SDK.
+Both **[Direct Inference](./inference)** and **[Fine-tuning](./fine-tuning)** use the same per-provider account system: you deposit to a main account, transfer funds to each provider's sub-account, and the provider deducts from there as you use the service. This page is the shared reference for all operations — Web UI, CLI, and SDK.
+
+:::note Using the Router instead?
+The [Router](./router/overview) has its own unified billing and does **not** use per-provider sub-accounts. Router deposits, balance, API keys, and usage live elsewhere — see [Router → Deposits & Billing](./router/account/deposits) and [Router → Authentication](./router/authentication).
+:::
 
 ## Overview
 

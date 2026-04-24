@@ -38,7 +38,7 @@ Enter your wallet private key when prompted.
 ### Create Account & Add Funds
 The Fine-tuning CLI requires an account to pay for service fees via the 0G Compute Network.
 
-**For detailed account management instructions, see [Account Management](./account-management).**
+**For detailed account management instructions, see [Account](./account-management).**
 
 ```bash
 # Deposit funds to your account
@@ -652,7 +652,7 @@ If `CUDA available: False`, you may need to reinstall PyTorch with the correct C
 
 ### Account Management
 
-For comprehensive account management, including viewing balances, managing sub-accounts, and handling refunds, see [Account Management](./account-management).
+For comprehensive account management, including viewing balances, managing sub-accounts, and handling refunds, see [Account](./account-management).
 
 Quick CLI commands:
 ```bash

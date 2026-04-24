@@ -114,7 +114,7 @@ Architecture and implementation details
 ### 🚀 For Developers
 
 Start using AI compute in 5 minutes  
-→ [Quick Start Guide](/developer-hub/building-on-0g/compute-network/inference)
+→ [Quick Start Guide](/developer-hub/building-on-0g/compute-network/router/quickstart)
 
 ### 💎 For GPU Owners
 

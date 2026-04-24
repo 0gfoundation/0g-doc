@@ -1,6 +1,6 @@
 ---
 id: overview
-title: Compute Network Overview
+title: Overview
 sidebar_position: 1
 description: "Overview of the 0G Compute Network — a decentralized GPU marketplace for affordable AI inference, fine-tuning, and verifiable computation."
 ---
@@ -66,10 +66,20 @@ The network consists of:
 ## Quick Start Paths
 
 ### 👨‍💻 "I want to use AI services"
-Build AI-powered applications without infrastructure:
-1. [Install SDK](./inference#sdk) - 5 minute setup
-2. [Fund your account](./account-management) - Pre-pay for usage
-3. [Send requests](./inference#direct-api-access) - **OpenAI SDK compatible**
+
+Two integration paths — pick one:
+
+**[Compute Router](./router/overview)** *(recommended for most apps)* — a single OpenAI-compatible endpoint with one unified balance, automatic provider failover, and an API key. Ideal for server-side apps, agents, and prototypes.
+1. Get an API key at [pc.0g.ai](https://pc.0g.ai)
+2. Deposit 0G tokens
+3. Point your OpenAI SDK at `https://router-api.0g.ai/v1`
+
+**[Direct](./direct)** — connect to individual providers via the `@0glabs/0g-serving-broker` SDK, manage per-provider sub-accounts, sign requests with your wallet. Use this for browser dApps with wallet signing, on-chain control, or when you need **fine-tuning** (Router is inference-only).
+1. [Install SDK](./inference) and pick a provider
+2. [Fund your account](./account-management) — shared across inference and fine-tuning
+3. Run [Inference](./inference) or [Fine-tuning](./fine-tuning)
+
+Deeper comparison: [Router vs Direct](./router/comparison).
 
 ### 🖥️ "I have GPUs to monetize"
 Turn idle hardware into revenue:
@@ -98,17 +108,15 @@ Typically 90%+ savings:
 <details>
 <summary><b>Is my data secure?</b></summary>
 
-Yes, through multiple layers:
-- TEE (Trusted Execution Environment) processing
-- No data retention by providers
-- Verifiable computation proofs
+- Every provider runs inside a TEE (Trusted Execution Environment) that isolates the serving process from external access to your inference traffic.
+- Provider responses are cryptographically signed by the TEE's private key, so you can verify the exact model that ran.
+- The Router stores only billing metadata (token counts, model, provider, timestamp) — not request or response bodies.
 </details>
 
 <details>
 <summary><b>How fast is it compared to centralized services?</b></summary>
 
-- Inference: 50-100ms latency (comparable to centralized)
-- Geographic distribution reduces latency
+Observed latency varies by model, provider load, and your distance to the provider. For chatbot workloads it is typically in the same range as centralized API services; check the provider list at [pc.0g.ai](https://pc.0g.ai) for live health and latency data per provider.
 </details>
 
 ---
