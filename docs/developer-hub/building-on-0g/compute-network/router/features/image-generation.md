@@ -105,7 +105,7 @@ The Router responds immediately with a job handle:
 
 ```json
 {
-  "job_id": "job_abc123",
+  "jobId": "5b595c31955d4be2923f5070705cced4",
   "status": "pending",
   "provider_address": "0xE29a72..."
 }
@@ -118,30 +118,31 @@ The Router responds immediately with a job handle:
 **`GET /v1/async/jobs/{jobId}?provider_address={addr}`**
 
 ```bash
-curl "https://router-api.0g.ai/v1/async/jobs/job_abc123?provider_address=0xE29a72..." \
+curl "https://router-api.0g.ai/v1/async/jobs/5b595c31955d4be2923f5070705cced4?provider_address=0xE29a72..." \
   -H "Authorization: Bearer sk-YOUR_API_KEY"
 ```
 
-While running:
-
-```json
-{ "job_id": "job_abc123", "status": "running", "provider_address": "0xE29a72..." }
-```
-
-When complete, the response adds the standard OpenAI `data` array:
+While the job is running, `status` is `"pending"` (or `"running"`). When finished, `status: "completed"` appears with the result payload and an injected `x_0g_trace`:
 
 ```json
 {
-  "job_id": "job_abc123",
   "status": "completed",
-  "provider_address": "0xE29a72...",
-  "data": [
-    { "b64_json": "iVBORw0KGgoAAAANSUhEUg..." }
-  ]
+  "createdAt": "2026-04-24T09:44:57.804Z",
+  "data": {
+    "created": 1777023898,
+    "data": [
+      { "b64_json": "iVBORw0KGgoAAAANSUhEUg..." }
+    ]
+  },
+  "x_0g_trace": { "request_id": "...", "provider": "0x...", "billing": { "input_cost": "...", "output_cost": "...", "total_cost": "..." } }
 }
 ```
 
-Polling every 2–3 seconds is typical.
+The image array lives at `data.data[]` — the outer `data` is a wrapper object the provider returns around the OpenAI-style result, not the OpenAI array itself.
+
+:::tip Use the `Retry-After` header for polling cadence
+Both submit and poll responses forward a `Retry-After` header (in seconds) when the provider sends one — use that value to decide when to poll again, since it reflects the provider's current queue. Fall back to a fixed 2–3 second interval only if the header is missing.
+:::
 
 ## 0G Router Extensions
 
@@ -154,7 +155,11 @@ The same optional top-level fields as chat completions, stripped before forwardi
 
 ## Billing
 
-Image generation is charged per image at rates declared by the model (see `pricing.image` in the [catalog](../models)). You're only charged when the job completes successfully — failed or cancelled jobs are not billed.
+Image generation is charged per image at rates declared by the model (see `pricing.image` in the [catalog](../models)). Billing is tied to the provider's execution, not to your client holding the connection:
+
+- **Submission starts the clock.** Once the provider accepts the job, generation begins and tokens start to be consumed.
+- **Abandoning a poll does not cancel the job.** If you close the HTTP connection, stop polling, or kill your process after submitting, the provider still runs the job to completion and you are still billed.
+- **Failed jobs** (provider-side error) are not billed.
 
 ## Related
 
