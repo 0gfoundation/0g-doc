@@ -70,16 +70,15 @@ print(result.text)
 
 ## 0G Router Extensions
 
-The Router supports the same routing and verification extensions as other endpoints. Because this endpoint uses `multipart/form-data`, pass these as **query parameters** rather than form fields:
+Because this endpoint uses `multipart/form-data` instead of a JSON body, the only Router extension that can be passed today is `verify_tee`, as a **query parameter**:
 
-| Query param         | Description                                                                          |
-| ------------------- | ------------------------------------------------------------------------------------ |
-| `verify_tee=true`   | Ask the Router to synchronously verify the provider's TEE signature — see [Verifiable Execution](./verifiable-execution) |
-| `provider.address`  | Pin to a specific provider — see [Routing](../routing)                               |
-| `provider.sort`     | `latency` or `price` — see [Routing](../routing)                                     |
+```
+?verify_tee=true
+```
+
+See [Verifiable Execution](./verifiable-execution) for what `tee_verified` means in the response. Provider routing fields (`provider.address`, `provider.sort`) are not currently parsed on multipart endpoints — use the default round-robin or pin via [Provider Routing](../routing) on the JSON-body endpoints.
 
 ## Related
 
 - [**Models**](../models) — list available audio models
-- [**Routing**](../routing)
 - [**Verifiable Execution**](./verifiable-execution)

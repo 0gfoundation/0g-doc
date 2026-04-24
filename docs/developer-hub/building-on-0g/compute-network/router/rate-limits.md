@@ -2,27 +2,33 @@
 id: rate-limits
 title: Rate Limits
 sidebar_position: 9
-description: "How the Router throttles requests under load, what you see on the wire, and how to handle 429 responses."
+description: "How the Router throttles requests, what headers you'll see, and how to handle 429 responses."
 ---
 
 # Rate Limits
 
-The Router dynamically throttles requests based on current network load. When demand spikes or a particular model's providers are saturated, you may be rate limited for a short period.
+The Router applies per-account request limits to keep the network responsive. The exact thresholds depend on your account state and may evolve as we tune them — this page documents how to **observe and react to** the limit, not the specific numbers.
 
-## What you'll see
+## Response headers
 
-When the Router accepts your request but cannot yet dispatch it to a provider, the HTTP connection stays open and you'll keep receiving keep-alive traffic until the request goes through or times out:
+Every inference response includes rate-limit headers (OpenAI-compatible) so you can back off proactively without waiting for a `429`:
 
-- **Non-streaming requests** — the server periodically sends empty lines while waiting
-- **Streaming (SSE) requests** — the server sends SSE keep-alive comments (`: keep-alive`) every few seconds
+```
+X-RateLimit-Limit-Requests: <your current per-minute limit>
+X-RateLimit-Remaining-Requests: <how many you have left in this window>
+X-RateLimit-Reset-Requests: <ISO-8601 timestamp when the window resets>
+```
 
-Neither affects JSON body parsing. Standard OpenAI client libraries and `curl` handle both correctly out of the box. If you're parsing the HTTP response yourself, skip empty lines / comment frames that arrive before the real payload.
+Some accounts also receive daily-window headers:
 
-If the Router cannot serve your request within **10 minutes**, it closes the connection.
+```
+X-RateLimit-Limit-Day: <daily quota>
+X-RateLimit-Remaining-Day: <left today>
+```
 
 ## 429 Too Many Requests
 
-When the Router decides to reject rather than wait, it returns `429 Too Many Requests` with a `Retry-After` header (seconds):
+When you exceed the limit, the Router returns `429` immediately with a `Retry-After` header (seconds):
 
 ```
 HTTP/1.1 429 Too Many Requests
@@ -33,7 +39,7 @@ Content-Type: application/json
 ```json
 {
   "error": {
-    "message": "Rate limit exceeded",
+    "message": "Rate limit exceeded. Please try again later.",
     "type": "rate_limit_error",
     "code": "too_many_requests"
   }
@@ -48,5 +54,5 @@ Content-Type: application/json
 - [**Deposits & Billing**](./account/deposits)
 
 :::info Coming soon
-Per-API-key throughput controls — explicit **RPM** (requests per minute) and **TPM** (tokens per minute) budgets set in the dashboard — are on the roadmap. Today throttling is purely load-adaptive.
+Per-API-key throughput controls — explicit **RPM** (requests per minute) and **TPM** (tokens per minute) budgets settable in the dashboard — are on the roadmap.
 :::
