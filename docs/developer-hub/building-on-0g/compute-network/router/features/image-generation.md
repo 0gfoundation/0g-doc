@@ -157,9 +157,8 @@ The same optional top-level fields as chat completions, stripped before forwardi
 
 Image generation is charged per image at rates declared by the model (see `pricing.image` in the [catalog](../models)). Billing is tied to the provider's execution, not to your client holding the connection:
 
-- **Submission starts the clock.** Once the provider accepts the job, generation begins and tokens start to be consumed.
+- **Submission starts the clock.** Once the provider accepts the job, generation begins.
 - **Abandoning a poll does not cancel the job.** If you close the HTTP connection, stop polling, or kill your process after submitting, the provider still runs the job to completion and you are still billed.
-- **Failed jobs** (provider-side error) are not billed.
 
 ## Related
 
