@@ -34,7 +34,7 @@ Content-Type: application/json
   "error": {
     "message": "Rate limit exceeded. Please try again later.",
     "type": "rate_limit_error",
-    "code": "too_many_requests"
+    "code": "rate_limit_exceeded"
   }
 }
 ```
