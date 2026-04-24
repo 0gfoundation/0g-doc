@@ -13,24 +13,17 @@ The Router applies per-account request limits to keep the network responsive. Th
 
 Every inference response includes rate-limit headers (OpenAI-compatible) so you can back off proactively without waiting for a `429`:
 
-```
+```http
 X-RateLimit-Limit-Requests: <your current per-minute limit>
 X-RateLimit-Remaining-Requests: <how many you have left in this window>
 X-RateLimit-Reset-Requests: <ISO-8601 timestamp when the window resets>
-```
-
-Some accounts also receive daily-window headers:
-
-```
-X-RateLimit-Limit-Day: <daily quota>
-X-RateLimit-Remaining-Day: <left today>
 ```
 
 ## 429 Too Many Requests
 
 When you exceed the limit, the Router returns `429` immediately with a `Retry-After` header (seconds):
 
-```
+```http
 HTTP/1.1 429 Too Many Requests
 Retry-After: 15
 Content-Type: application/json
