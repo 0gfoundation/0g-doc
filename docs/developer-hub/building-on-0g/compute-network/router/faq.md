@@ -17,7 +17,7 @@ See [Router vs Advanced Mode](./comparison#pc0gai-router-vs-advanced-mode) for a
 
 ## Do I need a wallet to use the Router?
 
-Yes. The Router bills on-chain, so you need a wallet to deposit 0G tokens and create API keys. MetaMask, WalletConnect, and email sign-in (via Privy) are all supported at [pc.0g.ai](https://pc.0g.ai).
+Yes. The Router bills on-chain, so you need a wallet to deposit 0G tokens and create API keys. [pc.0g.ai](https://pc.0g.ai) supports MetaMask and WalletConnect for direct wallet connect, plus social sign-in via Privy (Google, X/Twitter, Discord, TikTok) which provisions an embedded wallet for you.
 
 Once you have an API key, your application code doesn't touch the wallet again — it just sends `Authorization: Bearer sk-…`.
 

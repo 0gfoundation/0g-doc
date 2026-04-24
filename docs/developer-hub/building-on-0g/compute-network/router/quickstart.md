@@ -14,7 +14,7 @@ Four steps. Five minutes.
 
 ## 1. Connect Your Wallet
 
-Visit **[pc.0g.ai](https://pc.0g.ai)** and connect a wallet. MetaMask, WalletConnect, and email (via Privy) are all supported.
+Visit **[pc.0g.ai](https://pc.0g.ai)** and connect a wallet. MetaMask and WalletConnect work directly; you can also sign in with Google, X/Twitter, Discord, or TikTok via Privy, which provisions an embedded wallet for you.
 
 ## 2. Deposit Funds
 
