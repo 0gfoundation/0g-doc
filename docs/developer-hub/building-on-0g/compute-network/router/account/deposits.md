@@ -53,22 +53,11 @@ curl https://router-api.0g.ai/v1/account/balance \
 {
   "address": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
   "deposit_balance": "2000000000000000000",
-  "credit_balance":  "0",
-  "total_balance":   "2000000000000000000",
-  "balance":         "2000000000000000000"
+  "total_balance":   "2000000000000000000"
 }
 ```
 
-All values are in **neuron**.
-
-| Field | What it means |
-| --- | --- |
-| `deposit_balance` | Tokens the Router has pulled from your Payment Layer balance and is currently holding for your usage |
-| `credit_balance` | Promotional/grant credits, if any. Most accounts see `0` here. |
-| `total_balance` | `deposit_balance + credit_balance` — what is actually available to spend right now |
-| `balance` | Backwards-compatible alias for `total_balance` |
-
-`total_balance` may lag your Payment Layer balance slightly because the Router pulls from the Payment Layer in batches (see below). When `total_balance` hits zero and the Payment Layer is also empty, the next inference request returns `402 insufficient_balance`.
+Values are in **neuron**. `total_balance` is what is available to spend right now. It may lag your Payment Layer balance slightly because the Router pulls from the Payment Layer in batches (see below). When `total_balance` hits zero and the Payment Layer is also empty, the next inference request returns `402 insufficient_balance`.
 
 ## Check Your Usage
 
