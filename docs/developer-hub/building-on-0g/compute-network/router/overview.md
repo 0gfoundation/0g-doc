@@ -49,12 +49,12 @@ Deposit 0G tokens, consume on-chain, settle periodically. No subscriptions.
 
 ## Base URLs
 
-Both networks share the same Web UI at **[pc.0g.ai](https://pc.0g.ai)** — switch networks from your wallet, and the dashboard flips between mainnet and testnet automatically. Only the API endpoint you point your code at differs.
+Mainnet and testnet are fully separate environments — different Web UI, different API endpoint, different on-chain balances and API keys. Pick the one that matches the network your wallet is on.
 
-| Network     | API Endpoint                                              |
-| ----------- | --------------------------------------------------------- |
-| **Mainnet** | `https://router-api.0g.ai/v1`                             |
-| **Testnet** | `https://router-api-testnet.integratenetwork.work/v1`     |
+| Network     | Web UI                                              | API Endpoint                                              |
+| ----------- | --------------------------------------------------- | --------------------------------------------------------- |
+| **Mainnet** | [pc.0g.ai](https://pc.0g.ai)                        | `https://router-api.0g.ai/v1`                             |
+| **Testnet** | [pc.testnet.0g.ai](https://pc.testnet.0g.ai)        | `https://router-api-testnet.integratenetwork.work/v1`     |
 
 :::tip OpenAI SDK drop-in
 Any tool that speaks the OpenAI API works with 0G Router — change `base_url` and `api_key`, nothing else.
