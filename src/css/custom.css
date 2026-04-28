@@ -28,13 +28,14 @@
 /* Search bar  */
 .navbar__search {
   padding-right: 10px;
+  position: relative;
 }
 
 .navbar__search-input {
   background-color: #f0f0f0;
   border: none;
   border-radius: 20px;
-  padding: 8px 16px 8px 36px;
+  padding: 8px 64px 8px 36px;
   font-size: 14px;
   width: 200px;
   transition: width 0.3s ease, background-color 0.3s ease;
@@ -55,6 +56,32 @@
   top: 50%;
   transform: translateY(-50%);
   color: #666;
+}
+
+/* Keep keyboard shortcut icons inside the search field */
+.navbar__search [class*='searchHintContainer'],
+.navbar__search .DocSearch-Button-Keys {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  pointer-events: none;
+}
+
+.navbar__search [class*='searchHintContainer'] kbd,
+.navbar__search [class*='searchHint'],
+.navbar__search .DocSearch-Button-Key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  line-height: 1;
 }
 
 /* GitHub icon */
