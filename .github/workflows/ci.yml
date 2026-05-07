@@ -88,21 +88,47 @@ jobs:
     
     - name: Serve site and check links
       run: |
-        # Install link checker
-        npm install -g broken-link-checker
+        npm install -g broken-link-checker serve
 
-        # Start server in background
-        npx http-server build -p 3000 &
+        # Mirror Vercel routing locally: cleanUrls + redirects from vercel.json
+        # (serve rejects the $schema field, so strip it)
+        jq 'del(.["$schema"])' vercel.json > /tmp/serve.json
+
+        serve build -p 3000 -c /tmp/serve.json > /tmp/serve.log 2>&1 &
         SERVER_PID=$!
 
-        # Wait for server to start
-        sleep 10
+        # Wait for serve to accept connections
+        for i in $(seq 1 30); do
+          curl -sf -o /dev/null http://localhost:3000/ && break
+          sleep 1
+        done
 
-        # Check internal links only
-        blc http://localhost:3000 --recursive --exclude-external || echo "Some links may be broken, please review"
+        BLC_OUT=$(blc http://localhost:3000 --recursive --exclude-external 2>&1 || true)
+        BROKEN=$(echo "$BLC_OUT" | grep -c "BROKEN" || true)
+        UNIQUE=$(echo "$BLC_OUT" | grep "BROKEN" | sort -u || true)
 
-        # Kill server
-        kill $SERVER_PID
+        {
+          echo "## 🔗 Link Checker Results"
+          echo ""
+          echo "**Broken internal links: $BROKEN**"
+          if [ "$BROKEN" -gt 0 ]; then
+            echo ""
+            echo "<details><summary>Show broken links</summary>"
+            echo ""
+            echo '```'
+            echo "$UNIQUE"
+            echo '```'
+            echo ""
+            echo "</details>"
+          fi
+        } >> "$GITHUB_STEP_SUMMARY"
+
+        kill $SERVER_PID 2>/dev/null || true
+
+        if [ "$BROKEN" -gt 0 ]; then
+          echo "::error::$BROKEN broken internal links found"
+          exit 1
+        fi
 
 
   spell-check:
