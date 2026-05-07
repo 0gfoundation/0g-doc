@@ -90,17 +90,17 @@ jobs:
       run: |
         # Install link checker
         npm install -g broken-link-checker
-        
+
         # Start server in background
         npx http-server build -p 3000 &
         SERVER_PID=$!
-        
+
         # Wait for server to start
         sleep 10
-        
+
         # Check internal links only
         blc http://localhost:3000 --recursive --exclude-external || echo "Some links may be broken, please review"
-        
+
         # Kill server
         kill $SERVER_PID
 
@@ -108,11 +108,11 @@ jobs:
   spell-check:
     name: Spell Check
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    
+
     - name: Spell check
       uses: streetsidesoftware/cspell-action@v6
       with:
@@ -121,5 +121,5 @@ jobs:
           **/*.mdx
           docs/**/*.md
         config: .cspell.json
-      continue-on-error: true
+        incremental_files_only: false
 
