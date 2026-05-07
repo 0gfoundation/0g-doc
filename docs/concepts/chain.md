@@ -63,7 +63,7 @@ These optimizations enable 0G Chain to achieve maximum performance:
 
 Currently achieves 11,000 TPS per Shard through:
 
-1. **Optimized CometBFT**: Highly efficient consensus based on Tendermind
+1. **Optimized CometBFT**: Highly efficient consensus based on Tendermint
 2. **Efficient block production**: Tuned for AI-scale data processing
 3. **Fast finality**: Sub-second transaction confirmation
 
