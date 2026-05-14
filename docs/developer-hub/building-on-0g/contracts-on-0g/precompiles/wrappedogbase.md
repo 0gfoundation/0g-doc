@@ -4,13 +4,13 @@ title: Wrapped 0G Base
 description: "Wrapped0GBase precompile for 0G Chain. Wrap and unwrap native 0G tokens as ERC20 with quota-based mint and burn functions for DeFi compatibility."
 ---
 
-# Overview
+## Overview
 
 Wrapped0GBase is a wrapper for the `x/wrapped-og-base` module in the 0g chain. W0G is a wrapped ERC20 token for native 0G. It supports quota-based mint/burn functions based on native 0G transfers, on top of traditional wrapped token implementation. The minting/burning quota for each address will be determined through governance voting. `x/wrapped-og-base` is the module that supports and maintains the minting/burning quota.
 
 In most cases this precompile should be only called by wrapped 0G contract.
 
-# Address
+## Address
 
 `0x0000000000000000000000000000000000001002`
 
@@ -19,13 +19,70 @@ In most cases this precompile should be only called by wrapped 0G contract.
 >
 > This is the official address of the wrapped 0G (W0G) ERC20 token on the 0G chain. Use this address if you want to interact directly with the wrapped 0G token contract for transfers, approvals, or other ERC20 operations.
 
-# Interface
+## ABI
 
-[https://github.com/0gfoundation/0g-chain/blob/dev/precompiles/interfaces/contracts/IWrappedA0GIBase.sol](https://github.com/0gfoundation/0g-chain/blob/dev/precompiles/interfaces/contracts/IWrappedA0GIBase.sol)
+The ABI for encoding calls to the Wrapped 0G Base precompile (`0x0000000000000000000000000000000000001002`):
 
-## Structs
+<details>
+<summary>IWrappedA0GIBase ABI (JSON)</summary>
 
-### `Supply`
+```json
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "minter", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "burn",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getWA0GI",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "minter", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "mint",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "minter", "type": "address" }],
+    "name": "minterSupply",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "cap", "type": "uint256" },
+          { "internalType": "uint256", "name": "initialSupply", "type": "uint256" },
+          { "internalType": "uint256", "name": "supply", "type": "uint256" }
+        ],
+        "internalType": "struct Supply",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
+```
+
+</details>
+
+## Interface
+
+### Structs
+
+#### `Supply`
 ```solidity
 struct Supply {
     uint256 cap;
@@ -42,9 +99,9 @@ struct Supply {
 
 ---
 
-## Functions
+### Functions
 
-### `getWA0GI()`
+#### `getWA0GI()`
 ```solidity
 function getWA0GI() external view returns (address);
 ```
@@ -53,7 +110,7 @@ function getWA0GI() external view returns (address);
 
 ---
 
-### `minterSupply(address minter)`
+#### `minterSupply(address minter)`
 ```solidity
 function minterSupply(address minter) external view returns (Supply memory);
 ```
@@ -64,7 +121,7 @@ function minterSupply(address minter) external view returns (Supply memory);
 
 ---
 
-### `mint(address minter, uint256 amount)`
+#### `mint(address minter, uint256 amount)`
 ```solidity
 function mint(address minter, uint256 amount) external;
 ```
@@ -76,7 +133,7 @@ function mint(address minter, uint256 amount) external;
 
 ---
 
-### `burn(address minter, uint256 amount)`
+#### `burn(address minter, uint256 amount)`
 ```solidity
 function burn(address minter, uint256 amount) external;
 ```
@@ -85,5 +142,3 @@ function burn(address minter, uint256 amount) external;
   - `minter`: The address of the minter.
   - `amount`: The amount of 0G to burn.
 - **Restrictions**: Can only be called by the W0G contract.
-
----

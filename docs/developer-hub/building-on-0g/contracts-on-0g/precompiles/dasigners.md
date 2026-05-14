@@ -3,21 +3,268 @@ id: precompiles-dasigners
 title: DASigners
 description: "DASigners precompile reference for 0G Chain. Register signers, query quorums and epochs, and verify data availability via EVM smart contract calls."
 ---
-# Overview
+## Overview
 
 DAsigners is a wrapper for the `x/dasigners` module in the 0g chain, allowing querying the state of this module from EVM calls.
 
-# Address
+## Address
 
 `0x0000000000000000000000000000000000001000`
 
-# Interface
+## ABI
 
-[https://github.com/0gfoundation/0g-chain/blob/dev/precompiles/interfaces/contracts/IDASigners.sol](https://github.com/0gfoundation/0g-chain/blob/dev/precompiles/interfaces/contracts/IDASigners.sol)
+The ABI for encoding calls to the DASigners precompile (`0x0000000000000000000000000000000000001000`):
 
-## Structs
+<details>
+<summary>IDASigners ABI (JSON)</summary>
 
-### `SignerDetail`
+```json
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "signer", "type": "address" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "X", "type": "uint256" },
+          { "internalType": "uint256", "name": "Y", "type": "uint256" }
+        ],
+        "indexed": false,
+        "internalType": "struct BN254.G1Point",
+        "name": "pkG1",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          { "internalType": "uint256[2]", "name": "X", "type": "uint256[2]" },
+          { "internalType": "uint256[2]", "name": "Y", "type": "uint256[2]" }
+        ],
+        "indexed": false,
+        "internalType": "struct BN254.G2Point",
+        "name": "pkG2",
+        "type": "tuple"
+      }
+    ],
+    "name": "NewSigner",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "signer", "type": "address" },
+      { "indexed": false, "internalType": "string", "name": "socket", "type": "string" }
+    ],
+    "name": "SocketUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "epochNumber",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_epoch", "type": "uint256" },
+      { "internalType": "uint256", "name": "_quorumId", "type": "uint256" },
+      { "internalType": "bytes", "name": "_quorumBitmap", "type": "bytes" }
+    ],
+    "name": "getAggPkG1",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "X", "type": "uint256" },
+          { "internalType": "uint256", "name": "Y", "type": "uint256" }
+        ],
+        "internalType": "struct BN254.G1Point",
+        "name": "aggPkG1",
+        "type": "tuple"
+      },
+      { "internalType": "uint256", "name": "total", "type": "uint256" },
+      { "internalType": "uint256", "name": "hit", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_epoch", "type": "uint256" },
+      { "internalType": "uint256", "name": "_quorumId", "type": "uint256" }
+    ],
+    "name": "getQuorum",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_epoch", "type": "uint256" },
+      { "internalType": "uint256", "name": "_quorumId", "type": "uint256" },
+      { "internalType": "uint32", "name": "_rowIndex", "type": "uint32" }
+    ],
+    "name": "getQuorumRow",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address[]", "name": "_account", "type": "address[]" }],
+    "name": "getSigner",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "signer", "type": "address" },
+          { "internalType": "string", "name": "socket", "type": "string" },
+          {
+            "components": [
+              { "internalType": "uint256", "name": "X", "type": "uint256" },
+              { "internalType": "uint256", "name": "Y", "type": "uint256" }
+            ],
+            "internalType": "struct BN254.G1Point",
+            "name": "pkG1",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              { "internalType": "uint256[2]", "name": "X", "type": "uint256[2]" },
+              { "internalType": "uint256[2]", "name": "Y", "type": "uint256[2]" }
+            ],
+            "internalType": "struct BN254.G2Point",
+            "name": "pkG2",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct IDASigners.SignerDetail[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_account", "type": "address" }],
+    "name": "isSigner",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "params",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "tokensPerVote", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxVotesPerSigner", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxQuorums", "type": "uint256" },
+          { "internalType": "uint256", "name": "epochBlocks", "type": "uint256" },
+          { "internalType": "uint256", "name": "encodedSlices", "type": "uint256" }
+        ],
+        "internalType": "struct IDASigners.Params",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_epoch", "type": "uint256" }],
+    "name": "quorumCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "X", "type": "uint256" },
+          { "internalType": "uint256", "name": "Y", "type": "uint256" }
+        ],
+        "internalType": "struct BN254.G1Point",
+        "name": "_signature",
+        "type": "tuple"
+      }
+    ],
+    "name": "registerNextEpoch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "signer", "type": "address" },
+          { "internalType": "string", "name": "socket", "type": "string" },
+          {
+            "components": [
+              { "internalType": "uint256", "name": "X", "type": "uint256" },
+              { "internalType": "uint256", "name": "Y", "type": "uint256" }
+            ],
+            "internalType": "struct BN254.G1Point",
+            "name": "pkG1",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              { "internalType": "uint256[2]", "name": "X", "type": "uint256[2]" },
+              { "internalType": "uint256[2]", "name": "Y", "type": "uint256[2]" }
+            ],
+            "internalType": "struct BN254.G2Point",
+            "name": "pkG2",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct IDASigners.SignerDetail",
+        "name": "_signer",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "X", "type": "uint256" },
+          { "internalType": "uint256", "name": "Y", "type": "uint256" }
+        ],
+        "internalType": "struct BN254.G1Point",
+        "name": "_signature",
+        "type": "tuple"
+      }
+    ],
+    "name": "registerSigner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_account", "type": "address" },
+      { "internalType": "uint256", "name": "_epoch", "type": "uint256" }
+    ],
+    "name": "registeredEpoch",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "_socket", "type": "string" }],
+    "name": "updateSocket",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
+```
+
+</details>
+
+## Interface
+
+### Structs
+
+#### `SignerDetail`
 ```solidity
 struct SignerDetail {
     address signer;
@@ -34,7 +281,7 @@ struct SignerDetail {
   - `pkG1`: The G1 public key of the signer.
   - `pkG2`: The G2 public key of the signer.
 
-### `Params`
+#### `Params`
 ```solidity
 struct Params {
     uint tokensPerVote;
@@ -55,9 +302,9 @@ struct Params {
 
 ---
 
-## Functions
+### Functions
 
-### `params()`
+#### `params()`
 ```solidity
 function params() external view returns (Params memory);
 ```
@@ -66,7 +313,7 @@ function params() external view returns (Params memory);
 
 ---
 
-### `epochNumber()`
+#### `epochNumber()`
 ```solidity
 function epochNumber() external view returns (uint);
 ```
@@ -75,7 +322,7 @@ function epochNumber() external view returns (uint);
 
 ---
 
-### `quorumCount(uint _epoch)`
+#### `quorumCount(uint _epoch)`
 ```solidity
 function quorumCount(uint _epoch) external view returns (uint);
 ```
@@ -86,7 +333,7 @@ function quorumCount(uint _epoch) external view returns (uint);
 
 ---
 
-### `isSigner(address _account)`
+#### `isSigner(address _account)`
 ```solidity
 function isSigner(address _account) external view returns (bool);
 ```
@@ -97,7 +344,7 @@ function isSigner(address _account) external view returns (bool);
 
 ---
 
-### `getSigner(address[] memory _account)`
+#### `getSigner(address[] memory _account)`
 ```solidity
 function getSigner(
     address[] memory _account
@@ -110,7 +357,7 @@ function getSigner(
 
 ---
 
-### `getQuorum(uint _epoch, uint _quorumId)`
+#### `getQuorum(uint _epoch, uint _quorumId)`
 ```solidity
 function getQuorum(
     uint _epoch,
@@ -125,7 +372,7 @@ function getQuorum(
 
 ---
 
-### `getQuorumRow(uint _epoch, uint _quorumId, uint32 _rowIndex)`
+#### `getQuorumRow(uint _epoch, uint _quorumId, uint32 _rowIndex)`
 ```solidity
 function getQuorumRow(
     uint _epoch,
@@ -142,7 +389,7 @@ function getQuorumRow(
 
 ---
 
-### `registerSigner(SignerDetail memory _signer, BN254.G1Point memory _signature)`
+#### `registerSigner(SignerDetail memory _signer, BN254.G1Point memory _signature)`
 ```solidity
 function registerSigner(
     SignerDetail memory _signer,
@@ -156,7 +403,7 @@ function registerSigner(
 
 ---
 
-### `updateSocket(string memory _socket)`
+#### `updateSocket(string memory _socket)`
 ```solidity
 function updateSocket(string memory _socket) external;
 ```
@@ -166,7 +413,7 @@ function updateSocket(string memory _socket) external;
 
 ---
 
-### `registeredEpoch(address _account, uint _epoch)`
+#### `registeredEpoch(address _account, uint _epoch)`
 ```solidity
 function registeredEpoch(
     address _account,
@@ -181,7 +428,7 @@ function registeredEpoch(
 
 ---
 
-### `registerNextEpoch(BN254.G1Point memory _signature)`
+#### `registerNextEpoch(BN254.G1Point memory _signature)`
 ```solidity
 function registerNextEpoch(BN254.G1Point memory _signature) external;
 ```
@@ -191,7 +438,7 @@ function registerNextEpoch(BN254.G1Point memory _signature) external;
 
 ---
 
-### `getAggPkG1(uint _epoch, uint _quorumId, bytes memory _quorumBitmap)`
+#### `getAggPkG1(uint _epoch, uint _quorumId, bytes memory _quorumBitmap)`
 ```solidity
 function getAggPkG1(
     uint _epoch,
@@ -208,4 +455,3 @@ function getAggPkG1(
   - `aggPkG1`: The aggregated public key.
   - `total`: The number of rows.
   - `hit`: The number of rows that contributed to the aggregation.
----

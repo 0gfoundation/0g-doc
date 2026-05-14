@@ -1,12 +1,11 @@
 ---
 sidebar_position: 4
+title: Data Availability Node
 description: "Step-by-step guide to setting up a 0G Data Availability node, including Docker and source builds, BLS key generation, and signer registration."
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Data Availability Node
----
 While there are various approaches to running a DA (Data Availability) node, this guide outlines our recommended method and the necessary hardware specifications. DA Nodes perform the core functions of verifying, signing, and storing encoded blob data. 
 
 To operate effectively, your DA signer needs to run a DA node to verify encoded blob data, sign it, and store it for future farming and rewards. Currently, to run a DA Node on Testnet, users must stake 10 OG tokens. These can be obtained through our [faucet](https://faucet.0g.ai/) or via rewards from running Storage Nodes or Validator Nodes. You can also reach out to our technical moderators on [Discord](https://discord.com/invite/0glabs).
@@ -302,7 +301,7 @@ Find the Solidity interface in the [0g-da-contract repo](https://github.com/0gfo
 
 ## ABI
 
-Find the ABI in the [0g-chain repo](https://github.com/0gfoundation/0g-chain).
+Find the ABI on the [DASigners precompile page](/developer-hub/building-on-0g/contracts-on-0g/precompiles/precompiles-dasigners#abi).
 
 ## Transactions
 
