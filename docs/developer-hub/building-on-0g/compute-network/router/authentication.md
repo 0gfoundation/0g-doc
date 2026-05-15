@@ -23,10 +23,10 @@ Authorization: Bearer sk-YOUR_API_KEY
 ```
 
 ```
-Authorization: Bearer mk-YOUR_API_KEY
+Authorization: Bearer mk-YOUR_MANAGEMENT_KEY
 ```
 
-No OAuth flow, no wallet signature per request, no session tokens.
+No OAuth flow, no wallet signature per request, no session tokens. For the full request / response shape of every endpoint, see the **[Router API reference](https://0gfoundation.github.io/0g-router/)**.
 
 ## Permission matrix
 
