@@ -23,11 +23,11 @@ Pick the right one for the job: ship `sk-` keys to the runtime that actually cal
 Send the key in the `Authorization` header on every request — same shape for both kinds:
 
 ```
-Authorization: Bearer sk-YOUR_INFERENCE_KEY
+Authorization: Bearer sk-YOUR_API_KEY
 ```
 
 ```
-Authorization: Bearer mk-YOUR_MANAGEMENT_KEY
+Authorization: Bearer mk-YOUR_API_KEY
 ```
 
 That's the whole protocol — no OAuth flow, no wallet signature per request, no session tokens.
@@ -96,7 +96,7 @@ Two guardrails worth calling out:
 
 ### Audit fields
 
-Every successful request with an `mk-` key updates **`last_used_at`** and **`last_source_ip`** on the key. Writes are coalesced to at most one per key per 60 seconds, so a polling integration doesn't generate a write per request. IPv4-mapped IPv6 addresses (`::ffff:1.2.3.4`) are normalised to dotted-quad before storage so a dual-stack vs IPv4-only listener doesn't make one client look like two.
+Every successful request with an `mk-` key updates **`last_used_at`** and **`last_source_ip`** on the key. Writes are coalesced to at most one per key per 60 seconds, so a polling integration doesn't generate a write per request. IPv4-mapped IPv6 addresses (`::ffff:1.2.3.4`) are normalized to dotted-quad before storage so a dual-stack vs IPv4-only listener doesn't make one client look like two.
 
 Inference keys do **not** record these fields — for `sk-` keys the audit signal is usage / billing.
 
@@ -111,29 +111,8 @@ Management keys do not expire and the HTTP surface does not accept an expiration
 | Call `/v1/chat/completions` from your backend           | `sk-` inference key                       |
 | Read balance / usage from a monitoring job              | `mk-` with `account:read`                 |
 | Auto-provision per-tenant inference keys from CI        | `mk-` with `keys:create` (+ `keys:read`)  |
-| Auto-revoke leaked keys from a SIEM integration         | `mk-` with `keys:read` + `keys:manage`    |
+| Auto-revoke leaked keys from a security-monitoring job  | `mk-` with `keys:read` + `keys:manage`    |
 | Manage management keys themselves                       | Wallet sign-in (JWT) at pc.0g.ai          |
-
-## Breaking change — `sk-` keys lost access to `/v1/account/*`
-
-Previously inference keys could read `/v1/account/balance`, `/v1/account/usage`, etc. They no longer can — those endpoints now return:
-
-```json
-{
-  "error": {
-    "message": "this credential is not allowed to access account endpoints",
-    "type": "auth_error",
-    "code": "insufficient_scope"
-  }
-}
-```
-
-with HTTP `403`. To restore the call, swap the `sk-` for either:
-
-- a management key with `account:read`, or
-- a wallet JWT (sign-in session — what the Web UI uses).
-
-Inference endpoints (`/v1/chat/completions`, etc.) are unchanged; existing `sk-` keys keep working there.
 
 ## Best practices
 
