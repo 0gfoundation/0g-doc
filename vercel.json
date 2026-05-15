@@ -4,6 +4,11 @@
   "trailingSlash": false,
   "headers": [
     {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "staging.docs.0g.ai" }],
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
       "source": "/llms.txt",
       "headers": [
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },

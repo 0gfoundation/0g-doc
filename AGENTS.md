@@ -77,6 +77,21 @@ keywords: [keyword1, keyword2]
 
 URL changes that would break inbound links go in `vercel.json`'s `redirects` array. The CI link checker runs against the locally-served build with those redirects applied, so a redirect added there *will* satisfy the check for the old path.
 
+### Deployments and environments
+
+Hosted on Vercel via the native GitHub integration (no GitHub Actions deploy workflow).
+
+- `main` → production at `https://docs.0g.ai`.
+- `staging` → long-lived staging at `https://staging.docs.0g.ai`. Merge here before promoting to `main` for QA / stakeholder sign-off.
+- Every PR / non-default branch → an ephemeral preview URL (`*.vercel.app`), auto-`noindex`ed by Vercel.
+
+Two environment-aware bits of config worth knowing about:
+
+- **Analytics (gtag, Clarity)** are gated on `process.env.VERCEL_ENV === 'production'` in `docusaurus.config.ts` (via an `isProd` constant). They only ship to the live site — not to staging, previews, or local builds. **If you add another third-party tracker, follow the same pattern** so it doesn't pollute prod metrics from non-prod deploys.
+- **`staging.docs.0g.ai` is host-scoped to `X-Robots-Tag: noindex, nofollow`** via the first entry in `vercel.json`'s `headers` array. Don't remove that rule unless you genuinely want staging indexed.
+
+The schema.org JSON-LD tags in `headTags` stay on every environment — they're SEO metadata, not user tracking, and noindex already prevents staging from being indexed.
+
 ## Conventions
 
 - Commit prefixes used in this repo: `fix:`, `docs:`, `style:`, `chore(ci):`, `chore(docs):`. Match what `git log` shows for nearby work.

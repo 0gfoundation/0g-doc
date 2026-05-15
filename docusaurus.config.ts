@@ -3,6 +3,11 @@ import type * as Preset from '@docusaurus/preset-classic';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
+// Vercel sets VERCEL_ENV to 'production' only for the production environment;
+// preview/staging/custom envs get a different value, and it's unset locally.
+// Use this to gate analytics so they only fire from the live site.
+const isProd = process.env.VERCEL_ENV === 'production';
+
 const config: Config = {
   title: '0G Documentation',
   tagline: 'The Next Generation Web3 Infrastructure',
@@ -48,10 +53,14 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
-        gtag: {
-          trackingID: 'G-2GB2FSF7Q7',
-          anonymizeIP: true,
-        },
+        ...(isProd
+          ? {
+              gtag: {
+                trackingID: 'G-2GB2FSF7Q7',
+                anonymizeIP: true,
+              },
+            }
+          : {}),
         sitemap: {
           changefreq: 'weekly' as const,
           priority: 0.5,
@@ -98,17 +107,22 @@ const config: Config = {
   ],
 
   headTags: [
-    {
-      tagName: 'script',
-      attributes: {},
-      innerHTML: `
+    // Clarity user-session tracking — production only.
+    ...(isProd
+      ? [
+          {
+            tagName: 'script',
+            attributes: {},
+            innerHTML: `
         (function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
           t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
           y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "tr0w896qhb");
       `,
-    },
+          },
+        ]
+      : []),
     {
       tagName: 'script',
       attributes: { type: 'application/ld+json' },
