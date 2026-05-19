@@ -33,7 +33,7 @@ No OAuth flow, no wallet signature per request, no session tokens. For the full 
 One table covers what each credential can do and what scope it needs. `✅` = allowed, `❌` = `403 insufficient_scope`.
 
 | Scenario                       | Endpoint                            | `sk-` API key | `mk-` Management key   |
-| ------------------------------ | ----------------------------------- | :-----------: | ---------------------- |
+| ------------------------------ | ----------------------------------- | :-----------: | :--------------------- |
 | Run inference                  | `POST /v1/chat/completions` (etc.)  |       ✅      | ❌                      |
 | Read balance / usage / history | `GET /v1/account/*`                 |       ❌      | ✅ `account:read`       |
 | List API keys                  | `GET /v1/api-keys`                  |       ❌      | ✅ `keys:read`          |
