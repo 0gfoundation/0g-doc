@@ -126,18 +126,73 @@ async function fetchPageMarkdown(pathname: string): Promise<string | null> {
   return null;
 }
 
+const GENERIC_HEADINGS = new Set([
+  'overview', 'introduction', 'intro', 'getting started', 'next steps',
+  'troubleshooting', 'contents', 'table of contents', 'examples', 'example',
+  'usage', 'reference', 'api reference', 'changelog', 'faq', 'resources',
+  'further reading', 'see also', 'summary', 'conclusion', 'notes', 'note',
+  'tips', 'tip', 'caveats', 'about', 'background',
+]);
+
+const VERB_STARTERS = /^(install|deploy|set up|setup|run|create|configure|use|connect|fund|verify|stake|delegate|build|enable|disable|generate|sign|send|read|write|fetch|integrate|migrate|update|upgrade|test|debug|monitor|query|publish|register|claim|bridge|swap|transfer|withdraw|deposit|estimate|simulate|inspect|review|check|list|find|view|get|add|remove|start|stop|restart)\b/i;
+
+const PLURAL_NOUN_HEADINGS = /^(prerequisites|requirements|limitations|features|benefits|use cases|risks|tradeoffs|caveats|guarantees|properties|parameters|inputs|outputs|errors|fees|costs|permissions|environment variables|env vars)$/i;
+
+function rephraseHeading(raw: string, pageTitle: string | null): string | null {
+  const h = raw.trim().replace(/[:?!.]+$/, '').replace(/\s+/g, ' ');
+  if (!h || h.length < 3 || h.length > 60) return null;
+  if (GENERIC_HEADINGS.has(h.toLowerCase())) return null;
+
+  if (/^(how|what|why|when|where|which|can|should|do|does)\b/i.test(h)) {
+    return h.endsWith('?') ? h : `${h}?`;
+  }
+
+  const vs = h.match(/^(.+?)\s+vs\.?\s+(.+)$/i);
+  if (vs) return `What's the difference between ${vs[1]} and ${vs[2]}?`;
+
+  if (PLURAL_NOUN_HEADINGS.test(h)) return `What are the ${h.toLowerCase()}?`;
+
+  if (VERB_STARTERS.test(h)) {
+    return `How do I ${h.charAt(0).toLowerCase() + h.slice(1)}?`;
+  }
+
+  if (/\b(CLI|SDK|API)\b/.test(h)) return `How do I use the ${h}?`;
+
+  if (pageTitle) return `Explain "${h}" on this page`;
+  return `What is ${h}?`;
+}
+
 function extractSuggestions(markdown: string | null): string[] {
   if (!markdown) return [];
-  const h2s = markdown
-    .split('\n')
-    .filter((l) => /^##\s+/.test(l) && !/^##\s+(next steps|troubleshooting|contents|table of contents)/i.test(l))
-    .map((l) => l.replace(/^##\s+/, '').trim())
-    .filter(Boolean)
-    .slice(0, 3);
-  return h2s.map((h) => {
-    if (/^(how|what|why|when|where)\b/i.test(h)) return h.endsWith('?') ? h : `${h}?`;
-    return `What is ${h.replace(/[:?!.]+$/, '')}?`;
-  });
+  let pageTitle: string | null = null;
+  const fm = markdown.match(/^---\s*([\s\S]*?)\s*---/);
+  if (fm) {
+    const t = fm[1].match(/^title:\s*["']?(.+?)["']?\s*$/m);
+    if (t) pageTitle = t[1];
+  }
+  if (!pageTitle) {
+    const h1 = markdown.match(/^#\s+(.+)$/m);
+    if (h1) pageTitle = h1[1].trim();
+  }
+
+  const headings: string[] = [];
+  for (const line of markdown.split('\n')) {
+    const m = line.match(/^##\s+(.+?)\s*$/);
+    if (m) headings.push(m[1]);
+  }
+
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const h of headings) {
+    const phrased = rephraseHeading(h, pageTitle);
+    if (!phrased) continue;
+    const key = phrased.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(phrased);
+    if (out.length >= 3) break;
+  }
+  return out;
 }
 
 function extractFollowUps(reply: string): string[] {
@@ -653,7 +708,7 @@ function AskAIInner() {
               className={`${styles.headerLogo} ${styles.headerLogoDark}`}
             />
             <div>
-              <strong>Ask 0G AI</strong>
+              <strong>Ask AI</strong>
               <div className={styles.subtitle}>
                 {pageTitle ? (
                   <>
