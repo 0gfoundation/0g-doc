@@ -44,9 +44,11 @@ Tiered pricing for cached prompt tokens is on the roadmap — a future release w
 
 ## Check Your Balance
 
+`/v1/account/*` endpoints require a **management key** with the `account:read` scope (see [Authentication](../authentication)) — `sk-` keys return `403 insufficient_scope`.
+
 ```bash
 curl https://router-api.0g.ai/v1/account/balance \
-  -H "Authorization: Bearer sk-YOUR_API_KEY"
+  -H "Authorization: Bearer mk-YOUR_MANAGEMENT_KEY"
 ```
 
 ```json
@@ -65,7 +67,7 @@ Aggregate stats:
 
 ```bash
 curl "https://router-api.0g.ai/v1/account/usage/stats?start_date=2026-04-01" \
-  -H "Authorization: Bearer sk-YOUR_API_KEY"
+  -H "Authorization: Bearer mk-YOUR_MANAGEMENT_KEY"
 ```
 
 Returns total requests, total tokens (prompt/completion split), and total cost for the window.
@@ -74,7 +76,7 @@ Per-request history:
 
 ```bash
 curl "https://router-api.0g.ai/v1/account/usage/history?limit=20&offset=0" \
-  -H "Authorization: Bearer sk-YOUR_API_KEY"
+  -H "Authorization: Bearer mk-YOUR_MANAGEMENT_KEY"
 ```
 
 Returns a paginated list of individual requests with model, provider address, token counts, and cost. Both endpoints also accept `api_key_id`, `source`, `start_date`, and `end_date` filters.

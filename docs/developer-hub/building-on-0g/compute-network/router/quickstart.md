@@ -24,7 +24,7 @@ See [Deposits & Billing](./account/deposits) for how costs are calculated and ho
 
 ## 3. Create an API Key
 
-In **Dashboard → API Keys**, create a key with the `inference` permission. You'll get a secret starting with `sk-`.
+In **Dashboard → API Keys**, click **Create**. You'll get a secret starting with `sk-` — the API key used for inference calls. See [Authentication](./authentication) for the difference between `sk-` API keys and `mk-` management keys.
 
 Store it somewhere safe — the Router never shows it again.
 

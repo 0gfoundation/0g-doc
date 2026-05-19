@@ -7,6 +7,11 @@ description: "API keys (sk-) call models; management keys (mk-) administer your 
 
 # Authentication
 
+:::caution Breaking change (existing users)
+`sk-` keys no longer have access to `/v1/account/*` (balance, usage, history).
+Issue an `mk-` key with the `account:read` scope and update your dashboard / billing code.
+:::
+
 The Router accepts two kinds of credentials, distinguished by prefix:
 
 | Key type           | Prefix | What it's for                                                                                 |
