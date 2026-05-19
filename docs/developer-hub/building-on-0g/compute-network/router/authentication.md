@@ -39,7 +39,7 @@ One table covers what each credential can do and what scope it needs. `✅` = al
 | List API keys                  | `GET /v1/api-keys`                  |       ❌      | ✅ `keys:read`          |
 | Create API key                 | `POST /v1/api-keys`                 |       ❌      | ✅ `keys:create`        |
 | Edit / revoke API key          | `PATCH`/`DELETE /v1/api-keys/:id`   |       ❌      | ✅ `keys:manage`        |
-| Manage management keys         | `*/v1/management-keys`              |       ❌      | ❌ — wallet JWT only    |
+| Manage management keys         | `ANY /v1/management-keys/*`         |       ❌      | ❌ — wallet JWT only    |
 
 Two guardrails worth calling out:
 
