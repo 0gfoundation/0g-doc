@@ -34,7 +34,7 @@ Running a Validator node means providing validator services for the network, pro
 ```
 
 - **ETH_RPC_URL**: The RPC endpoint for the Symbiotic network.
-  - **Mainnet (Aristotle)**: Use an Ethereum Mainnet RPC endpoint (e.g., https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY)
+  - **Mainnet (Aristotle)**: Use an Ethereum Mainnet RPC endpoint (e.g., `https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY`)
   - **Testnet (Galileo)**: Use an Ethereum HoleSky RPC endpoint
 - **BLOCK_NUM**: The maximum block number range per call when syncing restaking events. Default is 1. Adjust based on your RPC provider limits.
 
