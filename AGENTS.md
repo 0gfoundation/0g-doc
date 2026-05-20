@@ -84,8 +84,16 @@ URL changes that would break inbound links go in `vercel.json`'s `redirects` arr
 Hosted on Vercel via the native GitHub integration (no GitHub Actions deploy workflow).
 
 - `main` → production at `https://docs.0g.ai`.
-- `staging` → long-lived staging at `https://staging.docs.0g.ai`. Merge here before promoting to `main` for QA / stakeholder sign-off.
+- `staging` → long-lived staging at `https://staging.docs.0g.ai`. A QA / preview environment, **not** a release source — see workflow below.
 - Every PR / non-default branch → an ephemeral preview URL (`*.vercel.app`), auto-`noindex`ed by Vercel.
+
+Vercel Authentication (deployment protection) is **disabled**, so staging and preview URLs are publicly reachable without a login — you can `curl` them directly to verify changes. They're kept out of search by `noindex` (staging via the `vercel.json` host rule, previews via Vercel's automatic header), not by an auth wall.
+
+#### Branching workflow
+
+`main` is the source of truth. Open PRs **from a feature branch into `main`** — one feature per PR, so each gets a scoped, reviewable diff. Do **not** open `staging → main` PRs: `staging` is long-lived and accumulates unrelated work, so promoting from it bundles half-finished changes and produces noisy diffs.
+
+`staging` is where you integrate and eyeball changes (and gather stakeholder sign-off) before merging the feature branch to `main`. To preview, push your branch onto `staging` (`git push origin <branch>:staging`). After a feature lands on `main`, re-sync `staging` to `main` so it doesn't drift — `main` is truth; `staging` mirrors `main` plus whatever is currently being previewed.
 
 Two environment-aware bits of config worth knowing about:
 
