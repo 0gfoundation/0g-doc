@@ -51,6 +51,7 @@
   ],
   "redirects": [
     { "source": "/node-sale/intro/intro", "destination": "/node-sale/intro", "permanent": true },
-    { "source": "/node-sale/faq/faq", "destination": "/node-sale/faq", "permanent": true }
+    { "source": "/node-sale/faq/faq", "destination": "/node-sale/faq", "permanent": true },
+    { "source": "/0g-storage", "destination": "/concepts/storage", "permanent": true }
   ]
 }

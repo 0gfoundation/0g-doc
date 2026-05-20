@@ -725,7 +725,6 @@ async function optimizedTransfer(transfers) {
 🐛 **[GitHub Issues](https://github.com/0gfoundation/0g-agent-nft/issues)** - Report bugs and feature requests  
 💬 **[Discord Community](https://discord.gg/0glabs)** - Get help from developers  
 📖 **[Documentation](./erc7857)** - Technical reference  
-📚 **[Knowledge Base](https://kb.0g.ai)** - Common solutions  
 
 ## Next Steps
 
