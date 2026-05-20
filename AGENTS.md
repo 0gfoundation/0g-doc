@@ -24,10 +24,12 @@ No test suite. CI validates by: build, broken-link check (see below), and cspell
 CI builds then serves the output with Vercel routing emulated (`cleanUrls` + `redirects` from `vercel.json`) and runs `broken-link-checker` against `http://localhost:3000`. A plain `pnpm serve` will *not* match production routing — if you're debugging a link-check failure, replicate the workflow from `.github/workflows/ci.yml`:
 
 ```
-jq 'del(.["$schema"])' vercel.json > /tmp/serve.json
+jq 'del(.["$schema"]) | .headers |= map(select(.has == null))' vercel.json > /tmp/serve.json
 npx serve build -p 3000 -c /tmp/serve.json
 npx blc http://localhost:3000 --recursive --exclude-external
 ```
+
+`serve` rejects both the `$schema` field and the `has` header directive (used to host-scope the `staging.docs.0g.ai` noindex rule), so the `jq` filter strips both. Vercel still applies `has`-scoped headers at the edge in production — only the local serve step skips them.
 
 ### Spell check
 
