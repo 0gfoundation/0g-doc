@@ -25,7 +25,7 @@ Always send `"response_format": "b64_json"`. Base64 is the only format supported
 
 **`POST /v1/images/generations`**
 
-Fully compatible with the [OpenAI Images API](https://platform.openai.com/docs/api-reference/images/create) — any OpenAI client library works unchanged once you switch the base URL.
+Fully compatible with the [OpenAI Images API](https://developers.openai.com/api/reference/resources/images/methods/generate) — any OpenAI client library works unchanged once you switch the base URL.
 
 <Tabs>
 <TabItem value="curl" label="cURL" default>

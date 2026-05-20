@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 **`POST /v1/audio/transcriptions`**
 
-Fully compatible with the [OpenAI Audio Transcription API](https://platform.openai.com/docs/api-reference/audio/createTranscription). Send audio as `multipart/form-data`; the OpenAI SDK does this automatically.
+Fully compatible with the [OpenAI Audio Transcription API](https://developers.openai.com/api/reference/resources/audio/subresources/transcriptions/methods/create). Send audio as `multipart/form-data`; the OpenAI SDK does this automatically.
 
 <Tabs>
 <TabItem value="curl" label="cURL" default>

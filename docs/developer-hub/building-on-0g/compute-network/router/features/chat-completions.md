@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 **`POST /v1/chat/completions`**
 
-Fully compatible with the [OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat). Supports streaming, tool calling, JSON mode, and reasoning-token models.
+Fully compatible with the [OpenAI Chat Completions API](https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create). Supports streaming, tool calling, JSON mode, and reasoning-token models.
 
 ## Request
 

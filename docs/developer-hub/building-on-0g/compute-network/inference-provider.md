@@ -28,7 +28,7 @@ Transform your AI services into verifiable, revenue-generating endpoints on the 
 ### Prepare Your Model Service
 
 #### Service Interface Requirements
-Your AI service must implement the [OpenAI API Interface](https://platform.openai.com/docs/api-reference/chat) for compatibility. This ensures consistent user experience across all providers.
+Your AI service must implement the [OpenAI API Interface](https://developers.openai.com/api/reference/chat-completions/overview) for compatibility. This ensures consistent user experience across all providers.
 
 #### Verification Interfaces
 To ensure the integrity and trustworthiness of services, different verification mechanisms are employed. Each mechanism comes with its own specific set of protocols and requirements to ensure service verification and security.
