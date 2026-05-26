@@ -48,7 +48,7 @@ One table covers what each credential can do and what scope it needs. `✅` = al
 
 Two guardrails worth calling out:
 
-- **Management keys cannot manage other management keys.** `*/v1/management-keys` requires the wallet JWT (sign-in session). A leaked `mk-` cannot mint replacements for itself.
+- **Management keys cannot manage other management keys.** `ANY /v1/management-keys/*` requires the wallet JWT (sign-in session). A leaked `mk-` cannot mint replacements for itself.
 - **`keys:manage` and `keys:create` are deliberately split.** A read-only audit integration that should be able to revoke a compromised key but **not** issue replacements gets `{keys:read, keys:manage}` and is locked out of issuance.
 
 ## API keys (`sk-`)
