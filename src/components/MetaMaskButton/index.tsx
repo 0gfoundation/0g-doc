@@ -22,6 +22,25 @@ const METAMASK_RDNS = 'io.metamask';
 const isImpersonator = (p: any): boolean =>
   Boolean(p?.isOkxWallet || p?.isOKExWallet || p?.isCoinbaseWallet || p?.isTrust || p?.isTrustWallet);
 
+// A normal mobile browser can't expose a wallet extension, so there's no
+// injected provider to talk to. Detect mobile (incl. iPadOS, which reports a
+// desktop UA but is touch-capable) so we can hand off to the MetaMask app.
+const isMobile = (): boolean => {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent;
+  return /Android|iPhone|iPod/i.test(ua) || /iPad/.test(ua) ||
+    (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+};
+
+// Deep link that reopens the current page inside the MetaMask mobile app's
+// in-app browser, where a provider IS injected. Format is link.metamask.io/dapp
+// followed by the URL without its scheme. See:
+// https://docs.metamask.io/sdk/guides/use-deeplinks/
+const metamaskDeepLink = (): string => {
+  const { host, pathname, search } = window.location;
+  return `https://link.metamask.io/dapp/${host}${pathname}${search}`;
+};
+
 interface MetaMaskButtonProps {
   label?: string;
   chainId?: string | number;
@@ -88,6 +107,13 @@ export default function MetaMaskButton({
   const addNetwork = async () => {
     const provider = resolveMetaMaskProvider();
     if (!provider) {
+      // On mobile there's no extension to inject a provider, so reopen this
+      // page in the MetaMask app's in-app browser, where the button works.
+      // (Inside that browser a provider IS present, so we never reach here.)
+      if (isMobile()) {
+        window.location.href = metamaskDeepLink();
+        return;
+      }
       alert(
         'MetaMask not found. If you have multiple wallet extensions installed (e.g. OKX, Coinbase), set MetaMask as your default or disable the others, then try again.'
       );
