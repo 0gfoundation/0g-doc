@@ -1,0 +1,12 @@
+# core-js / core-js-pure only run a postinstall donation banner — no real
+# build step — so pnpm 10+ is told not to run their scripts. Without this,
+# pnpm aborts installs (and therefore `pnpm start`/`build`) with
+# ERR_PNPM_IGNORED_BUILDS.
+allowBuilds:
+  core-js: false
+  core-js-pure: false
+
+# @lottielab/lottie-player pulls lottie-web via a git URL (an "exotic"
+# resolution). pnpm 11 blocks git-resolved subdependencies by default;
+# this dependency predates the upgrade and worked under pnpm 9, so allow it.
+blockExoticSubdeps: false
