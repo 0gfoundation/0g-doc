@@ -77,13 +77,11 @@ keywords: [keyword1, keyword2]
 
 `MetaMaskButton` and `OKXButton` render the "Add 0G network" buttons on the testnet/mainnet docs pages. They are **deliberately dependency-free** (no wagmi/viem/MetaMask SDK) — appropriate for a docs site whose only wallet feature is a one-click add-network. Keep them that way unless mobile UX becomes a priority, at which point the MetaMask Connect SDK (proper deeplinking/session management) is the upgrade trigger — not wagmi.
 
-`MetaMaskButton` invariants worth preserving (each fixes a real, audited failure mode — don't "simplify" them away):
+Shared, wallet-agnostic logic (chain-id formatting, nested-error-code unwrapping, mobile + in-app-webview detection) lives in `src/components/walletUtils.ts` — one source of truth for both buttons, so e.g. the social-webview list can't drift. Invariants worth preserving (each fixes a real, audited failure mode — don't "simplify" them away):
 
-- Resolves the genuine MetaMask provider via **EIP-6963** (`rdns: io.metamask`), not raw `window.ethereum` — other wallets (OKX, Brave, Coinbase) overwrite it and set `isMetaMask = true` to impersonate. Legacy `window.ethereum.providers[]` / `isMetaMask` are fallbacks only, with impersonators excluded.
-- Follows MetaMask's official switch-then-add-on-`4902` pattern, and handles the documented error codes: `4902` (incl. the **nested mobile shape** `error.data.originalError.code`, plus a post-switch `eth_chainId` re-check because mobile can resolve a switch without switching), `4001` (user rejected), `-32002` (request pending). Feedback is an inline `aria-live` region — not `alert()`/`console.log`.
-- Mobile (no injected provider) falls back to a `https://link.metamask.io/dapp/<url>` deep link into the MetaMask in-app browser.
-
-`OKXButton` targets the namespaced `window.okxwallet`, so it doesn't collide with `window.ethereum`.
+- **MetaMaskButton** resolves the genuine MetaMask provider via **EIP-6963** (`rdns: io.metamask`), not raw `window.ethereum` — other wallets (OKX, Brave, Coinbase) overwrite it and set `isMetaMask = true` to impersonate. Legacy `window.ethereum.providers[]` / `isMetaMask` are fallbacks only, with impersonators excluded. **OKXButton** needs none of this — it targets the namespaced `window.okxwallet`, so there's no `window.ethereum` collision to disambiguate.
+- Both follow MetaMask's official switch-then-add-on-`4902` pattern and handle the documented error codes: `4902` (incl. the **nested mobile shape** `error.data.originalError.code`, plus a post-switch `eth_chainId` re-check because mobile can resolve a switch without switching), `4001` (user rejected), `-32002` (request pending). Feedback is an inline `aria-live` region with an in-flight (`disabled`/`aria-busy`) guard — not `alert()`/`console.log`.
+- Mobile (no injected provider) falls back to a deep link into the wallet's in-app browser — `https://link.metamask.io/dapp/<url>` for MetaMask, OKX's `okx://wallet/dapp/url` universal link for OKX. Detected social in-app webviews (where universal-link handoff is unreliable) instead show "open in your default browser" guidance.
 
 ### Math and search
 
