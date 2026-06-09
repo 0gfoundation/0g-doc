@@ -45,6 +45,25 @@ const metamaskDeepLink = (): string => {
   return `https://link.metamask.io/dapp/${host}${pathname}${search}`;
 };
 
+// Social apps' in-app browsers (WKWebView/Android WebView) don't reliably
+// hand universal links off to the MetaMask app, so the deep link dead-ends
+// there. Detect the common ones so we can guide the user to a real browser
+// instead. https://github.com/MetaMask/metamask-mobile/issues/4025
+const inAppBrowserName = (): string | null => {
+  if (typeof navigator === 'undefined') return null;
+  const ua = navigator.userAgent || '';
+  if (/FBAN|FBAV|FB_IAB/.test(ua)) return 'Facebook';
+  if (/Instagram/.test(ua)) return 'Instagram';
+  if (/Twitter/.test(ua)) return 'X';
+  if (/Line\//.test(ua)) return 'LINE';
+  if (/MicroMessenger/.test(ua)) return 'WeChat';
+  if (/TikTok|musical_ly|BytedanceWebview/i.test(ua)) return 'TikTok';
+  if (/Telegram/i.test(ua)) return 'Telegram';
+  if (/Snapchat/.test(ua)) return 'Snapchat';
+  if (/LinkedInApp/.test(ua)) return 'LinkedIn';
+  return null;
+};
+
 interface MetaMaskButtonProps {
   label?: string;
   chainId?: string | number;
@@ -145,6 +164,16 @@ export default function MetaMaskButton({
       // page in the MetaMask app's in-app browser, where the button works.
       // (Inside that browser a provider IS present, so we never reach here.)
       if (isMobile()) {
+        // A social app's in-app browser can't hand off to MetaMask, and the
+        // deep link would dead-end there — guide the user to a real browser.
+        const webview = inAppBrowserName();
+        if (webview) {
+          setStatus({
+            kind: 'info',
+            message: `You're in ${webview}'s in-app browser, which can't open MetaMask. Open this page in your default browser (use the menu → "Open in browser"), then tap again.`,
+          });
+          return;
+        }
         window.location.href = metamaskDeepLink();
         return;
       }
