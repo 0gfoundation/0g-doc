@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { getChainID, errorCode, isMobile, inAppBrowserName, WalletStatus } from '../walletUtils';
 
 declare global {
   interface Window {
@@ -21,21 +22,6 @@ const METAMASK_RDNS = 'io.metamask';
 const isImpersonator = (p: any): boolean =>
   Boolean(p?.isOkxWallet || p?.isOKExWallet || p?.isCoinbaseWallet || p?.isTrust || p?.isTrustWallet || p?.isBraveWallet);
 
-// MetaMask mobile nests the EIP-1193 error code under data.originalError.code
-// instead of exposing it at the top level (e.g. 4902 for an unknown chain), so
-// read both. See https://github.com/MetaMask/metamask-mobile/issues/3312
-const errorCode = (e: any): number | undefined => e?.code ?? e?.data?.originalError?.code;
-
-// A normal mobile browser can't expose a wallet extension, so there's no
-// injected provider to talk to. Detect mobile (incl. iPadOS, which reports a
-// desktop UA but is touch-capable) so we can hand off to the MetaMask app.
-const isMobile = (): boolean => {
-  if (typeof navigator === 'undefined') return false;
-  const ua = navigator.userAgent;
-  return /Android|iPhone|iPod/i.test(ua) || /iPad/.test(ua) ||
-    (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-};
-
 // Deep link that reopens the current page inside the MetaMask mobile app's
 // in-app browser, where a provider IS injected. Format is link.metamask.io/dapp
 // followed by the URL without its scheme. See:
@@ -43,25 +29,6 @@ const isMobile = (): boolean => {
 const metamaskDeepLink = (): string => {
   const { host, pathname, search } = window.location;
   return `https://link.metamask.io/dapp/${host}${pathname}${search}`;
-};
-
-// Social apps' in-app browsers (WKWebView/Android WebView) don't reliably
-// hand universal links off to the MetaMask app, so the deep link dead-ends
-// there. Detect the common ones so we can guide the user to a real browser
-// instead. https://github.com/MetaMask/metamask-mobile/issues/4025
-const inAppBrowserName = (): string | null => {
-  if (typeof navigator === 'undefined') return null;
-  const ua = navigator.userAgent || '';
-  if (/FBAN|FBAV|FB_IAB/.test(ua)) return 'Facebook';
-  if (/Instagram/.test(ua)) return 'Instagram';
-  if (/Twitter/.test(ua)) return 'X';
-  if (/Line\//.test(ua)) return 'LINE';
-  if (/MicroMessenger/.test(ua)) return 'WeChat';
-  if (/TikTok|musical_ly|BytedanceWebview/i.test(ua)) return 'TikTok';
-  if (/Telegram/i.test(ua)) return 'Telegram';
-  if (/Snapchat/.test(ua)) return 'Snapchat';
-  if (/LinkedInApp/.test(ua)) return 'LinkedIn';
-  return null;
 };
 
 interface MetaMaskButtonProps {
@@ -86,7 +53,7 @@ export default function MetaMaskButton({
   blockExplorerUrls = ['https://chainscan-galileo.0g.ai/']
 }: MetaMaskButtonProps): JSX.Element {
   // Inline, screen-reader-announced feedback (replaces alert()/console.log).
-  const [status, setStatus] = useState<{ kind: 'success' | 'error' | 'info'; message: string } | null>(null);
+  const [status, setStatus] = useState<WalletStatus | null>(null);
   // Guards against double-clicks that would trigger MetaMask's -32002.
   const [busy, setBusy] = useState(false);
 
@@ -123,11 +90,6 @@ export default function MetaMaskButton({
     if (eth?.isMetaMask && !isImpersonator(eth)) return eth;
 
     return null;
-  };
-
-  const getChainID = (networkId: string | number): string => {
-    const numeric = typeof networkId === 'string' ? parseInt(networkId) : networkId;
-    return '0x' + Number(numeric).toString(16);
   };
 
   // Add the chain, then report the outcome. Used when a switch reveals the
