@@ -16,11 +16,16 @@ interface EIP6963ProviderDetail {
 
 const METAMASK_RDNS = 'io.metamask';
 
-// Other wallets (OKX, etc.) frequently set isMetaMask = true to impersonate
-// MetaMask, so that flag alone can't be trusted — only fall back to it after
-// EIP-6963 discovery fails, and exclude known impersonators.
+// Other wallets (OKX, Brave, etc.) frequently set isMetaMask = true to
+// impersonate MetaMask, so that flag alone can't be trusted — only fall back
+// to it after EIP-6963 discovery fails, and exclude known impersonators.
 const isImpersonator = (p: any): boolean =>
-  Boolean(p?.isOkxWallet || p?.isOKExWallet || p?.isCoinbaseWallet || p?.isTrust || p?.isTrustWallet);
+  Boolean(p?.isOkxWallet || p?.isOKExWallet || p?.isCoinbaseWallet || p?.isTrust || p?.isTrustWallet || p?.isBraveWallet);
+
+// MetaMask mobile nests the EIP-1193 error code under data.originalError.code
+// instead of exposing it at the top level (e.g. 4902 for an unknown chain), so
+// read both. See https://github.com/MetaMask/metamask-mobile/issues/3312
+const errorCode = (e: any): number | undefined => e?.code ?? e?.data?.originalError?.code;
 
 // A normal mobile browser can't expose a wallet extension, so there's no
 // injected provider to talk to. Detect mobile (incl. iPadOS, which reports a
@@ -63,6 +68,10 @@ export default function MetaMaskButton({
   blockExplorerUrls = ['https://chainscan-galileo.0g.ai/']
 }: MetaMaskButtonProps): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Inline, screen-reader-announced feedback (replaces alert()/console.log).
+  const [status, setStatus] = useState<{ kind: 'success' | 'error' | 'info'; message: string } | null>(null);
+  // Guards against double-clicks that would trigger MetaMask's -32002.
+  const [busy, setBusy] = useState(false);
 
   // Collect EIP-6963 provider announcements as they arrive.
   const providersRef = useRef<EIP6963ProviderDetail[]>([]);
@@ -104,7 +113,34 @@ export default function MetaMaskButton({
     return '0x' + Number(numeric).toString(16);
   };
 
+  // Add the chain, then report the outcome. Used when a switch reveals the
+  // chain isn't in the wallet yet.
+  const addChain = async (provider: any, desiredChainHex: string) => {
+    try {
+      await provider.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: desiredChainHex,
+          chainName,
+          nativeCurrency: { name: tokenName, symbol: tokenSymbol, decimals: tokenDecimals },
+          rpcUrls,
+          blockExplorerUrls,
+        }],
+      });
+      setStatus({ kind: 'success', message: `${chainName} added to MetaMask.` });
+    } catch (addError: any) {
+      if (errorCode(addError) === 4001) {
+        setStatus({ kind: 'info', message: 'Request cancelled.' });
+      } else {
+        setStatus({ kind: 'error', message: `Could not add ${chainName}. Please try again.` });
+      }
+    }
+  };
+
   const addNetwork = async () => {
+    if (busy) return;
+    setStatus(null);
+
     const provider = resolveMetaMaskProvider();
     if (!provider) {
       // On mobile there's no extension to inject a provider, so reopen this
@@ -114,91 +150,66 @@ export default function MetaMaskButton({
         window.location.href = metamaskDeepLink();
         return;
       }
-      alert(
-        'MetaMask not found. If you have multiple wallet extensions installed (e.g. OKX, Coinbase), set MetaMask as your default or disable the others, then try again.'
-      );
+      setStatus({
+        kind: 'error',
+        message:
+          'MetaMask not found. If you have multiple wallet extensions (e.g. OKX, Coinbase), set MetaMask as your default or disable the others, then try again.',
+      });
       return;
     }
 
     const desiredChainHex = getChainID(inputChainId);
-
-    // For Galileo Testnet specifically, keep the legacy migration helper
-    if (String(inputChainId) === '16601') {
-      const changedToGalileo = await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: desiredChainHex }] }).catch(async () => {
-        const changedToOldGalileo = await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: getChainID('80087') }] }).catch(async () => {
-          const params = [{
-            chainId: desiredChainHex,
-            chainName,
-            nativeCurrency: {
-              name: tokenName,
-              symbol: tokenSymbol,
-              decimals: tokenDecimals
-            },
-            rpcUrls,
-            blockExplorerUrls
-          }];
-
-          await provider.request({
-            method: 'wallet_addEthereumChain',
-            params
-          }).catch((error: any) => {
-            console.log(error);
+    setBusy(true);
+    try {
+      // For Galileo Testnet specifically, keep the legacy migration helper.
+      // NOTE: no shipped page passes 16601, so this branch is currently dead
+      // (see audit finding #5 — pending a decision on the Newton modal).
+      if (String(inputChainId) === '16601') {
+        const changedToGalileo = await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: desiredChainHex }] }).catch(async () => {
+          const changedToOldGalileo = await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: getChainID('80087') }] }).catch(async () => {
+            await addChain(provider, desiredChainHex);
+            return true;
           });
+          if (changedToOldGalileo) return false;
+          setIsModalOpen(true);
           return true;
         });
-
-        if (changedToOldGalileo) {
-          return false;
+        if (changedToGalileo) return;
+        const currentChainId = await provider.request({ method: 'eth_chainId' });
+        if (currentChainId === desiredChainHex) {
+          setStatus({ kind: 'success', message: '0G Testnet added to MetaMask.' });
         }
-
-        setIsModalOpen(true);
-        return true;
-      });
-
-      if (changedToGalileo) {
-        return false;
-      }
-
-      const currentChainId = await provider.request({ method: 'eth_chainId' });
-      if (currentChainId === desiredChainHex) {
-        alert('0G Testnet added');
         return;
       }
-      return;
-    }
 
-    // Generic flow for other networks (e.g., Mainnet)
-    try {
-      await provider.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: desiredChainHex }]
-      });
-      return;
-    } catch (switchError: any) {
-      if (switchError && switchError.code === 4902) {
-        try {
-          await provider.request({
-            method: 'wallet_addEthereumChain',
-            params: [{
-              chainId: desiredChainHex,
-              chainName,
-              nativeCurrency: {
-                name: tokenName,
-                symbol: tokenSymbol,
-                decimals: tokenDecimals
-              },
-              rpcUrls,
-              blockExplorerUrls
-            }]
-          });
-          alert(`${chainName} added`);
+      // Generic flow: try to switch, and add the chain if it isn't there yet.
+      try {
+        await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: desiredChainHex }] });
+        // MetaMask mobile can resolve the switch WITHOUT switching for an
+        // unknown chain (returns null instead of throwing 4902), so verify the
+        // active chain and fall through to add if it didn't actually switch.
+        // https://github.com/MetaMask/metamask-mobile/issues/12502
+        const current = await provider.request({ method: 'eth_chainId' });
+        if (typeof current === 'string' && current.toLowerCase() === desiredChainHex.toLowerCase()) {
+          setStatus({ kind: 'success', message: `Switched to ${chainName}.` });
           return;
-        } catch (addError) {
-          console.log(addError);
         }
-      } else {
-        console.log(switchError);
+        await addChain(provider, desiredChainHex);
+      } catch (switchError: any) {
+        const code = errorCode(switchError);
+        if (code === 4001) {
+          setStatus({ kind: 'info', message: 'Request cancelled.' });
+          return;
+        }
+        if (code === -32002) {
+          setStatus({ kind: 'info', message: 'Check MetaMask — a request is already open.' });
+          return;
+        }
+        // 4902 (in any shape) or anything else → the chain isn't added yet.
+        await addChain(provider, desiredChainHex);
       }
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -206,13 +217,16 @@ export default function MetaMaskButton({
     <div style={{ margin: '20px 0' }}>
       <button
         onClick={addNetwork}
+        disabled={busy}
+        aria-busy={busy}
         style={{
           backgroundColor: '#E2761B',
           color: 'white',
           padding: '10px 20px',
           border: 'none',
           borderRadius: '5px',
-          cursor: 'pointer',
+          cursor: busy ? 'wait' : 'pointer',
+          opacity: busy ? 0.7 : 1,
           fontSize: '16px',
           fontWeight: 'bold',
           display: 'inline-flex',
@@ -224,11 +238,23 @@ export default function MetaMaskButton({
           alt="MetaMask Fox"
           style={{ height: '18px' }}
         />
-        {label}
+        {busy ? 'Check MetaMask…' : label}
       </button>
-      <RemoveNewtonModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      {status && (
+        <div
+          role="status"
+          aria-live="polite"
+          style={{
+            marginTop: '10px',
+            fontSize: '14px',
+            color: status.kind === 'error' ? '#b00020' : status.kind === 'success' ? '#1a7f37' : '#555',
+          }}>
+          {status.message}
+        </div>
+      )}
+      <RemoveNewtonModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </div>
   );
