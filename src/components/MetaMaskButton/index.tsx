@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import RemoveNewtonModal from '../RemoveNewtonModal';
 
 declare global {
   interface Window {
@@ -67,7 +66,6 @@ export default function MetaMaskButton({
   rpcUrls = ['https://evmrpc-testnet.0g.ai'],
   blockExplorerUrls = ['https://chainscan-galileo.0g.ai/']
 }: MetaMaskButtonProps): JSX.Element {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   // Inline, screen-reader-announced feedback (replaces alert()/console.log).
   const [status, setStatus] = useState<{ kind: 'success' | 'error' | 'info'; message: string } | null>(null);
   // Guards against double-clicks that would trigger MetaMask's -32002.
@@ -161,28 +159,7 @@ export default function MetaMaskButton({
     const desiredChainHex = getChainID(inputChainId);
     setBusy(true);
     try {
-      // For Galileo Testnet specifically, keep the legacy migration helper.
-      // NOTE: no shipped page passes 16601, so this branch is currently dead
-      // (see audit finding #5 — pending a decision on the Newton modal).
-      if (String(inputChainId) === '16601') {
-        const changedToGalileo = await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: desiredChainHex }] }).catch(async () => {
-          const changedToOldGalileo = await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: getChainID('80087') }] }).catch(async () => {
-            await addChain(provider, desiredChainHex);
-            return true;
-          });
-          if (changedToOldGalileo) return false;
-          setIsModalOpen(true);
-          return true;
-        });
-        if (changedToGalileo) return;
-        const currentChainId = await provider.request({ method: 'eth_chainId' });
-        if (currentChainId === desiredChainHex) {
-          setStatus({ kind: 'success', message: '0G Testnet added to MetaMask.' });
-        }
-        return;
-      }
-
-      // Generic flow: try to switch, and add the chain if it isn't there yet.
+      // Try to switch, and add the chain if it isn't there yet.
       try {
         await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: desiredChainHex }] });
         // MetaMask mobile can resolve the switch WITHOUT switching for an
@@ -252,10 +229,6 @@ export default function MetaMaskButton({
           {status.message}
         </div>
       )}
-      <RemoveNewtonModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
     </div>
   );
 } 
