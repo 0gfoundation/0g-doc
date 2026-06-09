@@ -24,6 +24,20 @@ export const isMobile = (): boolean => {
     (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
 };
 
+// Returns true if `param` is present in the URL, and strips it (via
+// replaceState) so a reload doesn't re-fire. Used to auto-resume an add-network
+// after the mobile deep link reopens the page inside the wallet's in-app
+// browser — MetaMask/OKX have no deep link that adds a chain directly, so the
+// button re-invokes the flow itself on arrival.
+export const consumeUrlFlag = (param: string): boolean => {
+  if (typeof window === 'undefined') return false;
+  const url = new URL(window.location.href);
+  if (url.searchParams.get(param) === null) return false;
+  url.searchParams.delete(param);
+  window.history.replaceState(null, '', url.toString());
+  return true;
+};
+
 // Social apps' in-app browsers (WKWebView/Android WebView) don't reliably hand
 // universal links off to a wallet app, so a deep link dead-ends there. Detect
 // the common ones so callers can guide the user to a real browser instead.

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { getChainID, errorCode, isMobile, inAppBrowserName, WalletStatus } from '../walletUtils';
+import React, { useState, useEffect, useRef } from 'react';
+import { getChainID, errorCode, isMobile, inAppBrowserName, consumeUrlFlag, WalletStatus } from '../walletUtils';
 
 declare global {
   interface Window {
@@ -12,7 +12,9 @@ declare global {
 // is wrapped so OKX also offers its install page when the app isn't present.
 // https://web3.okx.com/build/docs/waas/app-universal-link
 const okxDeepLink = (): string => {
-  const inner = 'okx://wallet/dapp/url?dappUrl=' + encodeURIComponent(window.location.href);
+  const url = new URL(window.location.href);
+  url.searchParams.set('okxadd', '1'); // auto-resume the add once back in OKX's browser
+  const inner = 'okx://wallet/dapp/url?dappUrl=' + encodeURIComponent(url.toString());
   return 'https://web3.okx.com/download?deeplink=' + encodeURIComponent(inner);
 };
 
@@ -30,7 +32,7 @@ interface OKXButtonProps {
 export default function OKXButton({
   label = "Add 0G Testnet",
   chainId: inputChainId = '16602',
-  chainName = '0G-Testnet-Galileo',
+  chainName = '0G Galileo Testnet',
   tokenSymbol = '0G',
   tokenName = '0G',
   tokenDecimals = 18,
@@ -41,6 +43,7 @@ export default function OKXButton({
   const [status, setStatus] = useState<WalletStatus | null>(null);
   // Guards against double-clicks that would trigger the wallet's -32002.
   const [busy, setBusy] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Add the chain, then report the outcome. Used when a switch reveals the
   // chain isn't in the wallet yet.
@@ -124,9 +127,30 @@ export default function OKXButton({
     }
   };
 
+  // If we just returned from the mobile deep link (now inside OKX's in-app
+  // browser), scroll to the button and auto-resume the add once the wallet is
+  // available — OKX has no deep link that adds a network directly.
+  useEffect(() => {
+    if (!consumeUrlFlag('okxadd')) return;
+    let tries = 0;
+    const id = window.setInterval(() => {
+      tries += 1;
+      if (typeof window.okxwallet !== 'undefined') {
+        window.clearInterval(id);
+        buttonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        void addNetwork();
+      } else if (tries >= 20) {
+        window.clearInterval(id);
+      }
+    }, 150);
+    return () => window.clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div style={{ margin: '20px 0' }}>
       <button
+        ref={buttonRef}
         onClick={addNetwork}
         disabled={busy}
         aria-busy={busy}

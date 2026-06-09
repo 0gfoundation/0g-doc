@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getChainID, errorCode, isMobile, inAppBrowserName, WalletStatus } from '../walletUtils';
+import { getChainID, errorCode, isMobile, inAppBrowserName, consumeUrlFlag, WalletStatus } from '../walletUtils';
 
 declare global {
   interface Window {
@@ -24,11 +24,13 @@ const isImpersonator = (p: any): boolean =>
 
 // Deep link that reopens the current page inside the MetaMask mobile app's
 // in-app browser, where a provider IS injected. Format is link.metamask.io/dapp
-// followed by the URL without its scheme. See:
+// followed by the URL without its scheme. The `mmadd` flag tells the page to
+// auto-resume the add once it reloads in MetaMask's browser. See:
 // https://docs.metamask.io/sdk/guides/use-deeplinks/
 const metamaskDeepLink = (): string => {
-  const { host, pathname, search } = window.location;
-  return `https://link.metamask.io/dapp/${host}${pathname}${search}`;
+  const url = new URL(window.location.href);
+  url.searchParams.set('mmadd', '1');
+  return `https://link.metamask.io/dapp/${url.host}${url.pathname}${url.search}`;
 };
 
 interface MetaMaskButtonProps {
@@ -45,7 +47,7 @@ interface MetaMaskButtonProps {
 export default function MetaMaskButton({
   label = "Add 0G Testnet",
   chainId: inputChainId = '16602',
-  chainName = '0G-Testnet-Galileo',
+  chainName = '0G Galileo Testnet',
   tokenSymbol = '0G',
   tokenName = '0G',
   tokenDecimals = 18,
@@ -56,6 +58,7 @@ export default function MetaMaskButton({
   const [status, setStatus] = useState<WalletStatus | null>(null);
   // Guards against double-clicks that would trigger MetaMask's -32002.
   const [busy, setBusy] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Collect EIP-6963 provider announcements as they arrive.
   const providersRef = useRef<EIP6963ProviderDetail[]>([]);
@@ -181,9 +184,30 @@ export default function MetaMaskButton({
     }
   };
 
+  // If we just returned from the mobile deep link (now inside MetaMask's in-app
+  // browser), scroll to the button and auto-resume the add once the provider is
+  // available — MetaMask has no deep link that adds a network directly.
+  useEffect(() => {
+    if (!consumeUrlFlag('mmadd')) return;
+    let tries = 0;
+    const id = window.setInterval(() => {
+      tries += 1;
+      if (resolveMetaMaskProvider()) {
+        window.clearInterval(id);
+        buttonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        void addNetwork();
+      } else if (tries >= 20) {
+        window.clearInterval(id);
+      }
+    }, 150);
+    return () => window.clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div style={{ margin: '20px 0' }}>
       <button
+        ref={buttonRef}
         onClick={addNetwork}
         disabled={busy}
         aria-busy={busy}
