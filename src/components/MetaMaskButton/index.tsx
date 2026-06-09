@@ -52,7 +52,7 @@ export default function MetaMaskButton({
   tokenName = '0G',
   tokenDecimals = 18,
   rpcUrls = ['https://evmrpc-testnet.0g.ai'],
-  blockExplorerUrls = ['https://chainscan-galileo.0g.ai/']
+  blockExplorerUrls = ['https://chainscan-galileo.0g.ai']
 }: MetaMaskButtonProps): JSX.Element {
   // Inline, screen-reader-announced feedback (replaces alert()/console.log).
   const [status, setStatus] = useState<WalletStatus | null>(null);

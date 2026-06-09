@@ -44,7 +44,7 @@ Build and run production workloads on the 0G Mainnet.
     tokenSymbol="0G"
     tokenDecimals={18}
     rpcUrls={["https://evmrpc.0g.ai"]}
-    blockExplorerUrls={["https://chainscan.0g.ai/"]}
+    blockExplorerUrls={["https://chainscan.0g.ai"]}
   />
   <OKXButton
     label="Add 0G Mainnet"
@@ -54,7 +54,7 @@ Build and run production workloads on the 0G Mainnet.
     tokenSymbol="0G"
     tokenDecimals={18}
     rpcUrls={["https://evmrpc.0g.ai"]}
-    blockExplorerUrls={["https://chainscan.0g.ai/"]}
+    blockExplorerUrls={["https://chainscan.0g.ai"]}
   />
 </div>
 
