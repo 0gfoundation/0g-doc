@@ -8,7 +8,7 @@ Docusaurus 3 site published at https://docs.0g.ai. Content lives in `docs/`; sit
 
 ## Commands
 
-Node 20.11.0 (`.nvmrc`). README uses `yarn`, but the committed lockfile is `pnpm-lock.yaml` and CI runs pnpm 9 — prefer pnpm to keep the lockfile clean.
+Node 24 (`.nvmrc`) and pnpm 11, **pinned via the `packageManager` field in `package.json`**. README still says `yarn`, but the committed lockfile is `pnpm-lock.yaml` — always use pnpm. Run `nvm use` (picks up `.nvmrc`) and `corepack enable` so the pinned pnpm activates automatically; CI reads the same `packageManager` pin via `pnpm/action-setup` (the workflow deliberately sets **no** `version:`, or it errors with `ERR_PNPM_BAD_PM_VERSION`).
 
 - `pnpm install --frozen-lockfile` — install (matches CI)
 - `pnpm start` — dev server with live reload
@@ -18,6 +18,13 @@ Node 20.11.0 (`.nvmrc`). README uses `yarn`, but the committed lockfile is `pnpm
 - `pnpm clear` — clear Docusaurus cache when builds get weird
 
 No test suite. CI validates by: build, broken-link check (see below), and cspell.
+
+### pnpm 10+ gotchas (`pnpm-workspace.yaml`)
+
+pnpm 10+ tightened two defaults that abort installs on this repo. Both are intentionally relaxed in `pnpm-workspace.yaml` — **don't delete that file or those keys** or `pnpm install`/`pnpm start` will break again:
+
+- `allowBuilds: { core-js: false, core-js-pure: false }` — these packages' only build step is a postinstall donation banner; without this, installs abort with `ERR_PNPM_IGNORED_BUILDS`. (pnpm regenerates an `allowBuilds:` placeholder with `"set this to true or false"` values when it hits this — fill in `false`, don't leave the placeholder.)
+- `blockExoticSubdeps: false` — `@lottielab/lottie-player` resolves `lottie-web` via a git URL, which pnpm 11 blocks by default.
 
 ### Reproducing the CI link check locally
 
@@ -65,6 +72,18 @@ keywords: [keyword1, keyword2]
 - `markdown-endpoint-plugin.js` — copies raw `.md`/`.mdx` files into the build output so `docs.0g.ai/concepts/compute.md` returns raw markdown. Used by LLM tooling. Also installs dev-server middleware so the same routes work under `pnpm start`.
 - `security-headers-plugin.js` — sets CSP, X-Frame-Options, HSTS, etc. on the dev server. Production headers are set in `static/_headers` (Vercel) and `vercel.json`.
 - `docusaurus-plugin-llms` — generates `llms.txt` and `llms-full.txt` at the site root from the docs corpus.
+
+### Wallet buttons (`src/components/`)
+
+`MetaMaskButton` and `OKXButton` render the "Add 0G network" buttons on the testnet/mainnet docs pages. They are **deliberately dependency-free** (no wagmi/viem/MetaMask SDK) — appropriate for a docs site whose only wallet feature is a one-click add-network. Keep them that way unless mobile UX becomes a priority, at which point the MetaMask Connect SDK (proper deeplinking/session management) is the upgrade trigger — not wagmi.
+
+`MetaMaskButton` invariants worth preserving (each fixes a real, audited failure mode — don't "simplify" them away):
+
+- Resolves the genuine MetaMask provider via **EIP-6963** (`rdns: io.metamask`), not raw `window.ethereum` — other wallets (OKX, Brave, Coinbase) overwrite it and set `isMetaMask = true` to impersonate. Legacy `window.ethereum.providers[]` / `isMetaMask` are fallbacks only, with impersonators excluded.
+- Follows MetaMask's official switch-then-add-on-`4902` pattern, and handles the documented error codes: `4902` (incl. the **nested mobile shape** `error.data.originalError.code`, plus a post-switch `eth_chainId` re-check because mobile can resolve a switch without switching), `4001` (user rejected), `-32002` (request pending). Feedback is an inline `aria-live` region — not `alert()`/`console.log`.
+- Mobile (no injected provider) falls back to a `https://link.metamask.io/dapp/<url>` deep link into the MetaMask in-app browser.
+
+`OKXButton` targets the namespaced `window.okxwallet`, so it doesn't collide with `window.ethereum`.
 
 ### Math and search
 
