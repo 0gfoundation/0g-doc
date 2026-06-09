@@ -16,7 +16,7 @@ This page provides comprehensive context about 0G infrastructure to help AI codi
 
 | Parameter | Value |
 |-----------|-------|
-| **Network Name** | 0G-Galileo-Testnet |
+| **Network Name** | 0G Galileo Testnet |
 | **Chain ID** | 16602 |
 | **Token Symbol** | 0G |
 | **RPC Endpoint** | https://evmrpc-testnet.0g.ai (development only — use 3rd party RPCs for production) |
@@ -725,8 +725,8 @@ Curated list of community projects, tools, and resources built on 0G.
 await window.ethereum.request({
   method: 'wallet_addEthereumChain',
   params: [{
-    chainId: '0x40EA',
-    chainName: '0G-Galileo-Testnet',
+    chainId: '0x40DA',
+    chainName: '0G Galileo Testnet',
     nativeCurrency: { name: '0G', symbol: '0G', decimals: 18 },
     rpcUrls: ['https://evmrpc-testnet.0g.ai'],
     blockExplorerUrls: ['https://chainscan-galileo.0g.ai']
@@ -739,7 +739,7 @@ await window.ethereum.request({
 await window.ethereum.request({
   method: 'wallet_addEthereumChain',
   params: [{
-    chainId: '0x4125',
+    chainId: '0x4115',
     chainName: '0G Mainnet',
     nativeCurrency: { name: '0G', symbol: '0G', decimals: 18 },
     rpcUrls: ['https://evmrpc.0g.ai'],

@@ -22,7 +22,7 @@ Test your applications on 0G's infrastructure without real costs or risks.
 
 | Parameters | Network Details |
 |----------------|---|
-| **Network Name** | 0G-Galileo-Testnet |
+| **Network Name** | 0G Galileo Testnet |
 | **Chain ID** | 16602 |
 | **Token Symbol** | 0G |
 | **Block Explorer** | ```https://chainscan-galileo.0g.ai``` |

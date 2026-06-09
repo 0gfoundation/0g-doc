@@ -37,7 +37,7 @@ const RemoveNewtonModal: React.FC<RemoveNewtonModalProps> = ({ isOpen, onClose }
         <div style={styles.modalBody}>
           <p>
             The old Testnet versions are no longer active. 
-            Please remove it from your MetaMask network list before adding the current <strong>0G-Galileo-Testnet</strong> to avoid potential conflicts.
+            Please remove it from your MetaMask network list before adding the current <strong>0G Galileo Testnet</strong> to avoid potential conflicts.
           </p>
           <ol>
             <li>Open MetaMask and click the network dropdown menu at the top.</li>

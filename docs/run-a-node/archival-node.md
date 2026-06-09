@@ -6,7 +6,7 @@ description: "Guide to running a 0G archival node for complete historical blockc
 # Archival Node
 ---
 
-Running an Archival node for the **0G-Galileo-Testnet** means providing complete historical data storage and access for the network, maintaining the full blockchain history and state.
+Running an Archival node for the **0G Galileo Testnet** means providing complete historical data storage and access for the network, maintaining the full blockchain history and state.
 
 :::info **What You'll Need**
 - Linux system with sufficient disk space for archive data
