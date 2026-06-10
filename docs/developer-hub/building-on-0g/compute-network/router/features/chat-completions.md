@@ -37,7 +37,7 @@ Optional top-level fields. Stripped before the request is forwarded to the provi
 
 | Field        | Type    | Description                                                                          |
 | ------------ | ------- | ------------------------------------------------------------------------------------ |
-| `provider`   | object  | Control provider routing — see [Routing](../routing)                                 |
+| `provider`   | object  | **Deprecated** — prefer `X-0G-Provider-*` request headers. See [Routing](../routing) |
 | `verify_tee` | boolean | Ask the Router to synchronously verify the provider's TEE signature — see [Verifiable Execution](./verifiable-execution) |
 
 ## Streaming

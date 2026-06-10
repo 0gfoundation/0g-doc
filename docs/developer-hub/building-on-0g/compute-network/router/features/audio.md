@@ -70,13 +70,27 @@ print(result.text)
 
 ## 0G Router Extensions
 
-Because this endpoint uses `multipart/form-data` instead of a JSON body, the only Router extension that can be passed today is `verify_tee`, as a **query parameter**:
+Because this endpoint uses `multipart/form-data` instead of a JSON body, Router extensions are passed out-of-band — as a query parameter for `verify_tee`, and as `X-0G-Provider-*` request headers for provider routing.
+
+**TEE verification** — pass `verify_tee` as a query parameter:
 
 ```
 ?verify_tee=true
 ```
 
-See [Verifiable Execution](./verifiable-execution) for what `tee_verified` means in the response. Provider routing fields (`provider.address`, `provider.sort`) are not currently parsed on multipart endpoints — use the default round-robin or pin via [Provider Routing](../routing) on the JSON-body endpoints.
+See [Verifiable Execution](./verifiable-execution) for what `tee_verified` means in the response.
+
+**Provider routing** — pass `X-0G-Provider-*` headers, the same surface as JSON endpoints:
+
+```bash
+curl https://router-api.0g.ai/v1/audio/transcriptions \
+  -H "Authorization: Bearer sk-YOUR_API_KEY" \
+  -H "X-0G-Provider-Sort: latency" \
+  -F "file=@recording.mp3" \
+  -F "model=openai/whisper-large-v3"
+```
+
+See [Provider Routing](../routing) for the full header reference.
 
 ## Related
 
