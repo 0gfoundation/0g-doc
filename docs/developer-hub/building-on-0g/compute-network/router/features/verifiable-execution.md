@@ -139,4 +139,4 @@ All four steps pass → end-to-end cryptographic proof, no trust in the Router r
 
 - [**Principles: Verifiable Execution**](../principles#4-verifiable-execution) — the "why" behind this feature
 - [**Chat Completions**](./chat-completions#response-shape) — structure of the `x_0g_trace` block
-- [**Provider Routing**](../routing) — pin to a specific attested provider with `provider.address`
+- [**Provider Routing**](../routing) — pin to a specific attested provider with `X-0G-Provider-Address`

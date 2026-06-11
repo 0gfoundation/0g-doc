@@ -52,7 +52,7 @@ If you send a `tools` field to a model that doesn't support it, the Router retur
 curl "https://router-api.0g.ai/v1/providers?model=zai-org/GLM-5-FP8"
 ```
 
-Returns every TEE-acknowledged provider serving that model, with on-chain address, observed latency, and TEE attestation info. Use these addresses with the [`provider.address` field](./routing) if you want deterministic routing.
+Returns every TEE-acknowledged provider serving that model, with on-chain address, observed latency, and TEE attestation info. Use these addresses with the [`X-0G-Provider-Address` header](./routing) if you want deterministic routing.
 
 Query parameters:
 
