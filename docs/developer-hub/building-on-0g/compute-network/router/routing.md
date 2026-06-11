@@ -34,7 +34,7 @@ The Router accepts routing preferences from two surfaces. In priority order:
 Headers and body are merged field-by-field; when the same field is set on both, the header wins. Multipart endpoints (`/v1/audio/transcriptions`, `/v1/images/edits`, `/v1/async/images/edits`) have **no body routing surface** — headers are the only way to control routing there.
 
 :::caution The JSON body `provider` object is deprecated
-New code should use `X-0G-Provider-*` headers. The body surface still works today, but a future release will emit a `Deprecation: true` response header on body-source requests and eventually stop parsing the field. Headers are the only routing surface that works uniformly across JSON, multipart, and async endpoints.
+New code should use `X-0G-Provider-*` headers. The body surface still works today for back-compat but will be phased out in a future release. Headers are the only routing surface that works uniformly across JSON, multipart, and async endpoints.
 :::
 
 ## Routing Strategies
