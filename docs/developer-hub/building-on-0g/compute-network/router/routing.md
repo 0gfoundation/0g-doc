@@ -122,7 +122,7 @@ When both surfaces are present and set the same field, the header wins.
 
 ## Header Reference
 
-HTTP headers are case-insensitive per RFC 7230 — `X-0G-Provider-Address` and `x-0g-provider-address` are equivalent. Values are case-insensitive too unless noted.
+HTTP header names are case-insensitive per RFC 7230 — `X-0G-Provider-Address` and `x-0g-provider-address` are equivalent.
 
 | Header                          | Values                              | Description                                                                                                  |
 | ------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------ |
