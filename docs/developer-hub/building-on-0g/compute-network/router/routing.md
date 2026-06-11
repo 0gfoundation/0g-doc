@@ -128,7 +128,7 @@ HTTP header names are case-insensitive per RFC 7230 — `X-0G-Provider-Address` 
 | ------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `X-0G-Provider-Address`         | on-chain address (`0x…`)            | Pin the request to a specific provider. Implies `Allow-Fallbacks: false` unless overridden.                  |
 | `X-0G-Provider-Sort`            | `latency` \| `price`                | Sort strategy when no address is pinned. Ignored if `X-0G-Provider-Address` is set.                          |
-| `X-0G-Provider-Trust-Mode`      | `verified` \| `private`             | Restrict provider selection to a trust tier. The legacy `standard` tier is no longer accepted.               |
+| `X-0G-Provider-Trust-Mode`      | `verified` \| `private`             | Restrict provider selection to a trust tier.                                                                  |
 | `X-0G-Provider-Allow-Fallbacks` | `true` \| `false`                   | Allow cross-provider retry on failure. Lenient: anything other than `true`/`false` is treated as unset and defers to the default. |
 
 Defaults: `Allow-Fallbacks` is `true` normally, and `false` when `X-0G-Provider-Address` is set.
