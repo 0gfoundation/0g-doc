@@ -85,7 +85,7 @@ curl https://router-api.0g.ai/v1/chat/completions \
   }'
 ```
 
-Routes directly to a specific provider by on-chain address. **Fallback is disabled by default when pinning** — if the pinned provider fails, the request fails. Add `X-0G-Provider-Allow-Fallbacks: true` to re-enable cross-provider retry (see [Pinned address + fallbacks](#pinned-address--fallbacks) below).
+Routes directly to a specific provider by on-chain address. **Fallback is disabled by default when pinning** — if the pinned provider fails, the request fails. Add `X-0G-Provider-Allow-Fallbacks: true` to re-enable cross-provider retry.
 
 </TabItem>
 <TabItem value="multipart" label="Multipart (audio / image edit)">
@@ -132,21 +132,6 @@ HTTP header names are case-insensitive per RFC 7230 — `X-0G-Provider-Address` 
 | `X-0G-Provider-Allow-Fallbacks` | `true` \| `false`                   | Allow cross-provider retry on failure. Lenient: anything other than `true`/`false` is treated as unset and defers to the default. |
 
 Defaults: `Allow-Fallbacks` is `true` normally, and `false` when `X-0G-Provider-Address` is set.
-
-## Pinned address + fallbacks
-
-Pinning a provider via `X-0G-Provider-Address` re-derives `Allow-Fallbacks=false` unconditionally — **even if a JSON body's `provider.allow_fallbacks: true` is also present**. The Router cannot distinguish "body explicitly set true" from "body absent (default true)", so it treats a header-pinned address as the strict request.
-
-To pin an address **and** allow fallback, set both headers explicitly:
-
-```bash
-curl https://router-api.0g.ai/v1/chat/completions \
-  -H "Authorization: Bearer sk-YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -H "X-0G-Provider-Address: 0xd9966e..." \
-  -H "X-0G-Provider-Allow-Fallbacks: true" \
-  -d '{ "model": "zai-org/GLM-5-FP8", "messages": [{"role":"user","content":"Hello"}] }'
-```
 
 ## Discovering Provider Addresses
 
