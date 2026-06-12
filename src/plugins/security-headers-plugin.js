@@ -24,7 +24,7 @@ module.exports = function securityHeadersPlugin(context, options) {
         // Content Security Policy
         res.setHeader(
           'Content-Security-Policy',
-          "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https://www.google-analytics.com https://www.clarity.ms; font-src 'self' https://cdnjs.cloudflare.com; frame-ancestors 'none'; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://www.clarity.ms;"
+          "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.clarity.ms https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https://www.google-analytics.com https://www.clarity.ms; font-src 'self' https://cdnjs.cloudflare.com; frame-ancestors 'none'; frame-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://www.clarity.ms https://build.0g.ai;"
         );
         
         // HTTPS enforcement

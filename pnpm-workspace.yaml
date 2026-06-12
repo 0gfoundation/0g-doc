@@ -5,6 +5,10 @@
 allowBuilds:
   core-js: false
   core-js-pure: false
+  # @0gfoundation/ask-ai-widget installs from GitHub (no npm release), so its
+  # `prepare` script must run on install to build dist/. Without this, pnpm
+  # aborts with ERR_PNPM_GIT_DEP_PREPARE_NOT_ALLOWED.
+  "@0gfoundation/ask-ai-widget": true
 
 # @lottielab/lottie-player pulls lottie-web via a git URL (an "exotic"
 # resolution). pnpm 11 blocks git-resolved subdependencies by default;

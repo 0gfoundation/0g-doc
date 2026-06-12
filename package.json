@@ -16,6 +16,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@0gfoundation/ask-ai-widget": "github:0gfoundation/ask-ai-widget#v0.1.0",
     "@docusaurus/core": "^3.10.1",
     "@docusaurus/preset-classic": "^3.10.1",
     "@lottielab/lottie-player": "^1.1.2",
