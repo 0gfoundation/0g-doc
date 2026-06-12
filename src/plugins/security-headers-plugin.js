@@ -1,8 +1,9 @@
 /**
  * Security Headers Plugin for Docusaurus
- * 
- * This plugin adds security headers to protect against clickjacking and other vulnerabilities.
- * It works by adding middleware to the development server and generating a _headers file for production.
+ *
+ * Adds security headers to the DEV SERVER ONLY, via middleware. Production
+ * headers are served by Vercel from vercel.json's `headers` array — keep the
+ * CSP here in sync with that one so `pnpm start` mirrors production policy.
  */
 
 module.exports = function securityHeadersPlugin(context, options) {
@@ -24,7 +25,7 @@ module.exports = function securityHeadersPlugin(context, options) {
         // Content Security Policy
         res.setHeader(
           'Content-Security-Policy',
-          "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.clarity.ms https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https://www.google-analytics.com https://www.clarity.ms; font-src 'self' https://cdnjs.cloudflare.com; frame-ancestors 'none'; frame-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://www.clarity.ms https://build.0g.ai;"
+          "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://www.clarity.ms https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.clarity.ms https://github.com; font-src 'self' data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.gstatic.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.clarity.ms https://c.bing.com https://build.0g.ai; frame-src 'self' https://challenges.cloudflare.com https://www.youtube.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'"
         );
         
         // HTTPS enforcement

@@ -70,7 +70,7 @@ keywords: [keyword1, keyword2]
 ### Custom plugins (`src/plugins/`)
 
 - `markdown-endpoint-plugin.js` — copies raw `.md`/`.mdx` files into the build output so `docs.0g.ai/concepts/compute.md` returns raw markdown. Used by LLM tooling. Also installs dev-server middleware so the same routes work under `pnpm start`.
-- `security-headers-plugin.js` — sets CSP, X-Frame-Options, HSTS, etc. on the dev server. Production headers are set in `static/_headers` (Vercel) and `vercel.json`.
+- `security-headers-plugin.js` — sets CSP, X-Frame-Options, HSTS, etc. on the dev server. Production headers are set in `vercel.json`'s `headers` array **only** — Vercel does not read `_headers` files (that's a Netlify/Cloudflare Pages convention; a stale `static/_headers` used to sit here shipping nothing, and was removed). When a new page or component loads a third-party resource, the CSP in `vercel.json` (and the dev plugin, for parity) must be extended or the resource will be silently blocked in production.
 - `docusaurus-plugin-llms` — generates `llms.txt` and `llms-full.txt` at the site root from the docs corpus.
 
 ### Wallet buttons (`src/components/`)
