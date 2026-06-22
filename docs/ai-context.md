@@ -354,7 +354,7 @@ response = client.chat.completions.create(
 )
 ```
 
-**Router also supports**: image generation via `POST /v1/images/generations` (OpenAI-compatible, sync) or `POST /v1/async/images/generations` + `GET /v1/async/jobs/{jobId}?provider_address=...` (recommended for production) — both paths must pass `"response_format": "b64_json"` today; URL responses will be added later. Also `/v1/audio/transcriptions`, provider routing via `X-0G-Provider-*` request headers (`X-0G-Provider-Sort: latency`/`price`, or `X-0G-Provider-Address: 0x…` to pin), `GET /v1/models` (no auth), `GET /v1/account/balance`, `GET /v1/account/usage/{stats,history}`.
+**Router also supports**: image generation via `POST /v1/images/generations` (OpenAI-compatible, sync) or `POST /v1/async/images/generations` + `GET /v1/async/jobs/{jobId}?provider_address=...` (recommended for production) — both paths must pass `"response_format": "b64_json"` today; URL responses will be added later. Also `/v1/audio/transcriptions`, provider routing via `X-0G-Provider-*` request headers (`X-0G-Provider-Sort: latency`/`price`, `X-0G-Provider-Address: 0x…` to pin, or `X-0G-Provider-Max-Price-Usd-Prompt`/`-Completion`/`-Image` to cap per-request price — header-only, malformed values return `400`), `GET /v1/models` (no auth), `GET /v1/account/balance`, `GET /v1/account/usage/{stats,history}`.
 
 **Quick Start — Direct (SDK)**:
 
