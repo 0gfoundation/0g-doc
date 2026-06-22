@@ -39,7 +39,7 @@ Errors follow a consistent OpenAI-compatible shape. The response also includes `
 
 | `type`                  | `code` (examples)                                            | When it happens                                      |
 | ----------------------- | ------------------------------------------------------------ | ---------------------------------------------------- |
-| `invalid_request_error` | `invalid_body`, `missing_authorization`, `invalid_api_key`, `api_key_revoked`, `invalid_provider_header`, `invalid_max_price_usd`, `no_provider_within_max_price`, `pinned_provider_exceeds_max_price` | 400, 401 — request or auth is wrong (incl. malformed `X-0G-Provider-*` headers and price-ceiling conflicts) |
+| `invalid_request_error` | `invalid_body`, `missing_authorization`, `invalid_api_key`, `api_key_revoked`, `invalid_provider_header`, `invalid_max_price_usd`, `no_provider_within_max_price`, `pinned_provider_exceeds_max_price` | 400, 401 — request, auth, or routing headers are wrong (incl. malformed `X-0G-Provider-*` values and unsatisfiable price ceilings) |
 | `payment_error`         | `insufficient_balance`                                       | 402 — not enough 0G deposited                        |
 | `permission_error`      | `access_denied`                                              | 403 — the key is not allowed to perform this action  |
 | `not_found_error`       | `api_key_not_found`                                          | 404 — resource doesn't exist                         |
