@@ -123,6 +123,7 @@ const sidebars: SidebarsConfig = {
                           ],
                         },
                         'developer-hub/building-on-0g/compute-network/router/routing',
+                        'developer-hub/building-on-0g/compute-network/router/trust-modes',
                         'developer-hub/building-on-0g/compute-network/router/authentication',
                         'developer-hub/building-on-0g/compute-network/router/account/deposits',
                         'developer-hub/building-on-0g/compute-network/router/rate-limits',

@@ -128,21 +128,14 @@ HTTP header names are case-insensitive per RFC 7230 — `X-0G-Provider-Address` 
 | ------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `X-0G-Provider-Address`         | on-chain address (`0x…`)            | Pin the request to a specific provider. Implies `Allow-Fallbacks: false` unless overridden.                  |
 | `X-0G-Provider-Sort`            | `latency` \| `price`                | Sort strategy when no address is pinned. Ignored if `X-0G-Provider-Address` is set.                          |
-| `X-0G-Provider-Trust-Mode`      | `verified` \| `private`             | Restrict provider selection to a trust tier — see [Trust modes](#trust-modes).                                |
+| `X-0G-Provider-Trust-Mode`      | `private`                           | Restrict selection to Private (TeeML) providers — see [Trust Modes](./trust-modes).                          |
 | `X-0G-Provider-Allow-Fallbacks` | `true` \| `false`                   | Allow cross-provider retry on failure. Lenient: anything other than `true`/`false` is treated as unset and defers to the default. |
 
 Defaults: `Allow-Fallbacks` is `true` normally, and `false` when `X-0G-Provider-Address` is set.
 
 ### Trust modes
 
-`X-0G-Provider-Trust-Mode` restricts selection by the provider's [verification mode](../inference#verification-modes):
-
-| Value      | Routes to                      | Guarantee                                                                                          |
-| ---------- | ------------------------------ | --------------------------------------------------------------------------------------------------- |
-| `verified` | TeeML **and** TeeTLS providers | Verifiable execution — the response provably came from the real model.                              |
-| `private`  | TeeML providers only           | Verifiability **and** privacy — the model itself runs inside the TEE, so prompts never leave the enclave. |
-
-`verified` is a floor, not an exact match: TeeML (`private`-tier) providers also satisfy a `verified` request, since running the model inside the TEE gives you everything TeeTLS does and more. Values other than `verified`/`private` are rejected with `400 invalid_trust_mode`. Omit the header for no trust-tier restriction (the default).
+`X-0G-Provider-Trust-Mode: private` restricts selection to **Private (TeeML)** providers — those that run the model inside a TEE, so prompts never leave the enclave. Omit the header for no trust-tier restriction (the default). See [**Trust Modes**](./trust-modes) for the full explanation, including how to enforce private mode per API key.
 
 ## Discovering Provider Addresses
 
