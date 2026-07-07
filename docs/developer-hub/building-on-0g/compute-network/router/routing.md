@@ -198,13 +198,6 @@ The ceiling is **service-type aware**. Setting `Image` on a chat call (or `Promp
 STT models are billed per second of audio, which has no equivalent in the current USD pricing schema (`prompt` / `completion` / `image` only). Reusing the `Prompt` header for STT would be a footgun — the same `1.0` would mean "$1 per 1M tokens" on chat and "$1 per second" on audio — so `/v1/audio/transcriptions` enforces no ceiling for now.
 :::
 
-### Semantics
-
-- **No USD pricing metadata means excluded.** A provider whose pricing data lacks the dimension being filtered is dropped — a hard cap can't be honoured for an unknown price. The same applies if the advertised price is `NaN`, `Inf`, or negative.
-- **Pinning + a ceiling can conflict.** When `X-0G-Provider-Address` is set together with any `Max-Price-Usd-*` header, the pinned provider is checked against the ceiling directly. If it's over, the request fails with `400 pinned_provider_exceeds_max_price` rather than silently honouring the pin.
-- **Empty pool is a `400`, not a `503`.** If auto-select finds no provider clearing the ceiling, you get `400 no_provider_within_max_price` — a structural failure of your constraints, distinct from `503 no_available_provider` (a transient lack of healthy providers). See [Errors](./errors).
-- **Header-only.** This ceiling has no JSON body equivalent. Setting `provider.max_price_usd` in the request body is silently ignored — the headers are the only path that applies it.
-
 ## Discovering Provider Addresses
 
 List the providers serving a model with `GET /v1/providers?model_id=…` — see [Models](./models#listing-providers-for-a-model).
