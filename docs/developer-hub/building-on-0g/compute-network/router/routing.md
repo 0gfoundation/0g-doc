@@ -198,6 +198,11 @@ The ceiling is **service-type aware**. Setting `Image` on a chat call (or `Promp
 STT models are billed per second of audio, which has no equivalent in the current USD pricing schema (`prompt` / `completion` / `image` only). Reusing the `Prompt` header for STT would be a footgun — the same `1.0` would mean "$1 per 1M tokens" on chat and "$1 per second" on audio — so `/v1/audio/transcriptions` enforces no ceiling for now.
 :::
 
+Two failure modes are worth calling out:
+
+- **No provider qualifies.** If the ceiling filters out every candidate, the request fails with `400 no_provider_within_max_price`, not `503` — the pool is empty structurally, not transiently, so retrying without raising the ceiling won't help.
+- **Pinning + ceiling.** If `X-0G-Provider-Address` pins a provider above the ceiling, the request fails with `400 pinned_provider_exceeds_max_price` — the pin isn't silently overridden.
+
 ## Discovering Provider Addresses
 
 List the providers serving a model with `GET /v1/providers?model_id=…` — see [Models](./models#listing-providers-for-a-model).
