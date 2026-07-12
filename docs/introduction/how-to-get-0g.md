@@ -2,10 +2,14 @@
 id: how-to-get-0g
 title: How to Get 0G Token
 sidebar_position: 3
-description: "Learn how to buy, bridge, and swap 0G tokens through exchanges, XSwap bridge, and 0G Hub. Includes wallet setup and supported trading pairs."
+description: "Learn how to buy, bridge, and swap 0G tokens through exchanges, cross-chain bridges, and 0G Hub. Includes wallet setup and supported trading pairs."
 ---
 
 # How to Get 0G Token
+
+:::tip Interactive Guide
+Prefer a guided path? **[get.0g.ai](https://get.0g.ai)** is the official interactive guide to acquiring $0G — pick your starting point (fiat, another chain, an exchange, DeFi, or a wallet) and it walks you through step by step.
+:::
 
 :::info Network Details
 - **Token**: Native gas token (EVM-compatible)
@@ -16,27 +20,29 @@ description: "Learn how to buy, bridge, and swap 0G tokens through exchanges, XS
 
 ## Centralized Exchanges
 
-The most straightforward way to acquire $0G is through centralized exchanges. After purchasing, withdraw directly to the **0G Mainnet** (select "0G Chain" or "0G Mainnet" as the withdrawal network).
+The most straightforward way to acquire $0G is through centralized exchanges. After purchasing, withdraw directly to the **0G Mainnet** (select "0G Chain" or "0G Mainnet" as the withdrawal network). All exchanges below support deposits and withdrawals on the native 0G network.
 
 ### Spot Trading
 
 | Exchange | Trading Pairs |
 |----------|---------------|
 | **[HTX](https://www.htx.com/trade/0g_usdt)** | 0G/USDT |
-| **[Binance](https://www.binance.com/en/trade/0G_USDT)** | 0G/USDT, 0G/USDC, 0G/BNB, 0G/FDUSD, 0G/TRY |
+| **[Binance](https://www.binance.com/en/trade/0G_USDT)** | 0G/USDT, 0G/USDC, 0G/TRY |
 | **[Bybit](https://www.bybit.com/en/trade/spot/0G/USDT)** | 0G/USDT |
 | **[MEXC](https://www.mexc.com/exchange/0G_USDT)** | 0G/USDT, 0G/USDC |
 | **[KuCoin](https://www.kucoin.com/trade/0G-USDT)** | 0G/USDT |
 | **[Gate.io](https://www.gate.io/trade/0G_USDT)** | 0G/USDT |
 | **[Bitget](https://www.bitget.com/spot/0GUSDT)** | 0G/USDT |
 | **[HashKey Exchange](https://global.hashkey.com/en-US/spot/0G_USDT)** | 0G/USDT |
-| **[LBank](https://www.lbank.com/trade/0g_usdt)** | 0G/USDT |
-| **[Upbit](https://upbit.com/exchange?code=CRIX.UPBIT.USDT-0G)** | 0G/USDT |
-| **[Kraken](https://www.kraken.com/prices/0g)** | 0G/USDT |
+| **[LBank](https://www.lbank.com/trade/0g_usdt)** | 0G/USDT, 0G/USDC |
+| **[Upbit](https://upbit.com/exchange?code=CRIX.UPBIT.KRW-0G)** | 0G/KRW, 0G/BTC, 0G/USDT |
+| **[Kraken](https://www.kraken.com/prices/0g)** | 0G/USD, 0G/EUR |
+| **[BitMart](https://www.bitmart.com/trade/en-US?symbol=0G_USDT)** | 0G/USDT |
+| **[Bithumb](https://www.bithumb.com/react/trade/order/0G-KRW)** | 0G/KRW |
 
 ## Bridge to 0G Chain
 
-Use **[XSwap](https://xswap.link/)**, the official bridge for the 0G network, powered by [Chainlink CCIP](https://docs.chain.link/ccip/directory/mainnet/chain/0g-mainnet).
+**[XSwap](https://xswap.link/)** is the official bridge for the 0G network, powered by [Chainlink CCIP](https://docs.chain.link/ccip/directory/mainnet/chain/0g-mainnet).
 
 ### XSwap Bridge
 
@@ -53,6 +59,23 @@ Use **[XSwap](https://xswap.link/)**, the official bridge for the 0G network, po
 4. Choose asset to bridge (e.g., USDC)
 5. Confirm transaction and wait for bridging to complete
 6. Once bridged, swap your assets to $0G on the 0G Hub
+
+### Khalani TokenFlight (Cross-Chain Swap on 0G Hub)
+
+- **URL**: [https://hub.0g.ai/khalani/transfer](https://hub.0g.ai/khalani/transfer)
+- **Networks**: 20 chains — including Ethereum, BNB Chain, Arbitrum, Base, Solana, Monad, Bitcoin and Tron
+- **How it works**: Intent-based routing with atomic settlement. Select a source chain and token; TokenFlight finds the best route and delivers on 0G.
+
+### More Bridges & Aggregators
+
+| Bridge | Route to 0G | Notes |
+|--------|-------------|-------|
+| **[Jumper](https://jumper.exchange)** | 60+ chains | LI.FI aggregator; includes a gas-refuel option |
+| **[Interport](https://interport.fi)** | 10+ chains incl. Solana & Monad | Gas Transfer feature delivers native 0G for fees |
+| **[Stargate](https://stargate.finance)** | Ethereum & BNB Chain | Bridges $0G, plus WBTC / WETH / cbBTC to 0G |
+| **[Wormhole Portal](https://portalbridge.com)** | Solana and 15+ chains | Wrapped-asset token bridge |
+| **[0G Hub Bridge](https://hub.0g.ai/bridge)** | Ethereum ↔ 0G | Moves W0G (wrapped 0G) |
+| **[Gas.zip](https://www.gas.zip)** | Gas refuel only | Tops up a small amount of native 0G for transaction fees |
 
 ## Swap on 0G Chain
 
@@ -73,10 +96,11 @@ To receive and hold $0G, you need a wallet that supports the 0G network.
 
 ### Supported Wallets
 
+- **[Bitget Wallet](https://web3.bitget.com/)** - Built-in 0G Chain support: select "0G Chain" from the network list, no manual setup
 - **[MetaMask](https://metamask.io/)** - Add 0G network manually via [Mainnet Overview](/developer-hub/mainnet/mainnet-overview)
-- **[SafePal](https://www.safepal.com/)** - Native support for 0G chain
-- **[OKX Wallet](https://www.okx.com/web3)** - Native support for 0G network
+- **[OKX Wallet](https://www.okx.com/web3)** - Add 0G network manually
 - **[Rabby](https://rabby.io/)** - Add 0G network manually
+- **[SafePal](https://www.safepal.com/)** - Add 0G via the in-app custom network directory (App v3.9.0+)
 
 ### Adding 0G Network
 
@@ -84,4 +108,4 @@ For detailed instructions on adding the 0G network to your wallet, including RPC
 
 ---
 
-For more information about the 0G network and its features, see [Understanding 0G](/introduction/understanding-0g).
+For more information about the 0G network and its features, see [Understanding 0G](/introduction/understanding-0g). For a step-by-step path tailored to where you're starting from, use the interactive guide at [get.0g.ai](https://get.0g.ai).
