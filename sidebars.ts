@@ -124,6 +124,7 @@ const sidebars: SidebarsConfig = {
                         },
                         'developer-hub/building-on-0g/compute-network/router/routing',
                         'developer-hub/building-on-0g/compute-network/router/authentication',
+                        'developer-hub/building-on-0g/compute-network/router/privacy',
                         'developer-hub/building-on-0g/compute-network/router/account/deposits',
                         'developer-hub/building-on-0g/compute-network/router/rate-limits',
                         'developer-hub/building-on-0g/compute-network/router/errors',
