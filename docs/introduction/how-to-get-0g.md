@@ -20,7 +20,7 @@ Prefer a guided path? **[get.0g.ai](https://get.0g.ai)** is the official interac
 
 ## Centralized Exchanges
 
-The most straightforward way to acquire $0G is through centralized exchanges. After purchasing, withdraw directly to the **0G Mainnet** (select "0G Chain" or "0G Mainnet" as the withdrawal network). All exchanges below support deposits and withdrawals on the native 0G network — always confirm the withdrawal network in-app before transferring, as availability can be paused during network upgrades.
+The most straightforward way to acquire $0G is through centralized exchanges. After purchasing, withdraw directly to the **0G Mainnet** (select "0G Chain" or "0G Mainnet" as the withdrawal network). All exchanges below support withdrawals to the native 0G network — always confirm the withdrawal network in-app before transferring, as availability can be paused during network upgrades.
 
 ### Spot Trading
 
