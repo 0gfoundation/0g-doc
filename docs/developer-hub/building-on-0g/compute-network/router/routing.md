@@ -145,7 +145,7 @@ HTTP header names are case-insensitive per RFC 7230 — `X-0G-Provider-Address` 
 | ------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `X-0G-Provider-Address`         | on-chain address (`0x…`)            | Pin the request to a specific provider. Implies `Allow-Fallbacks: false` unless overridden.                  |
 | `X-0G-Provider-Sort`            | `latency` \| `price`                | Sort strategy when no address is pinned. Ignored if `X-0G-Provider-Address` is set. Must be exactly `latency` or `price` — any other non-empty value is rejected with `400 invalid_provider_header`. |
-| `X-0G-Provider-Trust-Mode`      | `verified` \| `private`             | Restrict provider selection to a trust tier — see [Trust modes](#trust-modes).                                |
+| `X-0G-Provider-Trust-Mode`      | `standard` \| `verified` \| `private` | Restrict provider selection to a trust tier — see [Trust modes](#trust-modes).                                |
 | `X-0G-Provider-Allow-Fallbacks` | `true` \| `false`                   | Allow cross-provider retry on failure. Must be exactly `true` or `false` (case-insensitive) — `1`, `0`, `yes`, and other non-empty values are rejected with `400 invalid_provider_header`. |
 | `X-0G-Provider-Max-Price-Usd-Prompt`     | finite, non-negative decimal | Per-request ceiling on prompt token price, USD per 1M tokens. See [Capping price per request](#capping-price-per-request). |
 | `X-0G-Provider-Max-Price-Usd-Completion` | finite, non-negative decimal | Per-request ceiling on completion token price, USD per 1M tokens. See [Capping price per request](#capping-price-per-request). |
@@ -157,14 +157,15 @@ A header that is absent, or blank after trimming whitespace, is treated as unset
 
 ### Trust modes
 
-`X-0G-Provider-Trust-Mode` restricts selection by the provider's [verification mode](../inference#verification-modes):
+`X-0G-Provider-Trust-Mode` restricts selection by the provider's [verification mode](../inference#verification-modes). The tiers are ordered `standard < verified < private` and act as a floor: asking for `verified` is also satisfied by the stronger `private`.
 
 | Value      | Routes to                      | Guarantee                                                                                          |
 | ---------- | ------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `standard` | Any TEE-backed provider        | TEE-backed execution; the upstream discloses no independent verifiability method.                   |
 | `verified` | TeeML **and** TeeTLS providers | Verifiable execution — the response provably came from the real model.                              |
 | `private`  | TeeML providers only           | Verifiability **and** privacy — the model itself runs inside the TEE, so prompts never leave the enclave. |
 
-`verified` is a floor, not an exact match: TeeML (`private`-tier) providers also satisfy a `verified` request, since running the model inside the TEE gives you everything TeeTLS does and more. Values other than `verified`/`private` are rejected with `400 invalid_trust_mode`. Omit the header for no trust-tier restriction (the default).
+Values other than `standard`/`verified`/`private` are rejected with `400 invalid_trust_mode`. Omit the header for no trust-tier restriction (the default).
 
 ## Capping price per request
 

@@ -43,9 +43,9 @@ This is the `private` tier of [trust-mode routing](./routing.md#trust-modes):
 |------|-----------|-----------|
 | `private` | TeeML providers only | Sealed inference: prompts never leave the enclave |
 | `verified` | TeeML and TeeTLS providers | Verifiable execution: the response provably came from the real model |
-| `standard` | All providers, including third-party channels | Full model access |
+| `standard` | Any TEE-backed provider (any tier) | TEE-backed execution; upstream discloses no independent verifiability method |
 
-With TeeTLS, 0G's broker (itself running inside a TEE) relays your request over attested TLS and cannot read it in transit, but the upstream provider processes your prompt under its own data policy. With `standard`, the routing path is not attested. If your requirement is that no third party ever sees plaintext, use `private`.
+With TeeTLS, 0G's broker (itself running inside a TEE) relays your request over attested TLS and cannot read it in transit, but the upstream provider processes your prompt under its own data policy. With `standard`, the request still runs on a TEE-backed provider, but the upstream discloses no independent verifiability method. If your requirement is that no third party ever sees plaintext, use `private`.
 
 :::note Model selection is not tier selection
 When a model has both TeeML and TeeTLS providers, the Router balances between them for performance unless a trust mode is set. To guarantee the enclave, set the tier explicitly using one of the methods below.
