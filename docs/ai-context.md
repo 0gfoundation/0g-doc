@@ -24,7 +24,7 @@ This page provides comprehensive context about 0G infrastructure to help AI codi
 | **Storage Explorer** | https://storagescan-galileo.0g.ai |
 | **Faucet** | https://faucet.0g.ai (0.1 0G/day) |
 | **Faucet (Google Cloud)** | https://cloud.google.com/application/web3/faucet/0g/galileo |
-| **Storage Indexer** | https://indexer-storage-testnet-turbo.0g.ai |
+| **Storage Indexer** | https://indexer-storage-testnet-turbo.0g.ai (API base URL; root `/` may return 404) |
 | **Storage Start Block** | 1 |
 | **DA Start Block** | 940000 |
 
@@ -45,7 +45,7 @@ This page provides comprehensive context about 0G infrastructure to help AI codi
 | **Chain ID** | 16661 |
 | **Token Symbol** | 0G |
 | **RPC Endpoint** | https://evmrpc.0g.ai |
-| **Storage Indexer** | https://indexer-storage-turbo.0g.ai |
+| **Storage Indexer** | https://indexer-storage-turbo.0g.ai (API base URL; root `/` may return 404) |
 | **Block Explorer** | https://chainscan.0g.ai |
 | **Storage Start Block** | 2387557 |
 
@@ -288,6 +288,10 @@ GET  /file/{root}/path/to/file     # Download file from folder
 GET  /file/info/{cid}              # Query file info
 POST /file/segment                 # Upload file segment (JSON: txSeq/root, index, data, proof)
 ```
+
+The storage indexer URLs above are API base URLs. The root path (`/`) is not a
+health endpoint and can return `404`; use an API route such as
+`/file/info/{cid}` when checking indexer availability.
 
 **Documentation Links**:
 - SDK Guide: [https://docs.0g.ai/developer-hub/building-on-0g/storage/sdk](https://docs.0g.ai/developer-hub/building-on-0g/storage/sdk)
