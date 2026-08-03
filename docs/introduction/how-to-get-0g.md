@@ -37,7 +37,6 @@ The most straightforward way to acquire $0G is through centralized exchanges. Af
 | **[LBank](https://www.lbank.com/trade/0g_usdt)** | 0G/USDT, 0G/USDC |
 | **[Upbit](https://upbit.com/exchange?code=CRIX.UPBIT.KRW-0G)** | 0G/KRW, 0G/BTC, 0G/USDT |
 | **[Kraken](https://www.kraken.com/prices/0g)** | 0G/USD, 0G/EUR |
-| **[BitMart](https://www.bitmart.com/trade/en-US?symbol=0G_USDT)** | 0G/USDT |
 | **[Bithumb](https://www.bithumb.com/react/trade/order/0G-KRW)** | 0G/KRW |
 
 ## Bridge to 0G Chain
