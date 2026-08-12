@@ -1,0 +1,28 @@
+# The "Vercel – 0g-doc-new" commit status comes from a stale personal Vercel
+# project (owner has left; Vercel-side access is unrecoverable) that is still
+# linked to this repo through the org's Vercel GitHub App installation. It
+# fails on every PR. GitHub commit statuses cannot be deleted, but the latest
+# write for a given context wins — so this workflow overwrites each failing
+# status with a passing one. Remove this workflow once the project is
+# disconnected on the Vercel side.
+name: Neutralize stale Vercel check
+
+on: status
+
+permissions:
+  statuses: write
+
+jobs:
+  overwrite:
+    # NB: the context string uses an en dash (–), exactly as Vercel posts it.
+    if: github.event.context == 'Vercel – 0g-doc-new' && github.event.state != 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Overwrite failing status with success
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${{ github.repository }}/statuses/${{ github.event.sha }}" \
+            -f context='Vercel – 0g-doc-new' \
+            -f state='success' \
+            -f description='Ignored: stale Vercel project (see the Vercel – 0g-doc check instead)'
