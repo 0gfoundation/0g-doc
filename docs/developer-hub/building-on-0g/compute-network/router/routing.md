@@ -161,11 +161,11 @@ A header that is absent, or blank after trimming whitespace, is treated as unset
 
 | Value      | Routes to                      | Guarantee                                                                                          |
 | ---------- | ------------------------------ | --------------------------------------------------------------------------------------------------- |
-| `standard` | Any TEE-backed provider        | TEE-backed execution; the upstream discloses no independent verifiability method.                   |
+| `standard` | All providers, including third-party channels | Full model access. Non-verifiable: no attestation or signed proof to check.                        |
 | `verified` | TeeML **and** TeeTLS providers | Verifiable execution — the response provably came from the real model.                              |
 | `private`  | TeeML providers only           | Verifiability **and** privacy — the model itself runs inside the TEE, so prompts never leave the enclave. |
 
-Values other than `standard`/`verified`/`private` are rejected with `400 invalid_trust_mode`. Omit the header for no trust-tier restriction (the default).
+Values other than `standard`/`verified`/`private` are rejected with `400 invalid_trust_mode`. Omit the header for no trust-tier restriction (the default) — an unrestricted request can be served by any provider of the model, including `standard` ones.
 
 ## Capping price per request
 

@@ -12,11 +12,11 @@ This page describes exactly what happens to your data on the 0G Compute Router (
 
 ## Zero data retention
 
-The Router operates with zero data retention on text and audio inference content; file and image workflows use bounded transient storage:
+The Router operates with zero data retention on inference content:
 
-- **Prompts and completions are processed in memory only** for the lifetime of the request: the Router handles them in memory to route and bill the request, and never writes them to storage. There is no conversation table, no prompt log, no response archive.
+- **Prompts and completions are processed in memory only** for the lifetime of the request: the Router handles them in memory to route and bill the request, and never writes them to storage. There is no conversation table and no response archive; billing records carry metadata only.
 - **0G does not train on your data.** Content that is never stored cannot be used for training.
-- **Uploaded files are transient.** Files sent to multipart endpoints (audio transcription, image edits) are auto-deleted within **60 minutes**. Image-generation inputs and outputs are held for at most **30 minutes** to serve the result, then deleted.
+- **Multipart inputs are not stored.** Audio and image inputs sent to multipart endpoints are passed through in memory for the lifetime of the request and never persisted. The Router does not store generated images: results are returned to the caller and not kept.
 
 ### What is retained
 
@@ -43,12 +43,12 @@ This is the `private` tier of [trust-mode routing](./routing.md#trust-modes):
 |------|-----------|-----------|
 | `private` | TeeML providers only | Sealed inference: prompts never leave the enclave |
 | `verified` | TeeML and TeeTLS providers | Verifiable execution: the response provably came from the real model |
-| `standard` | Any TEE-backed provider (any tier) | TEE-backed execution; upstream discloses no independent verifiability method |
+| `standard` | All providers, including third-party channels | Full model access. Non-verifiable: no attestation or signed proof to check |
 
-With TeeTLS, 0G's broker (itself running inside a TEE) relays your request over attested TLS and cannot read it in transit, but the upstream provider processes your prompt under its own data policy. With `standard`, the request still runs on a TEE-backed provider, but the upstream discloses no independent verifiability method. If your requirement is that no third party ever sees plaintext, use `private`.
+With TeeTLS, 0G's broker (itself running inside a TEE) relays your request over attested TLS and cannot read it in transit, but the upstream provider processes your prompt under its own data policy. `standard` places no restriction on the provider pool: it widens the catalog to third-party channels that are non-verifiable. The serving broker runs on TEE hardware with verification disabled and the upstream is not disclosed, so there is no attestation or signature to check on the response. Today the Claude and GPT-5.6 families are served on this tier; the live list is always the [models endpoint](#models-with-privacy-mode). If your requirement is that no third party ever sees plaintext, use `private`.
 
 :::note Model selection is not tier selection
-When a model has both TeeML and TeeTLS providers, the Router balances between them for performance unless a trust mode is set. To guarantee the enclave, set the tier explicitly using one of the methods below.
+A request that does not set a trust mode can be served by **any** provider of the model, including `standard` ones, and the model list displays each model according to its **highest-capability** provider. When a model has multiple providers, the Router balances between them for performance. To guarantee a verifiable channel, pin the tier explicitly using one of the methods below.
 :::
 
 For workloads that must not touch the Router at all, [Advanced mode](https://pc.0g.ai/sdk) connects your wallet directly to a provider: funding and inference happen entirely inside the decentralized network, with no intermediary in the path.
