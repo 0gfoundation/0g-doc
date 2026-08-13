@@ -26,8 +26,8 @@ The most straightforward way to acquire $0G is through centralized exchanges. Af
 
 | Exchange | Trading Pairs |
 |----------|---------------|
-| **[HTX](https://www.htx.com/trade/0g_usdt)** | 0G/USDT |
 | **[Binance](https://www.binance.com/en/trade/0G_USDT)** | 0G/USDT, 0G/USDC, 0G/TRY |
+| **[HTX](https://www.htx.com/trade/0g_usdt)** | 0G/USDT |
 | **[Bybit](https://www.bybit.com/en/trade/spot/0G/USDT)** | 0G/USDT |
 | **[MEXC](https://www.mexc.com/exchange/0G_USDT)** | 0G/USDT, 0G/USDC |
 | **[KuCoin](https://www.kucoin.com/trade/0G-USDT)** | 0G/USDT |
@@ -86,6 +86,10 @@ To move your $0G from BNB Chain to the native 0G network, bridge with [Stargate]
 | **[0G Hub Bridge](https://hub.0g.ai/bridge)** | Ethereum ↔ 0G | Moves W0G (wrapped 0G) |
 | **[Gas.zip](https://www.gas.zip)** | Gas refuel only | Tops up a small amount of native 0G for transaction fees |
 
+:::note For developers
+[LI.FI](https://li.fi/) — the bridge & swap aggregation engine behind Jumper — supports 0G Mainnet directly (chain key `zerog`, chain ID `16661`). Use the [LI.FI API](https://docs.li.fi/) or [SDK](https://docs.li.fi/sdk/overview) to quote and execute cross-chain swaps into 0G programmatically, e.g. `GET https://li.quest/v1/quote?toChain=16661&...`.
+:::
+
 ## Swap on 0G Chain
 
 Once you have assets on the 0G network, swap them for native $0G tokens.
@@ -110,6 +114,10 @@ To receive and hold $0G, you need a wallet that supports the 0G network.
 - **[OKX Wallet](https://www.okx.com/web3)** - Add 0G network manually
 - **[Rabby](https://rabby.io/)** - Add 0G network manually
 - **[SafePal](https://www.safepal.com/)** - Add 0G via the in-app custom network directory (App v3.9.0+)
+- **[Zerion](https://zerion.io/)** - Add 0G as a custom network
+- **[Safe](https://safe.0g.ai/)** - Multisig smart-account wallet for teams and treasuries, deployed on 0G
+- **[Fordefi](https://fordefi.com/)** - Institutional MPC wallet; add 0G as a custom EVM chain
+- **[Ledger](https://www.ledger.com/)** - Hardware wallet; pair it with MetaMask or Rabby to transact on 0G
 
 ### Adding 0G Network
 
