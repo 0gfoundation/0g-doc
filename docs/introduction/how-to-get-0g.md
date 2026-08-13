@@ -8,7 +8,7 @@ description: "Learn how to buy, bridge, and swap 0G tokens through exchanges, cr
 # How to Get 0G Token
 
 :::tip Interactive Guide
-Prefer a guided path? **[get.0g.ai](https://get.0g.ai)** is the official interactive guide to acquiring $0G — pick your starting point (fiat, another chain, an exchange, DeFi, or a wallet) and it walks you through step by step.
+Prefer a guided path? **[get.0g.ai](https://get.0g.ai)** is the official interactive guide to acquiring $0G. Pick your starting point (fiat, another chain, an exchange, DeFi, or a wallet) and it walks you through step by step.
 :::
 
 :::info Network Details
@@ -20,19 +20,19 @@ Prefer a guided path? **[get.0g.ai](https://get.0g.ai)** is the official interac
 
 ## Official Token Contracts
 
-On the 0G Mainnet, $0G is the **native gas token** — like ETH on Ethereum, it has no contract address (some interfaces display it as `0x0000…0000`). Every official contract representation of $0G is listed below. **Any other contract claiming to be $0G, on any network, is not official.**
+On the 0G Mainnet, the 0G token is the **native gas token**. Like ETH on Ethereum, it has no contract address (some interfaces display it as `0x0000…0000`). Every official contract representation is listed below. **Any other contract claiming to be $0G, on any network, is not official.**
 
 | Network | Token | Contract Address |
 |---------|-------|------------------|
-| 0G Mainnet (chain ID 16661) | W0G — Wrapped 0G | [`0x1Cd0690fF9a693f5EF2dD976660a8dAFc81A109c`](https://chainscan.0g.ai/address/0x1Cd0690fF9a693f5EF2dD976660a8dAFc81A109c) |
-| Ethereum (chain ID 1) | 0G — official bridged token | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://etherscan.io/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) |
-| BNB Chain (chain ID 56) | 0G — official bridged token | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://bscscan.com/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) |
+| 0G Mainnet (chain ID 16661) | W0G (Wrapped 0G) | [`0x1Cd0690fF9a693f5EF2dD976660a8dAFc81A109c`](https://chainscan.0g.ai/address/0x1Cd0690fF9a693f5EF2dD976660a8dAFc81A109c) |
+| Ethereum (chain ID 1) | 0G (official bridged token) | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://etherscan.io/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) |
+| BNB Chain (chain ID 56) | 0G (official bridged token) | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://bscscan.com/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) |
 
-All three tokens use 18 decimals. The official bridged token deliberately shares the **same address on Ethereum and BNB Chain**, and moves to and from the 0G network via [Stargate](https://stargate.finance). W0G is the canonical wrapped form of native $0G on the 0G chain — see [Wrapped 0G Base](/developer-hub/building-on-0g/contracts-on-0g/precompiles/precompiles-wrappedogbase) for details.
+All three tokens use 18 decimals. The official bridged token deliberately shares the **same address on Ethereum and BNB Chain**, and moves to and from the 0G network via [Stargate](https://stargate.finance). W0G is the canonical wrapped form of the native token on the 0G chain; see [Wrapped 0G Base](/developer-hub/building-on-0g/contracts-on-0g/precompiles/precompiles-wrappedogbase) for details.
 
 ## Centralized Exchanges
 
-The most straightforward way to acquire $0G is through centralized exchanges. After purchasing, withdraw directly to the **0G Mainnet** (select "0G Chain" or "0G Mainnet" as the withdrawal network). All exchanges below support withdrawals to the native 0G network — always confirm the withdrawal network in-app before transferring, as availability can be paused during network upgrades.
+The most straightforward way to acquire $0G is through centralized exchanges. After purchasing, withdraw directly to the **0G Mainnet** (select "0G Chain" or "0G Mainnet" as the withdrawal network). All exchanges below support withdrawals to the native 0G network. Always confirm the withdrawal network in-app before transferring, as availability can be paused during network upgrades.
 
 ### Spot Trading
 
@@ -53,13 +53,7 @@ The most straightforward way to acquire $0G is through centralized exchanges. Af
 
 ## Buy on Fomo
 
-**[Fomo](https://fomo.family)** is a social trading app (mobile and web) for buying crypto in seconds — multichain, gasless, with Apple Pay support.
-
-- **URL**: [$0G on Fomo](https://fomo.family/coin?address=0x4b948d64de1f71fcd12fb586f4c776421a35b3ee&chainId=56&r=vargs_g&source=share_link)
-- **Network**: BNB Chain (trades the [official bridged $0G token](#official-token-contracts))
-- **Features**: Gasless trading, Apple Pay funding, social feeds and top-trader alerts
-
-To move your $0G from BNB Chain to the native 0G network, bridge with [Stargate](https://stargate.finance).
+Buy the [official bridged $0G](#official-token-contracts) directly on [Fomo](https://fomo.family/coin?address=0x4b948d64de1f71fcd12fb586f4c776421a35b3ee&chainId=56&r=vargs_g&source=share_link).
 
 ## Bridge to 0G Chain
 
@@ -84,7 +78,7 @@ To move your $0G from BNB Chain to the native 0G network, bridge with [Stargate]
 ### Khalani TokenFlight (Cross-Chain Swap on 0G Hub)
 
 - **URL**: [https://hub.0g.ai/khalani/transfer](https://hub.0g.ai/khalani/transfer)
-- **Networks**: 20 chains — including Ethereum, BNB Chain, Arbitrum, Base, Solana, Monad, Bitcoin and Tron
+- **Networks**: 20 chains, including Ethereum, BNB Chain, Arbitrum, Base, Solana, Monad, Bitcoin and Tron
 - **How it works**: Intent-based routing with atomic settlement. Select a source chain and token; TokenFlight finds the best route and delivers on 0G.
 
 ### More Bridges & Aggregators
@@ -99,7 +93,7 @@ To move your $0G from BNB Chain to the native 0G network, bridge with [Stargate]
 | **[Gas.zip](https://www.gas.zip)** | Gas refuel only | Tops up a small amount of native 0G for transaction fees |
 
 :::note For developers
-[LI.FI](https://li.fi/) — the bridge & swap aggregation engine behind Jumper — supports 0G Mainnet directly (chain key `zerog`, chain ID `16661`). Use the [LI.FI API](https://docs.li.fi/) or [SDK](https://docs.li.fi/sdk/overview) to quote and execute cross-chain swaps into 0G programmatically, e.g. `GET https://li.quest/v1/quote?toChain=16661&...`.
+[LI.FI](https://li.fi/), the bridge & swap aggregation engine behind Jumper, supports 0G Mainnet directly (chain key `zerog`, chain ID `16661`). Use the [LI.FI API](https://docs.li.fi/) or [SDK](https://docs.li.fi/sdk/overview) to quote and execute cross-chain swaps into 0G programmatically, e.g. `GET https://li.quest/v1/quote?toChain=16661&...`.
 :::
 
 ## Swap on 0G Chain
@@ -121,23 +115,23 @@ To receive and hold $0G, you need a wallet that supports the 0G network.
 
 ### Supported Wallets
 
-Every wallet below detects the native $0G token automatically once the 0G network is added. "Bridged tokens" refers to W0G, USDC.e, WETH and WBTC on the 0G network.
+Every wallet below detects the native $0G token automatically once the 0G network is added.
 
-| Wallet | Add 0G Network | Token Detection |
-|--------|----------------|-----------------|
-| **[MetaMask](https://metamask.io/)** | Add manually — see [Mainnet Overview](/developer-hub/mainnet/mainnet-overview) | $0G |
-| **[Rabby](https://rabby.io/)** | Built-in | $0G and bridged tokens, with USD values |
-| **[OKX Wallet](https://www.okx.com/web3)** | Built-in | $0G (USD value) and bridged tokens |
-| **[Bitget Wallet](https://web3.bitget.com/)** | Built-in | $0G (USD value) and bridged tokens |
-| **[Zerion](https://zerion.io/)** | Built-in | $0G (USD value) and most bridged tokens |
-| **[Coinbase Wallet](https://www.coinbase.com/wallet)** | Add manually | $0G |
-| **[SafePal](https://www.safepal.com/)** | In-app network directory (App v3.9.0+) | $0G (USD value) and bridged tokens |
-| **[Trust Wallet](https://trustwallet.com/)** | Add manually | $0G |
-| **[TokenPocket](https://www.tokenpocket.pro/)** | In-app network directory | $0G |
-| **[Rainbow](https://rainbow.me/)** | Add manually | $0G |
-| **[Safe](https://safe.global/)** (multisig for teams & treasuries) | Built-in | — |
-| **[Fordefi](https://fordefi.com/)** (institutional MPC) | Built-in | — |
-| **[Ledger](https://www.ledger.com/)** (hardware wallet) | Built-in | — |
+| Wallet | Add 0G Network |
+|--------|----------------|
+| **[MetaMask](https://metamask.io/)** | Add manually (see [Mainnet Overview](/developer-hub/mainnet/mainnet-overview)) |
+| **[Rabby](https://rabby.io/)** | Built-in |
+| **[OKX Wallet](https://www.okx.com/web3)** | Built-in |
+| **[Bitget Wallet](https://web3.bitget.com/)** | Built-in |
+| **[Zerion](https://zerion.io/)** | Built-in |
+| **[Coinbase Wallet](https://www.coinbase.com/wallet)** | Add manually |
+| **[SafePal](https://www.safepal.com/)** | In-app network directory (App v3.9.0+) |
+| **[Trust Wallet](https://trustwallet.com/)** | Add manually |
+| **[TokenPocket](https://www.tokenpocket.pro/)** | In-app network directory |
+| **[Rainbow](https://rainbow.me/)** | Add manually |
+| **[Safe](https://safe.global/)** (multisig for teams & treasuries) | Built-in |
+| **[Fordefi](https://fordefi.com/)** (institutional MPC) | Built-in |
+| **[Ledger](https://www.ledger.com/)** (hardware wallet) | Built-in |
 
 ### Adding 0G Network
 
