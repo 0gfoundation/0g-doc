@@ -39,6 +39,10 @@ const config: Config = {
       crossorigin: 'anonymous',
     },
   ],
+  clientModules: [
+    // GA4 search-term tracking (no-op outside production, where gtag is absent)
+    require.resolve('./src/clientModules/searchAnalytics.ts'),
+  ],
   presets: [
     [
       'classic',
@@ -76,6 +80,12 @@ const config: Config = {
       {
         hashed: true,
         language: ["en"],
+        // Keep English stop words ("get", "how", "to", ...) in the index.
+        // Without this, a search like "get 0g" can never match the
+        // "How to Get 0G Token" page: "get" is stripped at index time, so
+        // the query only matches pages whose prose contains "getting"/"gets",
+        // and those fill the result limit before the fallback query runs.
+        removeDefaultStopWordFilter: ["en"],
         highlightSearchTermsOnTargetPage: true,
         explicitSearchResultPath: true,
         searchBarPosition: 'right',
