@@ -123,12 +123,9 @@ Every wallet below detects the native $0G token automatically once the 0G networ
 | **[Trust Wallet](https://trustwallet.com/)** | Add manually | $0G |
 | **[TokenPocket](https://www.tokenpocket.pro/)** | In-app network directory | $0G |
 | **[Rainbow](https://rainbow.me/)** | Add manually | $0G |
-
-**For teams, institutions and cold storage:**
-
-- **[Safe](https://safe.global/)** - Multisig smart-account wallet for teams and treasuries — available on 0G
-- **[Fordefi](https://fordefi.com/)** - Institutional MPC wallet with native 0G support
-- **[Ledger](https://www.ledger.com/)** - Hardware wallet with 0G support
+| **[Safe](https://safe.global/)** (multisig for teams & treasuries) | Built-in | — |
+| **[Fordefi](https://fordefi.com/)** (institutional MPC) | Built-in | — |
+| **[Ledger](https://www.ledger.com/)** (hardware wallet) | Built-in | — |
 
 ### Adding 0G Network
 
