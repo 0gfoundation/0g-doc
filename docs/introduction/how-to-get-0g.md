@@ -114,10 +114,10 @@ To receive and hold $0G, you need a wallet that supports the 0G network.
 - **[OKX Wallet](https://www.okx.com/web3)** - Add 0G network manually
 - **[Rabby](https://rabby.io/)** - Add 0G network manually
 - **[SafePal](https://www.safepal.com/)** - Add 0G via the in-app custom network directory (App v3.9.0+)
-- **[Zerion](https://zerion.io/)** - Add 0G as a custom network
-- **[Safe](https://safe.0g.ai/)** - Multisig smart-account wallet for teams and treasuries, deployed on 0G
-- **[Fordefi](https://fordefi.com/)** - Institutional MPC wallet; add 0G as a custom EVM chain
-- **[Ledger](https://www.ledger.com/)** - Hardware wallet; pair it with MetaMask or Rabby to transact on 0G
+- **[Zerion](https://zerion.io/)** - Native 0G support
+- **[Safe](https://safe.global/)** - Multisig smart-account wallet for teams and treasuries — available on 0G
+- **[Fordefi](https://fordefi.com/)** - Institutional MPC wallet with native 0G support
+- **[Ledger](https://www.ledger.com/)** - Hardware wallet with 0G support
 
 ### Adding 0G Network
 
