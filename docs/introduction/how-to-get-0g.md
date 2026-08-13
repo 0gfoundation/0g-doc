@@ -18,6 +18,18 @@ Prefer a guided path? **[get.0g.ai](https://get.0g.ai)** is the official interac
 - **Mainnet Launch**: September 2025
 :::
 
+## Official Token Contracts
+
+On the 0G Mainnet, $0G is the **native gas token** — like ETH on Ethereum, it has no contract address (some interfaces display it as `0x0000…0000`). Every official contract representation of $0G is listed below. **Any other contract claiming to be $0G, on any network, is not official.**
+
+| Network | Token | Contract Address |
+|---------|-------|------------------|
+| 0G Mainnet (chain ID 16661) | W0G — Wrapped 0G | [`0x1Cd0690fF9a693f5EF2dD976660a8dAFc81A109c`](https://chainscan.0g.ai/address/0x1Cd0690fF9a693f5EF2dD976660a8dAFc81A109c) |
+| Ethereum (chain ID 1) | 0G — official bridged token | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://etherscan.io/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) |
+| BNB Chain (chain ID 56) | 0G — official bridged token | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://bscscan.com/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) |
+
+All three tokens use 18 decimals. The official bridged token deliberately shares the **same address on Ethereum and BNB Chain**, and moves to and from the 0G network via [Stargate](https://stargate.finance). W0G is the canonical wrapped form of native $0G on the 0G chain — see [Wrapped 0G Base](/developer-hub/building-on-0g/contracts-on-0g/precompiles/precompiles-wrappedogbase) for details.
+
 ## Centralized Exchanges
 
 The most straightforward way to acquire $0G is through centralized exchanges. After purchasing, withdraw directly to the **0G Mainnet** (select "0G Chain" or "0G Mainnet" as the withdrawal network). All exchanges below support withdrawals to the native 0G network — always confirm the withdrawal network in-app before transferring, as availability can be paused during network upgrades.
@@ -44,7 +56,7 @@ The most straightforward way to acquire $0G is through centralized exchanges. Af
 **[Fomo](https://fomo.family)** is a social trading app (mobile and web) for buying crypto in seconds — multichain, gasless, with Apple Pay support.
 
 - **URL**: [$0G on Fomo](https://fomo.family/coin?address=0x4b948d64de1f71fcd12fb586f4c776421a35b3ee&chainId=56&r=vargs_g&source=share_link)
-- **Network**: BNB Chain (trades the bridged $0G token)
+- **Network**: BNB Chain (trades the [official bridged $0G token](#official-token-contracts))
 - **Features**: Gasless trading, Apple Pay funding, social feeds and top-trader alerts
 
 To move your $0G from BNB Chain to the native 0G network, bridge with [Stargate](https://stargate.finance).

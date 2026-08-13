@@ -85,6 +85,18 @@ This page provides comprehensive context about 0G infrastructure to help AI codi
 | **Compute Inference** | `0x47340d900bdFec2BD393c626E12ea0656F938d84` | Compute inference service |
 | **Compute FineTuning** | `0x4e3474095518883744ddf135b7E0A23301c7F9c0` | Compute fine-tuning service |
 
+### $0G Token Contracts
+
+$0G is the **native gas token** on 0G Mainnet (no contract address). Official token contract representations:
+
+| Network (chain ID) | Token | Address |
+|--------------------|-------|---------|
+| 0G Mainnet (16661) | W0G — Wrapped 0G | `0x1Cd0690fF9a693f5EF2dD976660a8dAFc81A109c` |
+| Ethereum (1) | 0G — official bridged token | `0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE` |
+| BNB Chain (56) | 0G — official bridged token | `0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE` |
+
+All 18 decimals. The bridged token shares the same address on Ethereum and BNB Chain (bridged via Stargate). Any other contract claiming to be $0G is not official.
+
 ## 0G Services Overview
 
 ### 0G Chain
