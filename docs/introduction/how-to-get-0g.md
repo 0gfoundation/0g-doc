@@ -39,6 +39,16 @@ The most straightforward way to acquire $0G is through centralized exchanges. Af
 | **[Kraken](https://www.kraken.com/prices/0g)** | 0G/USD, 0G/EUR |
 | **[Bithumb](https://www.bithumb.com/react/trade/order/0G-KRW)** | 0G/KRW |
 
+## Buy on Fomo
+
+**[Fomo](https://fomo.family)** is a social trading app (mobile and web) for buying crypto in seconds — multichain, gasless, with Apple Pay support.
+
+- **URL**: [$0G on Fomo](https://fomo.family/coin?address=0x4b948d64de1f71fcd12fb586f4c776421a35b3ee&chainId=56&r=vargs_g&source=share_link)
+- **Network**: BNB Chain (trades the bridged $0G token)
+- **Features**: Gasless trading, Apple Pay funding, social feeds and top-trader alerts
+
+To move your $0G from BNB Chain to the native 0G network, bridge with [Stargate](https://stargate.finance).
+
 ## Bridge to 0G Chain
 
 **[XSwap](https://xswap.link/)** is the official bridge for the 0G network, powered by [Chainlink CCIP](https://docs.chain.link/ccip/directory/mainnet/chain/0g-mainnet).
