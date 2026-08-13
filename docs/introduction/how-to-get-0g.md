@@ -109,12 +109,23 @@ To receive and hold $0G, you need a wallet that supports the 0G network.
 
 ### Supported Wallets
 
-- **[Bitget Wallet](https://web3.bitget.com/)** - Built-in 0G Chain support: select "0G Chain" from the network list, no manual setup
-- **[MetaMask](https://metamask.io/)** - Add 0G network manually via [Mainnet Overview](/developer-hub/mainnet/mainnet-overview)
-- **[OKX Wallet](https://www.okx.com/web3)** - Add 0G network manually
-- **[Rabby](https://rabby.io/)** - Add 0G network manually
-- **[SafePal](https://www.safepal.com/)** - Add 0G via the in-app custom network directory (App v3.9.0+)
-- **[Zerion](https://zerion.io/)** - Native 0G support
+Every wallet below detects the native $0G token automatically once the 0G network is added. "Bridged tokens" refers to W0G, USDC.e, WETH and WBTC on the 0G network.
+
+| Wallet | Add 0G Network | Token Detection |
+|--------|----------------|-----------------|
+| **[MetaMask](https://metamask.io/)** | Add manually — see [Mainnet Overview](/developer-hub/mainnet/mainnet-overview) | $0G |
+| **[Rabby](https://rabby.io/)** | Built-in | $0G and bridged tokens, with USD values |
+| **[OKX Wallet](https://www.okx.com/web3)** | Built-in | $0G (USD value) and bridged tokens |
+| **[Bitget Wallet](https://web3.bitget.com/)** | Built-in | $0G (USD value) and bridged tokens |
+| **[Zerion](https://zerion.io/)** | Built-in | $0G (USD value) and most bridged tokens |
+| **[Coinbase Wallet](https://www.coinbase.com/wallet)** | Add manually | $0G |
+| **[SafePal](https://www.safepal.com/)** | In-app network directory (App v3.9.0+) | $0G (USD value) and bridged tokens |
+| **[Trust Wallet](https://trustwallet.com/)** | Add manually | $0G |
+| **[TokenPocket](https://www.tokenpocket.pro/)** | In-app network directory | $0G |
+| **[Rainbow](https://rainbow.me/)** | Add manually | $0G |
+
+**For teams, institutions and cold storage:**
+
 - **[Safe](https://safe.global/)** - Multisig smart-account wallet for teams and treasuries — available on 0G
 - **[Fordefi](https://fordefi.com/)** - Institutional MPC wallet with native 0G support
 - **[Ledger](https://www.ledger.com/)** - Hardware wallet with 0G support
