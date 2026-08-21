@@ -122,6 +122,19 @@ const sidebars: SidebarsConfig = {
                             'developer-hub/building-on-0g/compute-network/router/features/verifiable-execution',
                           ],
                         },
+                        {
+                          type: 'category',
+                          label: 'Clients & Dev Tools',
+                          link: {
+                            type: 'generated-index',
+                            title: 'Clients & Dev Tools',
+                            description:
+                              'Point an existing client or coding tool at the Router — configuration only, no SDK changes.',
+                          },
+                          items: [
+                            'developer-hub/building-on-0g/compute-network/router/clients/claude-code',
+                          ],
+                        },
                         'developer-hub/building-on-0g/compute-network/router/routing',
                         'developer-hub/building-on-0g/compute-network/router/authentication',
                         'developer-hub/building-on-0g/compute-network/router/privacy',
