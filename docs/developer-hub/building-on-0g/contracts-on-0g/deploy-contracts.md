@@ -126,8 +126,8 @@ networks: {
 
 // For Foundry
 [rpc_endpoints]
-0g_testnet = "https://evmrpc-testnet.0g.ai"
-0g_mainnet = "https://evmrpc.0g.ai"
+testnet = "https://evmrpc-testnet.0g.ai"
+mainnet = "https://evmrpc.0g.ai"
 ```
 
 **Deploy Using Your Preferred Tool**:
@@ -151,7 +151,7 @@ main().catch((error) => {
 });
 ```
 
-Run: `npx hardhat run scripts/deploy.js --network 0g-testnet`
+Run: `npx hardhat run scripts/deploy.js --network testnet`
 
 </details>
 
@@ -178,7 +178,7 @@ module.exports = function (deployer) {
 };
 ```
 
-Run: `truffle migrate --network 0g-testnet`
+Run: `truffle migrate --network testnet`
 
 </details>
 
