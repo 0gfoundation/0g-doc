@@ -366,7 +366,7 @@ response = client.chat.completions.create(
 )
 ```
 
-**Router also supports**: image generation via `POST /v1/images/generations` (OpenAI-compatible, sync) or `POST /v1/async/images/generations` + `GET /v1/async/jobs/{jobId}?provider_address=...` (recommended for production) — both paths must pass `"response_format": "b64_json"` today; URL responses will be added later. Also `/v1/audio/transcriptions`, provider routing via `X-0G-Provider-*` request headers (`X-0G-Provider-Sort: latency`/`price`, `X-0G-Provider-Address: 0x…` to pin, or `X-0G-Provider-Max-Price-Usd-Prompt`/`-Completion`/`-Image` to cap per-request price — header-only, malformed values return `400`), `GET /v1/models` (no auth), `GET /v1/account/balance`, `GET /v1/account/usage/{stats,history}`.
+**Router also supports**: image generation via `POST /v1/images/generations` (OpenAI-compatible, sync) or `POST /v1/async/images/generations` + `GET /v1/async/jobs/{jobId}?provider_address=...` (recommended for production) — both paths must pass `"response_format": "b64_json"` today; URL responses will be added later. Also `/v1/audio/transcriptions`, provider routing via `X-0G-Provider-*` request headers (`X-0G-Provider-Sort: latency`/`price`, `X-0G-Provider-Address: 0x…` to pin, or `X-0G-Provider-Max-Price-Usd-Prompt`/`-Completion`/`-Image` to cap per-request price — header-only, malformed values return `400`), `GET /v1/models` (no auth), `GET /v1/account/balance`, `GET /v1/account/usage/{stats,history}`. The Router also serves the **Anthropic Messages API** (`POST /v1/messages`): set `ANTHROPIC_BASE_URL=https://router-api.0g.ai` to point Anthropic SDKs or Claude Code at it; models listing `"anthropic"` in `supported_formats` on `GET /v1/models` support this format.
 
 **Quick Start — Direct (SDK)**:
 
@@ -416,6 +416,7 @@ client = OpenAI(
   - Quickstart: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/quickstart](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/quickstart)
   - Models: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/models](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/models)
   - Chat Completions: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/features/chat-completions](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/features/chat-completions)
+  - Claude Code (Anthropic API): [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/clients/claude-code](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/clients/claude-code)
   - Provider Routing: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/routing](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/routing)
   - Deposits & Billing: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/account/deposits](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/account/deposits)
   - Router vs Direct: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/comparison](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/router/comparison)

@@ -41,12 +41,12 @@ Then run:
 claude --permission-mode auto
 ```
 
-## Private mode
-
+:::tip Private mode
 Both models above are TEE-backed (`"verifiability": "TeeML"`). To guarantee every Claude
 Code request runs inside an enclave, create the key with trust mode **Private** in
 Dashboard → API Keys — that key routes only to TeeML providers regardless of what the
 client sends. See [Privacy & ZDR](../privacy#enabling-privacy-mode).
+:::
 
 ## Notes
 
