@@ -70,7 +70,9 @@ This page provides comprehensive context about 0G infrastructure to help AI codi
 | **WrappedOGBase** | `0x0000000000000000000000000000000000001001` | Wrapped native token (precompile) |
 | **Compute Ledger** | `0xE70830508dAc0A97e6c087c75f402f9Be669E406` | Compute network payment ledger |
 | **Compute Inference** | `0xa79F4c8311FF93C06b8CfB403690cc987c93F91E` | Compute inference service |
-| **Compute FineTuning** | `0xaC66eBd174435c04F1449BBa08157a707B6fa7b1` | Compute fine-tuning service |
+| **Compute FineTuning** | `0xC6C075D8039763C8f1EbE580be5ADdf2fd6941bA` | Compute fine-tuning service (`fine-tuning-v1.1`) |
+
+The previous testnet fine-tuning contract (`0xaC66eBd174435c04F1449BBa08157a707B6fa7b1`, registered as `fine-tuning-v1.0`) is still deployed and still registered on the Ledger, but it runs an older ABI. Use `fine-tuning-v1.1` for new integrations; historical indexers covering data before 2026-02-12 still need the old address.
 
 ### Mainnet Contracts
 
