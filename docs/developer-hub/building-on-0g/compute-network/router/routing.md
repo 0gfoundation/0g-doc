@@ -102,7 +102,28 @@ curl https://router-api.0g.ai/v1/chat/completions \
   }'
 ```
 
-Routes directly to a specific provider by on-chain address. **Fallback is disabled by default when pinning** — if the pinned provider fails, the request fails. Add `X-0G-Provider-Allow-Fallbacks: true` to re-enable cross-provider retry.
+Routes directly to a specific provider by on-chain address. **Fallback is disabled by default when pinning by address** — if the pinned provider fails, the request fails. Add `X-0G-Provider-Allow-Fallbacks: true` to re-enable cross-provider retry.
+
+</TabItem>
+<TabItem value="identity" label="Pin an Upstream (identity)">
+
+```bash
+curl https://router-api.0g.ai/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-YOUR_API_KEY" \
+  -H "X-0G-Provider-Identity: aliyun" \
+  -d '{
+    "model": "glm-5.2",
+    "messages": [{"role": "user", "content": "Hello"}]
+  }'
+```
+
+Some models are served through more than one upstream channel. `provider_identity` is the operator-declared name of that channel (for example `aliyun`, `zhipu`, `openrouter`) — a routing label, not an attested property (`verifiability` remains the trust signal). It is shown per endpoint on [`GET /v1/providers`](./models#listing-providers-for-a-model) and matched verbatim (case-sensitive). The header works in two modes:
+
+- **Alone** — a filter, not a pin: it narrows the candidates for the model to every endpoint carrying that identity, possibly across several providers, then the normal ranking (your [`X-0G-Provider-Sort`](#header-reference) choice) picks among them. Fallback stays enabled but only across the matching endpoints — it never spills over to other identities.
+- **Combined with `X-0G-Provider-Address`** — pins the exact upstream variant under that provider address, and inherits the address pin's `Allow-Fallbacks: false` default.
+
+An identity that matches no endpoint fails deterministically, rejected with `400 provider_model_mismatch` — never a silent fallback to unfiltered routing. Other routing filters compose after the identity filter: if the identity's endpoints exist but none matches a requested [trust mode](#trust-modes), the request fails with `503 no_provider_for_trust_mode` instead. Endpoints that serve a model through a single native channel carry no identity (the field is omitted on `/v1/providers`); pin those by address.
 
 </TabItem>
 <TabItem value="multipart" label="Multipart (audio / image edit)">
@@ -144,6 +165,7 @@ HTTP header names are case-insensitive per RFC 7230 — `X-0G-Provider-Address` 
 | Header                          | Values                              | Description                                                                                                  |
 | ------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `X-0G-Provider-Address`         | on-chain address (`0x…`)            | Pin the request to a specific provider. Implies `Allow-Fallbacks: false` unless overridden.                  |
+| `X-0G-Provider-Identity`        | upstream channel name (e.g. `aliyun`) | Route to a named upstream channel. Alone it filters candidates to that identity and normal ranking picks among them; with `X-0G-Provider-Address` it pins the exact variant and inherits `Allow-Fallbacks: false`. An identity matching no endpoint is rejected with `400 provider_model_mismatch`. |
 | `X-0G-Provider-Sort`            | `latency` \| `price`                | Sort strategy when no address is pinned. Ignored if `X-0G-Provider-Address` is set. Must be exactly `latency` or `price` — any other non-empty value is rejected with `400 invalid_provider_header`. |
 | `X-0G-Provider-Trust-Mode`      | `standard` \| `verified` \| `private` | Restrict provider selection to a trust tier — see [Trust modes](#trust-modes).                                |
 | `X-0G-Provider-Allow-Fallbacks` | `true` \| `false`                   | Allow cross-provider retry on failure. Must be exactly `true` or `false` (case-insensitive) — `1`, `0`, `yes`, and other non-empty values are rejected with `400 invalid_provider_header`. |

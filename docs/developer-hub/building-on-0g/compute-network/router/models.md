@@ -54,6 +54,8 @@ curl "https://router-api.0g.ai/v1/providers?model=zai-org/GLM-5-FP8"
 
 Returns every TEE-acknowledged provider serving that model, with on-chain address, observed latency, and TEE attestation info. Use these addresses with the [`X-0G-Provider-Address` header](./routing) if you want deterministic routing.
 
+Each entry also carries `provider_identity` — the operator-declared name of the upstream channel serving that endpoint (for example `aliyun` or `openrouter`). It is a routing label, not an attested property; `verifiability` remains the trust signal. Endpoints serving a model through a single native channel omit the field. To route by channel, use the [`X-0G-Provider-Identity` header](./routing#header-reference) — it filters candidates rather than pinning one endpoint unless combined with an address. Independently of any pin, your usage history records which identity served each request.
+
 Query parameters:
 
 | Field          | Description                                                        |
