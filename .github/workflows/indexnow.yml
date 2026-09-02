@@ -1,0 +1,29 @@
+name: IndexNow
+
+# After each production deploy, tell IndexNow-capable search engines (Bing,
+# Yandex, Naver, Seznam) which URLs changed so they refresh sooner. The key is
+# public by design; the key file lives in static/ and is served at the site root.
+
+on:
+  deployment_status:
+
+jobs:
+  submit:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production – 0g-doc'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit sitemap URLs to IndexNow
+        env:
+          HOST: docs.0g.ai
+          KEY: 87b4b8d2b1e19fbcd03a203c990ee6f3
+        run: |
+          set -euo pipefail
+          curl -sf "https://$HOST/sitemap.xml" -o sitemap.xml
+          grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's/<\/\?loc>//g' | jq -R . | jq -s \
+            --arg host "$HOST" --arg key "$KEY" \
+            '{host: $host, key: $key, keyLocation: ("https://" + $host + "/" + $key + ".txt"), urlList: .}' > payload.json
+          echo "Submitting $(jq '.urlList | length' payload.json) URLs"
+          code=$(curl -s -o response.txt -w '%{http_code}' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' --data @payload.json)
+          echo "IndexNow responded $code"; cat response.txt || true
+          case "$code" in 200|202) ;; *) echo "::error::IndexNow submission failed with HTTP $code"; exit 1;; esac
