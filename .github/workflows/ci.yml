@@ -45,6 +45,18 @@ jobs:
           echo "No TypeScript config found, skipping type check..."
         fi
 
+    - name: Retired phrases
+      run: |
+        # Positioning language that must not come back. Hard-coded until the
+        # brand canon file exists; keep in sync with the marketing kill list.
+        # "Aristotle" is deliberately not here: it is the mainnet release name.
+        PATTERN='decentralized AI operating system|deAIOS|modular AI blockchain|fastest modular|modular AI stack'
+        if grep -rniE "$PATTERN" docs docusaurus.config.ts --include='*.md' --include='*.mdx' --include='*.ts'; then
+          echo "::error::retired phrase found (see matches above); use the approved wording"
+          exit 1
+        fi
+        echo "No retired phrases."
+
     - name: Build documentation
       run: pnpm build
     
