@@ -52,7 +52,7 @@ These differentiators make 0G uniquely positioned to tackle the challenges of sc
 
 ## How Does This Work?
 
-As covered in [0G Storage](./storage.md), data within the 0G ecosystem is first erasure-coded and split into "data chunks," which are then distributed across various Storage Nodes in the 0G Storage network. 
+Data submitted to 0G DA is first erasure-coded and split into "data chunks," which are then distributed across various Storage Nodes in the 0G Storage network. 
 
 To ensure data availability, 0G uses **Data Availability Nodes** that are randomly chosen using a Verifiable Random Function (VRF). A VRF generates random values in a way that is unpredictable yet verifiable by others, which is important as it prevents potentially malicious nodes from collusion.
 
