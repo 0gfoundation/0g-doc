@@ -61,8 +61,8 @@ Decentralized storage (like 0G):
 <summary><b>💾 Data Storage Lane</b></summary>
 
 - Manages actual data storage
-- Uses erasure coding: splits data into chunks with redundancy
-- Even if 30% of nodes fail, your data remains accessible
+- Every upload is committed on-chain as a Merkle root, so any node's copy can be verified against it
+- Durability comes from replication: many independent miners keep copies because PoRA pays them to
 - Automatic replication maintains availability
 </details>
 <img src="/img/0G Storage Architecture.png" alt="Storage Architecture" />
@@ -143,7 +143,7 @@ To promote fairness, the mining range is capped at 8 TB of data per mining opera
 | **IPFS** | Small files, hobby projects | Very slow, no guarantees |
 
 ### 0G's Unique Position
-- **Only solution** supporting both structured and unstructured data
+- Supports both structured and unstructured data
 - **Instant access** unlike other decentralized options
 - **Built for AI** from the ground up
 
@@ -152,7 +152,7 @@ To promote fairness, the mining range is capped at 8 TB of data per mining opera
 <details>
 <summary><b>Is my data really safe if nodes go offline?</b></summary>
 
-Yes! The erasure coding system ensures your data survives node failures. The network automatically maintains redundancy levels, so your data remains accessible even during significant outages.
+Yes. Your data is stored by many independent miners who are paid through PoRA to keep it, and every upload is committed on-chain as a Merkle root, so any copy can be verified. Individual node failures do not affect availability as long as other miners hold the data, which the incentives are designed to guarantee. Erasure coding is used by 0G DA, not by 0G Storage.
 </details>
 
 <details>
