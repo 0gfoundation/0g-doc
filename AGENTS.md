@@ -17,7 +17,7 @@ Node 24 (`.nvmrc`) and pnpm 11, **pinned via the `packageManager` field in `pack
 - `pnpm typecheck` / `npx tsc --noEmit` — TypeScript check (CI runs this)
 - `pnpm clear` — clear Docusaurus cache when builds get weird
 
-No test suite. CI validates by: build, broken-link check (see below), and cspell.
+No test suite. CI validates by: build, broken-link check (see below), a check that every link in the built `llms.txt` resolves, a retired-phrase grep (positioning language on the marketing kill list fails the build; the list is hard-coded in `ci.yml` until a shared brand canon file exists), and cspell.
 
 ### pnpm 10+ gotchas (`pnpm-workspace.yaml`)
 
@@ -103,6 +103,8 @@ Hosted on Vercel via the native GitHub integration (no GitHub Actions deploy wor
 - **`VERCEL_DEEP_CLONE=true` must be set in the Vercel project's environment variables.** Vercel clones with `--depth=10` by default; the visible "Last updated" dates (`showLastUpdateTime`) and the sitemap `<lastmod>` values come from `git log`, so without a full clone most pages would carry the date of the shallow boundary commit instead of their real last change. Search engines ignore `lastmod` they cannot verify, so a shallow clone silently defeats the freshness signals.
 - `staging` → long-lived staging at `https://staging.docs.0g.ai`. A QA / preview environment, **not** a release source — see workflow below.
 - Every PR / non-default branch → an ephemeral preview URL (`*.vercel.app`), auto-`noindex`ed by Vercel.
+- After every successful production deploy, `.github/workflows/indexnow.yml` (triggered by Vercel's `deployment_status` for the `Production – 0g-doc` environment) submits the live sitemap to IndexNow so Bing and the other IndexNow engines refresh sooner. The key is public by design and lives in `static/<key>.txt`; keep the filename and the `KEY` env in the workflow in sync if it is ever rotated.
+- `context7.json` at the repo root tells Context7 to index `docs/` from this repo (the repo-backed entry should outrank the stale website scrape once the library is claimed on context7.com). `vercel.json` also sends `Link: </llms.txt>; rel="describedby"` on every page.
 
 Vercel Authentication (deployment protection) is **disabled**, so staging and preview URLs are publicly reachable without a login — you can `curl` them directly to verify changes. They're kept out of search by `noindex` (staging via the `vercel.json` host rule, previews via Vercel's automatic header), not by an auth wall.
 
