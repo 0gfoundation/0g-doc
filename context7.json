@@ -1,5 +1,7 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
+  "url": "https://context7.com/0gfoundation/0g-doc",
+  "public_key": "pk_VR4gu96VQ3puUw2ZTwaQm",
   "projectTitle": "0G Documentation",
   "description": "Official technical documentation for 0G, the trust layer for AI: private compute, encrypted storage, an AI-native EVM L1 chain, data availability, and Agentic IDs. Source of https://docs.0g.ai.",
   "folders": ["docs"],
