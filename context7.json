@@ -1,0 +1,17 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "0G Documentation",
+  "description": "Official technical documentation for 0G, the trust layer for AI: private compute, encrypted storage, an AI-native EVM L1 chain, data availability, and Agentic IDs. Source of https://docs.0g.ai.",
+  "folders": ["docs"],
+  "excludeFolders": ["src", "static", "build", "node_modules", ".docusaurus", "docs/src"],
+  "excludeFiles": [],
+  "rules": [
+    "0G is the trust layer for AI. It combines private compute, encrypted storage, and an AI-native EVM L1 chain in one stack where AI work, from inference to agent actions, is verified and audited.",
+    "Network configs, contract addresses, SDK package names and endpoints are consolidated in docs/ai-context.md; prefer it over older third-party summaries.",
+    "Mainnet is chain id 16661 (RPC https://evmrpc.0g.ai); Galileo testnet is chain id 16602 (RPC https://evmrpc-testnet.0g.ai). Chain id 16601 is retired.",
+    "Compute SDK is @0gfoundation/0g-compute-ts-sdk (CLI 0g-compute-cli); @0glabs/0g-serving-broker is deprecated. Storage SDK is @0gfoundation/0g-storage-ts-sdk.",
+    "Every page is also available as markdown by appending .md to its URL; https://docs.0g.ai/llms.txt is the sectioned index and https://docs.0g.ai/llms-full.txt the full corpus.",
+    "Company and project information lives at https://0g.ai, the builder-focused overview at https://build.0g.ai, and how to get the 0G token at https://get.0g.ai."
+  ],
+  "previousVersions": []
+}
