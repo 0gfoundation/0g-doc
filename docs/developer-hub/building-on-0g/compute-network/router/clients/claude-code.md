@@ -27,7 +27,7 @@ and replace `YOUR_API_KEY` with a Router [API key](../authentication):
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.3",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "0gm-1.0-35b-a3b",
 
-    "CLAUDE_CODE_MAX_CONTEXT_TOKENS": "1032192"
+    "CLAUDE_CODE_MAX_CONTEXT_TOKENS": "983616"
   },
   "modelOverrides": {
     "claude-sonnet-5": "0gm-1.0-35b-a3b"
