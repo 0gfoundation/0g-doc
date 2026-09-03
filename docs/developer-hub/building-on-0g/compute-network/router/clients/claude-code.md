@@ -22,12 +22,12 @@ and replace `YOUR_API_KEY` with a Router [API key](../authentication):
     "ANTHROPIC_AUTH_TOKEN": "YOUR_API_KEY",
     "ANTHROPIC_API_KEY": "",
 
-    "ANTHROPIC_MODEL": "glm-5.2",
-    "ANTHROPIC_DEFAULT_FABLE_MODEL": "glm-5.2",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.2",
+    "ANTHROPIC_MODEL": "glm-5.3",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "glm-5.3",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.3",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "0gm-1.0-35b-a3b",
 
-    "CLAUDE_CODE_MAX_CONTEXT_TOKENS": "983616"
+    "CLAUDE_CODE_MAX_CONTEXT_TOKENS": "1032192"
   },
   "modelOverrides": {
     "claude-sonnet-5": "0gm-1.0-35b-a3b"
@@ -58,7 +58,7 @@ client sends. See [Privacy & ZDR](../privacy#enabling-privacy-mode).
 - **`ANTHROPIC_DEFAULT_HAIKU_MODEL`** covers background work — session names for
   `claude --resume`, status for commands like `/usage`.
 - **`CLAUDE_CODE_MAX_CONTEXT_TOKENS`** is the main model's real context window. Without
-  it Claude Code assumes 200 K and compacts at a fifth of `glm-5.2`'s 1 M.
+  it Claude Code assumes 200 K and compacts at a fifth of `glm-5.3`'s 1 M.
 - **`--permission-mode auto`** is required per session, or set
   `{"permissions": {"defaultMode": "auto"}}` in `~/.claude/settings.json`. With an API
   key, sessions otherwise start in Manual mode.
