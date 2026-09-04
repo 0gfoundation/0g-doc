@@ -20,6 +20,14 @@ const config: Config = {
 
   url: 'https://docs.0g.ai',
   baseUrl: '/',
+
+  // Build-time values exposed to the client. The Turnstile site key is public
+  // (it ships in the page) and must match a widget whose hostnames include
+  // docs.0g.ai. Set TURNSTILE_SITE_KEY in Vercel; the fallback is Cloudflare's
+  // always-pass test key for local development only.
+  customFields: {
+    turnstileSiteKey: process.env.TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA',
+  },
   organizationName: '0G Labs',
   projectName: '0g-docs',
 
