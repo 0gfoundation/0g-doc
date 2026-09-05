@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@0gfoundation/ask-ai-widget':
-        specifier: github:0gfoundation/ask-ai-widget#v0.1.0
-        version: https://codeload.github.com/0gfoundation/ask-ai-widget/tar.gz/847cdc676bf1b11823ca9bdd63ba8bdadf975e4f(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: github:0gfoundation/ask-ai-widget#v0.3.6
+        version: https://codeload.github.com/0gfoundation/ask-ai-widget/tar.gz/043790a4c683a91eef6473a919ae2b096901e4ba(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@docusaurus/core':
         specifier: ^3.10.1
         version: 3.10.1(@mdx-js/react@3.1.0(@types/react@18.3.18)(react@18.3.1))(acorn@8.14.0)(debug@4.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4)
@@ -81,9 +81,9 @@ importers:
 
 packages:
 
-  '@0gfoundation/ask-ai-widget@https://codeload.github.com/0gfoundation/ask-ai-widget/tar.gz/847cdc676bf1b11823ca9bdd63ba8bdadf975e4f':
-    resolution: {gitHosted: true, integrity: sha512-D0F8SWDELFNiX2vTcIrhxL94+2Jj2KBi12IyP1QOXULnr9YTI8nv+DEFwsNa1sjpDLLHgHm0JQYy1xtJ50CLFA==, tarball: https://codeload.github.com/0gfoundation/ask-ai-widget/tar.gz/847cdc676bf1b11823ca9bdd63ba8bdadf975e4f}
-    version: 0.1.0
+  '@0gfoundation/ask-ai-widget@https://codeload.github.com/0gfoundation/ask-ai-widget/tar.gz/043790a4c683a91eef6473a919ae2b096901e4ba':
+    resolution: {gitHosted: true, integrity: sha512-U/VJQjOSa2CDr9cfr7cZI7xwfdO9dUvADqk+781XcXm+bi5fbZOmgzg1TFyKKAGdtK7qEFXy5H5W+X2QG2JzCQ==, tarball: https://codeload.github.com/0gfoundation/ask-ai-widget/tar.gz/043790a4c683a91eef6473a919ae2b096901e4ba}
+    version: 0.3.6
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
@@ -5825,7 +5825,7 @@ packages:
 
 snapshots:
 
-  '@0gfoundation/ask-ai-widget@https://codeload.github.com/0gfoundation/ask-ai-widget/tar.gz/847cdc676bf1b11823ca9bdd63ba8bdadf975e4f(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@0gfoundation/ask-ai-widget@https://codeload.github.com/0gfoundation/ask-ai-widget/tar.gz/043790a4c683a91eef6473a919ae2b096901e4ba(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@marsidev/react-turnstile': 1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lucide-react: 0.540.0(react@18.3.1)
