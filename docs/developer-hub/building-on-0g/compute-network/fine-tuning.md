@@ -84,10 +84,10 @@ The CLI displays two categories of models: predefined models available across al
 #### Predefined Models
 These are standard models available across all providers:
 
-| Model Name | Type | Price per Million Tokens | Description |
-|------------|------|--------------------------|-------------|
-| `Qwen2.5-0.5B-Instruct` | Causal LM | 0.5 0G | Qwen 2.5 instruction-tuned model (0.5B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) |
-| `Qwen3-32B` | Causal LM | 4 0G | Qwen 3 large language model (32B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen3-32B) |
+| Model Name | Type | Price per Million Tokens | Available on | Description |
+|------------|------|--------------------------|--------------|-------------|
+| `Qwen2.5-0.5B-Instruct` | Causal LM | 0.5 0G | Mainnet, Testnet | Qwen 2.5 instruction-tuned model (0.5B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) |
+| `Qwen3-32B` | Causal LM | 4 0G | Mainnet only | Qwen 3 large language model (32B parameters). More details: [HuggingFace](https://huggingface.co/Qwen/Qwen3-32B) |
 
 </details>
 
@@ -96,6 +96,10 @@ The output consists of two main sections:
 - **Predefined Models:** Models provided by the system as predefined options. They are built-in, curated, and maintained to ensure quality and reliability.
 
 - **Provider's Model:** Models offered by external service providers. Providers may customize or fine-tune models to address specific needs.
+
+:::note Network availability
+Model availability depends on the provider. At the time of writing the testnet provider offers `Qwen2.5-0.5B-Instruct` only; `Qwen3-32B` is available on mainnet. Run `list-models` against the network you are using rather than relying on this table.
+:::
 
 :::caution Model Name Format
 Use model names **without** the `Qwen/` prefix when specifying the `--model` parameter. For example:
@@ -453,6 +457,8 @@ After fine-tuning, you receive a **LoRA adapter** (Low-Rank Adaptation), not a f
 2. Load the LoRA adapter on top of the base model
 3. Run inference
 
+If the provider that trained your model also runs a 0G inference service, the CLI can instead load the adapter on that provider's GPU and chat with it through the inference broker, with no base model download. See [Serving the Adapter on a 0G Inference Provider](#serving-the-adapter-on-a-0g-inference-provider) below.
+
 ### Step 1: Download Base Model
 
 Download the same base model that was used for fine-tuning from HuggingFace:
@@ -701,6 +707,44 @@ You can cancel a task before it starts running using the following command:
 ```
 
 **Note:** Tasks that are already in progress or completed cannot be canceled.
+
+### Serving the Adapter on a 0G Inference Provider
+
+The SDK CLI can deploy the LoRA adapter to a 0G inference GPU and chat with the fine-tuned model through the inference broker. This needs an inference provider that serves your base model with LoRA support (its broker exposes `/v1/lora/adapters`) and has access to your adapter, which in practice means the provider that ran the fine-tuning task also runs an inference service.
+
+:::note Availability
+At the time of writing, the public fine-tuning providers on mainnet and testnet are not registered as inference providers, so this path cannot be used on the public networks yet. Check with `0g-compute-cli inference list-providers`: if your fine-tuning provider's address is listed there, the commands below apply.
+:::
+
+```bash
+# Acknowledge the model and deploy the adapter in one step (--model is required with --deploy)
+0g-compute-cli fine-tuning acknowledge-model \
+  --provider <PROVIDER_ADDRESS> \
+  --task-id <TASK_ID> \
+  --data-path ./encrypted_model.bin \
+  --deploy --model Qwen2.5-0.5B-Instruct
+# Add --inference-provider <ADDRESS> if the inference service runs under a different address.
+
+# Or deploy an already acknowledged adapter and wait until it is active
+0g-compute-cli fine-tuning deploy-adapter \
+  --provider <INFERENCE_PROVIDER_ADDRESS> \
+  --model Qwen2.5-0.5B-Instruct \
+  --task-id <TASK_ID> \
+  --wait
+
+# The adapter's model name is derived from the base model and the task id
+0g-compute-cli fine-tuning get-adapter-name --model Qwen2.5-0.5B-Instruct --task-id <TASK_ID>
+# Example output: ft-Qwen2-5-0-5B-Instruct-<first 12 characters of the task id>
+
+# Chat with the fine-tuned model through the inference broker
+0g-compute-cli fine-tuning chat \
+  --provider <INFERENCE_PROVIDER_ADDRESS> \
+  --model Qwen2.5-0.5B-Instruct \
+  --task-id <TASK_ID> \
+  --message "Hello"
+```
+
+Chat requests are billed like any other inference request to that provider, from your **inference** sub-account (`transfer-fund --provider <ADDRESS> --amount <OG>` without `--service fine-tuning`). Any OpenAI-compatible client can call the fine-tuned model the same way as other inference services by passing the adapter name as the `model` field.
 
 ## Troubleshooting
 
