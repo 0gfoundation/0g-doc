@@ -415,18 +415,33 @@ client = OpenAI(
 
 **Fine-tuning Models** (uses the Direct account system; not available via Router):
 ```bash
-# Prepare dataset (JSONL format, one {"prompt": "...", "completion": "..."} per line)
-0g-compute-cli fine-tuning upload-data --file dataset.jsonl
+# Dataset: JSONL, one object per line, in one of the supported formats:
+# {"instruction","input","output"}, chat {"messages":[...]}, or plain {"text"}
 
-# Create fine-tuning task (fund the fine-tuning sub-account first: transfer-fund --service fine-tuning)
+# Fund the provider's fine-tuning sub-account first (--service fine-tuning is required)
+0g-compute-cli transfer-fund --provider <PROVIDER_ADDRESS> --amount 2 --service fine-tuning
+
+# Create a task from a local dataset (uploaded automatically) and a training config
 0g-compute-cli fine-tuning create-task \
+  --provider <PROVIDER_ADDRESS> \
   --model Qwen2.5-0.5B-Instruct \
-  --dataset <DATASET_ID> \
-  --provider <PROVIDER_ADDRESS>
+  --dataset-path dataset.jsonl \
+  --config-path config.json
 
-# Monitor progress
-0g-compute-cli fine-tuning get-task --task-id <TASK_ID>
+# Or upload once and reuse the root hash with --dataset <ROOT_HASH>
+0g-compute-cli fine-tuning upload --data-path dataset.jsonl
+
+# Monitor progress (omit --task to get the latest task)
+0g-compute-cli fine-tuning get-task --provider <PROVIDER_ADDRESS> --task <TASK_ID>
+
+# When status is Delivered: download and acknowledge within 48 hours (--data-path is a file, not a directory)
+0g-compute-cli fine-tuning acknowledge-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --data-path ./encrypted_model.bin
+
+# When status is Finished: decrypt to a zip containing the LoRA adapter
+0g-compute-cli fine-tuning decrypt-model --provider <PROVIDER_ADDRESS> --task-id <TASK_ID> --encrypted-model ./encrypted_model.bin --output ./model.zip
 ```
+
+Fine-tuning base models: `Qwen2.5-0.5B-Instruct` (mainnet and testnet), `Qwen3-32B` (mainnet only). Check the live list with `0g-compute-cli fine-tuning list-models`.
 
 **Documentation Links**:
 - Overview: [https://docs.0g.ai/developer-hub/building-on-0g/compute-network/overview](https://docs.0g.ai/developer-hub/building-on-0g/compute-network/overview)
