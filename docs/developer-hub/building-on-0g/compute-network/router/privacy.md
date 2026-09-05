@@ -69,7 +69,7 @@ client = OpenAI(
 )
 
 completion = client.chat.completions.create(
-    model="glm-5.2",  # served by a TeeML provider
+    model="glm-5.3",  # served by a TeeML provider
     messages=[{"role": "user", "content": "Hello"}],
 )
 ```
