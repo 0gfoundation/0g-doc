@@ -10,6 +10,28 @@ description: "Configure Claude Code to run on the 0G Compute Router."
 [Claude Code](https://code.claude.com/docs) reaches the Router over the Anthropic Messages
 API, so it needs configuration only — no plugin, no proxy.
 
+## Quick install
+
+Installs Claude Code if it is missing, checks the key against the Router, and writes the
+settings below. An existing `settings.json` is backed up and merged into, never replaced.
+
+**macOS / Linux**
+
+```bash
+curl -fsSL https://docs.0g.ai/claude-code/install.sh | bash
+```
+
+**Windows (PowerShell)**
+
+```powershell
+irm https://docs.0g.ai/claude-code/install.ps1 | iex
+```
+
+Both prompt for your Router [API key](../authentication), or take it from `ZG_API_KEY`
+for unattended installs. Then run `claude --permission-mode auto`.
+
+To configure by hand instead, read on.
+
 ## Configure
 
 Create `~/.claude/settings.json` (Windows: `C:\Users\<username>\.claude\settings.json`)
