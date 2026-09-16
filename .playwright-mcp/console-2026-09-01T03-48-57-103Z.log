@@ -1,0 +1,7 @@
+[    3538ms] [WARNING] jQuery Flot not loaded properly @ https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0:98
+[    3826ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://www.bing.com/webmasters/api/globalelements/profile:0
+[    3831ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://www.bing.com/webmasters/api/globalelements/globalinfo:0
+[    3910ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://www.bing.com/webmasters/api/helpupdate/permissions/edit:0
+[    4326ms] [ERROR] A bad HTTP response code (404) was received when fetching the script. @ :0
+[    5490ms] [WARNING] Some icons were re-registered. Applications should only call registerIcons for any given icon once. Redefining what an icon is may have unintended consequences. Duplicates include: 
+GlobalNavButton, ChevronDown, ChevronUp, Edit, Add, Cancel, More, Settings, Mail, Filter (+ 1791 more) @ https://www.bing.com/webmasters/dist/bundle.min.js?v=nWWmMmqoXyrdCFo1WeE3vDHIF35E4jiNbA4NUpFL3jA:1

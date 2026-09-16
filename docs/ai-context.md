@@ -91,15 +91,19 @@ The previous testnet fine-tuning contract (`0xaC66eBd174435c04F1449BBa08157a707B
 
 ### $0G Token Contracts
 
-$0G is the **native gas token** on 0G Mainnet (no contract address). Official token contract representations:
+$0G is the **native gas token** on 0G Mainnet (no contract address). Official token contract representations (full page: https://docs.0g.ai/developer-hub/building-on-0g/contracts-on-0g/token-addresses):
 
 | Network (chain ID) | Token | Address |
 |--------------------|-------|---------|
 | 0G Mainnet (16661) | W0G — Wrapped 0G | `0x1Cd0690fF9a693f5EF2dD976660a8dAFc81A109c` |
 | Ethereum (1) | 0G — official bridged token | `0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE` |
 | BNB Chain (56) | 0G — official bridged token | `0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE` |
+| Ethereum (1) | W0G — Wrapped 0G, Chainlink CCIP | `0x4C1Dab3Be86347977F3DfC4b9688224ef2272939` |
+| Base (8453) | W0G — Wrapped 0G, Chainlink CCIP | `0x23cd099eB438CcA50349EE2BC809196b1ae00861` |
+| Solana (mainnet-beta) | W0G — Wrapped 0G, SPL mint, 9 decimals | `gNyJyS9pQt33o4y4L3gdWZAF2XHgPrCBRQuaiCZStMe` |
+| Robinhood Chain (4663) | W0G — Wrapped 0G, Chainlink CCIP | `0x32003CC8357938bCF615c1222a349c58f2B30698` |
 
-All 18 decimals. The bridged token shares the same address on Ethereum and BNB Chain (bridged via Stargate). Any other contract claiming to be $0G is not official.
+All EVM tokens use 18 decimals; the Solana mint uses 9. The bridged 0G token shares the same address on Ethereum and BNB Chain (LayerZero OFT, bridged via Stargate); W0G on Ethereum, Base, Solana and Robinhood Chain is bridged with Chainlink CCIP. Any other contract claiming to be $0G is not official.
 
 ## 0G Services Overview
 

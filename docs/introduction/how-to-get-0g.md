@@ -28,7 +28,7 @@ On the 0G Mainnet, the 0G token is the **native gas token**. Like ETH on Ethereu
 | Ethereum (chain ID 1) | 0G (official bridged token) | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://etherscan.io/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) |
 | BNB Chain (chain ID 56) | 0G (official bridged token) | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://bscscan.com/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) |
 
-All three tokens use 18 decimals. The official bridged token deliberately shares the **same address on Ethereum and BNB Chain**, and moves to and from the 0G network via [Stargate](https://stargate.finance). W0G is the canonical wrapped form of the native token on the 0G chain; see [Wrapped 0G Base](/developer-hub/building-on-0g/contracts-on-0g/precompiles/precompiles-wrappedogbase) for details.
+W0G is also issued on Ethereum, Base, Solana and Robinhood Chain through Chainlink CCIP; the full list, with explorer links, is on the [0G Token Addresses](/developer-hub/building-on-0g/contracts-on-0g/token-addresses) page. All three tokens above use 18 decimals. The official bridged token deliberately shares the **same address on Ethereum and BNB Chain**, and moves to and from the 0G network via [Stargate](https://stargate.finance). W0G is the canonical wrapped form of the native token on the 0G chain; see [Wrapped 0G Base](/developer-hub/building-on-0g/contracts-on-0g/precompiles/precompiles-wrappedogbase) for details.
 
 ## Centralized Exchanges
 

@@ -70,6 +70,7 @@ const sidebars: SidebarsConfig = {
                 'developer-hub/building-on-0g/contracts-on-0g/deploy-contracts',
                 'developer-hub/building-on-0g/contracts-on-0g/staking-interfaces',
                 'developer-hub/building-on-0g/contracts-on-0g/validator-contract-functions',
+                'developer-hub/building-on-0g/contracts-on-0g/token-addresses',
                 {
                   type: 'category',
                   label: 'Precompiles',

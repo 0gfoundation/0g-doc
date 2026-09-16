@@ -1,0 +1,809 @@
+- generic [ref=e1]:
+  - blockquote [ref=e2]:
+    - heading [level=2] [ref=e3]: Documentation Index
+    - paragraph [ref=e4]:
+      - text: "Fetch the complete documentation index at:"
+      - link [ref=e5] [cursor=pointer]:
+        - /url: /docs/llms.txt
+        - text: /docs/llms.txt
+    - paragraph [ref=e6]: Use this file to discover all available pages before exploring further.
+  - generic [ref=e7]:
+    - link "Skip to main content" [ref=e8] [cursor=pointer]:
+      - /url: "#content-area"
+    - generic [ref=e10]:
+      - banner [ref=e11]:
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - link "Mintlify home page light logo" [ref=e18] [cursor=pointer]:
+              - /url: https://mintlify.com/docs
+              - generic [ref=e19]: Mintlify home page
+              - img "light logo" [ref=e20]
+            - button "English" [ref=e22] [cursor=pointer]
+          - navigation "Main" [ref=e26]:
+            - list [ref=e27]:
+              - listitem [ref=e28]:
+                - link "Documentation" [ref=e29] [cursor=pointer]:
+                  - /url: /docs
+              - listitem [ref=e30]:
+                - link "API reference" [ref=e31] [cursor=pointer]:
+                  - /url: /docs/api/introduction
+              - listitem [ref=e32]:
+                - link "Changelog" [ref=e33] [cursor=pointer]:
+                  - /url: /docs/changelog
+              - listitem [ref=e34]:
+                - button "Learn" [ref=e35] [cursor=pointer]
+          - generic [ref=e38]:
+            - generic [ref=e39]:
+              - button "Open search" [ref=e40] [cursor=pointer]
+              - button "Toggle assistant panel" [ref=e45] [cursor=pointer]
+            - list [ref=e49]:
+              - listitem [ref=e50]:
+                - link "Talk to us" [ref=e51] [cursor=pointer]:
+                  - /url: https://mintlify.com/contact/sales
+              - listitem [ref=e53]:
+                - link "Get started" [ref=e54] [cursor=pointer]:
+                  - /url: https://mintlify.com/start
+            - button "Change theme preference" [ref=e57] [cursor=pointer]
+      - navigation "Pages" [ref=e62]:
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - heading "Get started" [level=3] [ref=e67]
+            - list [ref=e68]:
+              - listitem [ref=e69]:
+                - link "Introduction" [ref=e70] [cursor=pointer]:
+                  - /url: /docs
+              - listitem [ref=e74]:
+                - link "Quickstart" [ref=e75] [cursor=pointer]:
+                  - /url: /docs/quickstart
+              - listitem [ref=e79]:
+                - link "AI-native" [ref=e80] [cursor=pointer]:
+                  - /url: /docs/ai-native
+              - listitem [ref=e84]:
+                - button "CLI" [ref=e85] [cursor=pointer]
+              - listitem [ref=e90]:
+                - button "Migrate to Mintlify" [ref=e91] [cursor=pointer]
+          - generic [ref=e96]:
+            - heading "Create content" [level=3] [ref=e98]
+            - list [ref=e99]:
+              - listitem [ref=e100]:
+                - button "Pages" [ref=e101] [cursor=pointer]
+              - listitem [ref=e106]:
+                - button "Formatting" [ref=e107] [cursor=pointer]
+              - listitem [ref=e112]:
+                - button "Components" [ref=e113] [cursor=pointer]
+              - listitem [ref=e118]:
+                - button "Media" [ref=e119] [cursor=pointer]
+              - listitem [ref=e124]:
+                - link "Reusable snippets" [ref=e125] [cursor=pointer]:
+                  - /url: /docs/create/reusable-snippets
+              - listitem [ref=e129]:
+                - link "Personalized content" [ref=e130] [cursor=pointer]:
+                  - /url: /docs/create/personalization
+              - listitem [ref=e134]:
+                - button "Editor" [ref=e135] [cursor=pointer]
+              - listitem [ref=e140]:
+                - link "CI checks" [ref=e141] [cursor=pointer]:
+                  - /url: /docs/deploy/ci
+          - generic [ref=e145]:
+            - heading "Manage your site" [level=3] [ref=e147]
+            - list [ref=e148]:
+              - listitem [ref=e149]:
+                - button "Global settings" [ref=e150] [cursor=pointer]
+              - listitem [ref=e155]:
+                - link "Navigation" [ref=e156] [cursor=pointer]:
+                  - /url: /docs/organize/navigation
+              - listitem [ref=e160]:
+                - link "Contextual menu" [ref=e161] [cursor=pointer]:
+                  - /url: /docs/ai/contextual-menu
+              - listitem [ref=e165]:
+                - link "Bring your own model" [ref=e166] [cursor=pointer]:
+                  - /url: /docs/ai/bring-your-own-model
+              - listitem [ref=e170]:
+                - link "Redirects" [ref=e171] [cursor=pointer]:
+                  - /url: /docs/create/redirects
+              - listitem [ref=e175]:
+                - link "Exclude files" [ref=e176] [cursor=pointer]:
+                  - /url: /docs/organize/mintignore
+              - listitem [ref=e180]:
+                - button "Repository setup" [ref=e181] [cursor=pointer]
+              - listitem [ref=e186]:
+                - button "Visual customization" [ref=e187] [cursor=pointer]
+              - listitem [ref=e192]:
+                - button "Analytics" [ref=e193] [cursor=pointer]
+              - listitem [ref=e198]:
+                - button "Deployments" [ref=e199] [cursor=pointer]
+              - listitem [ref=e204]:
+                - button "Hosting" [ref=e205] [cursor=pointer]
+              - listitem [ref=e210]:
+                - button "Export your site" [ref=e211] [cursor=pointer]
+              - listitem [ref=e216]:
+                - button "Authentication" [ref=e217] [cursor=pointer]
+              - listitem [ref=e222]:
+                - button "Security" [ref=e223] [cursor=pointer]
+          - generic [ref=e228]:
+            - heading "Agent" [level=3] [ref=e230]
+            - list [ref=e231]:
+              - listitem [ref=e232]:
+                - link "What is the agent?" [ref=e233] [cursor=pointer]:
+                  - /url: /docs/agent
+              - listitem [ref=e237]:
+                - link "Add the agent to Slack" [ref=e238] [cursor=pointer]:
+                  - /url: /docs/agent/slack
+              - listitem [ref=e242]:
+                - button "Automations" [ref=e243] [cursor=pointer]
+              - listitem [ref=e248]:
+                - link "Customize agent behavior" [ref=e249] [cursor=pointer]:
+                  - /url: /docs/agent/customize
+              - listitem [ref=e253]:
+                - link "Write effective prompts" [ref=e254] [cursor=pointer]:
+                  - /url: /docs/agent/effective-prompts
+              - listitem [ref=e258]:
+                - link "Use cases" [ref=e259] [cursor=pointer]:
+                  - /url: /docs/agent/use-cases
+          - generic [ref=e263]:
+            - heading "Assistant" [level=3] [ref=e265]
+            - list [ref=e266]:
+              - listitem [ref=e267]:
+                - link "Assistant" [ref=e268] [cursor=pointer]:
+                  - /url: /docs/assistant
+              - listitem [ref=e272]:
+                - link "Configure the assistant" [ref=e273] [cursor=pointer]:
+                  - /url: /docs/assistant/configure
+              - listitem [ref=e277]:
+                - link "Customize assistant behavior" [ref=e278] [cursor=pointer]:
+                  - /url: /docs/assistant/customize
+              - listitem [ref=e282]:
+                - link "Widget New" [ref=e283] [cursor=pointer]:
+                  - /url: /docs/assistant/widget
+                  - generic [ref=e285]:
+                    - generic [ref=e286]: Widget
+                    - generic [ref=e287]: New
+              - listitem [ref=e290]:
+                - link "Add assistant skills" [ref=e291] [cursor=pointer]:
+                  - /url: /docs/assistant/skills
+              - listitem [ref=e295]:
+                - link "Use the assistant" [ref=e296] [cursor=pointer]:
+                  - /url: /docs/assistant/use
+          - generic [ref=e300]:
+            - heading "Agent-ready content" [level=3] [ref=e302]
+            - list [ref=e303]:
+              - listitem [ref=e304]:
+                - link "Admin MCP" [ref=e305] [cursor=pointer]:
+                  - /url: /docs/ai/mintlify-mcp
+              - listitem [ref=e309]:
+                - button "Mintlify Index" [ref=e310] [cursor=pointer]
+              - listitem [ref=e315]:
+                - link "Search MCP" [ref=e316] [cursor=pointer]:
+                  - /url: /docs/ai/model-context-protocol
+              - listitem [ref=e320]:
+                - link "llms.txt" [ref=e321] [cursor=pointer]:
+                  - /url: /docs/ai/llmstxt
+              - listitem [ref=e325]:
+                - link "skill.md" [ref=e326] [cursor=pointer]:
+                  - /url: /docs/ai/skillmd
+              - listitem [ref=e330]:
+                - link "Markdown export" [ref=e331] [cursor=pointer]:
+                  - /url: /docs/ai/markdown-export
+          - generic [ref=e335]:
+            - heading "Search and SEO" [level=3] [ref=e337]
+            - list [ref=e338]:
+              - listitem [ref=e339]:
+                - link "Search" [ref=e340] [cursor=pointer]:
+                  - /url: /docs/optimize/search
+              - listitem [ref=e344]:
+                - link "SEO" [ref=e345] [cursor=pointer]:
+                  - /url: /docs/optimize/seo
+          - generic [ref=e349]:
+            - heading "Document APIs" [level=3] [ref=e351]
+            - list [ref=e352]:
+              - listitem [ref=e353]:
+                - link "API playground overview" [ref=e354] [cursor=pointer]:
+                  - /url: /docs/api-playground/overview
+              - listitem [ref=e358]:
+                - button "API specifications" [ref=e359] [cursor=pointer]
+              - listitem [ref=e364]:
+                - button "Endpoint pages" [ref=e365] [cursor=pointer]
+              - listitem [ref=e370]:
+                - link "Troubleshooting" [ref=e371] [cursor=pointer]:
+                  - /url: /docs/api-playground/troubleshooting
+          - generic [ref=e375]:
+            - heading "Integrations" [level=3] [ref=e377]
+            - list [ref=e378]:
+              - listitem [ref=e379]:
+                - button "Analytics" [ref=e380] [cursor=pointer]
+              - listitem [ref=e385]:
+                - button "SDKs" [ref=e386] [cursor=pointer]
+              - listitem [ref=e391]:
+                - button "Support" [ref=e392] [cursor=pointer]
+              - listitem [ref=e397]:
+                - button "Privacy" [ref=e398] [cursor=pointer]
+          - generic [ref=e403]:
+            - heading "Reference" [level=3] [ref=e405]
+            - list [ref=e406]:
+              - listitem [ref=e407]:
+                - link "Concepts" [ref=e408] [cursor=pointer]:
+                  - /url: /docs/reference/concepts
+              - listitem [ref=e412]:
+                - link "Glossary" [ref=e413] [cursor=pointer]:
+                  - /url: /docs/reference/glossary
+              - listitem [ref=e417]:
+                - link "Credit pricing" [ref=e418] [cursor=pointer]:
+                  - /url: /docs/credits
+      - generic [ref=e423]:
+        - main [ref=e424]:
+          - generic [ref=e426]:
+            - generic [ref=e427]:
+              - generic [ref=e428]:
+                - generic [ref=e429]: Manage your site
+                - generic [ref=e430]:
+                  - heading "Contextual menu" [level=1] [ref=e431]
+                  - generic [ref=e432]:
+                    - button "Copy page" [ref=e433] [cursor=pointer]
+                    - button "More actions" [ref=e440] [cursor=pointer]
+              - paragraph [ref=e444]: Add a contextual menu to your docs with one-click AI integrations for ChatGPT, Claude, Perplexity, Google AI Studio, Devin, Devin Desktop, and MCP tools.
+            - generic [ref=e445]:
+              - generic [ref=e446]: The contextual menu provides quick access to AI-optimized content and direct integrations with popular AI tools. When users click the contextual menu on any page, they can copy content as context for AI tools or open it in an AI conversation. Supported tools include ChatGPT, Claude, Perplexity, Google AI Studio, Grok, Devin, Devin Desktop, and any custom tool you configure.
+              - note "Tip" [ref=e447]:
+                - generic [ref=e452]:
+                  - text: Pair the contextual menu with your hosted
+                  - link [ref=e453] [cursor=pointer]:
+                    - /url: /docs/ai/skillmd
+                    - code [ref=e454]: skill.md
+                  - text: file and
+                  - link "MCP server" [ref=e455] [cursor=pointer]:
+                    - /url: /docs/ai/model-context-protocol
+                  - text: . This lets users install your product’s full capabilities into their AI tools, not just the page they are reading.
+              - heading "Navigate to header Menu options" [level=2] [ref=e456]:
+                - link "Navigate to header" [ref=e457] [cursor=pointer]:
+                  - /url: "#menu-options"
+                - generic [ref=e462] [cursor=pointer]: Menu options
+              - generic [ref=e463]: The contextual menu includes several pre-built options that you can enable by adding their identifier to your configuration.
+              - region "Scrollable table" [ref=e464]:
+                - table [ref=e466]:
+                  - rowgroup [ref=e467]:
+                    - row [ref=e468]:
+                      - columnheader "Option" [ref=e469]
+                      - columnheader "Identifier" [ref=e470]
+                      - columnheader "Description" [ref=e471]
+                  - rowgroup [ref=e472]:
+                    - row [ref=e473]:
+                      - cell [ref=e474]:
+                        - strong [ref=e475]: Copy page
+                      - cell [ref=e476]:
+                        - code [ref=e477]: copy
+                      - cell "Copies the current page as Markdown for pasting as context into AI tools" [ref=e478]
+                    - row [ref=e479]:
+                      - cell [ref=e480]:
+                        - strong [ref=e481]: View as Markdown
+                      - cell [ref=e482]:
+                        - code [ref=e483]: view
+                      - cell "Opens the current page as Markdown" [ref=e484]
+                    - row [ref=e485]:
+                      - cell [ref=e486]:
+                        - strong [ref=e487]: Ask assistant
+                      - cell [ref=e488]:
+                        - code [ref=e489]: assistant
+                      - cell [ref=e490]:
+                        - text: Opens the
+                        - link "assistant" [ref=e491] [cursor=pointer]:
+                          - /url: /docs/assistant/index
+                        - text: with the current page as context
+                    - row [ref=e492]:
+                      - cell [ref=e493]:
+                        - strong [ref=e494]: Download PDF
+                      - cell [ref=e495]:
+                        - code [ref=e496]: download-pdf
+                      - cell [ref=e497]:
+                        - text: Downloads the current page as a PDF. Available on
+                        - link "Enterprise plans" [ref=e498] [cursor=pointer]:
+                          - /url: https://mintlify.com/pricing
+                        - text: .
+                    - row [ref=e499]:
+                      - cell [ref=e500]:
+                        - strong [ref=e501]: Open in ChatGPT
+                      - cell [ref=e502]:
+                        - code [ref=e503]: chatgpt
+                      - cell "Creates a ChatGPT conversation with the current page as context" [ref=e504]
+                    - row [ref=e505]:
+                      - cell [ref=e506]:
+                        - strong [ref=e507]: Open in Claude
+                      - cell [ref=e508]:
+                        - code [ref=e509]: claude
+                      - cell "Creates a Claude conversation with the current page as context" [ref=e510]
+                    - row [ref=e511]:
+                      - cell [ref=e512]:
+                        - strong [ref=e513]: Open in Perplexity
+                      - cell [ref=e514]:
+                        - code [ref=e515]: perplexity
+                      - cell "Creates a Perplexity conversation with the current page as context" [ref=e516]
+                    - row [ref=e517]:
+                      - cell [ref=e518]:
+                        - strong [ref=e519]: Open in Grok
+                      - cell [ref=e520]:
+                        - code [ref=e521]: grok
+                      - cell "Creates a Grok conversation with the current page as context" [ref=e522]
+                    - row [ref=e523]:
+                      - cell [ref=e524]:
+                        - strong [ref=e525]: Open in Google AI Studio
+                      - cell [ref=e526]:
+                        - code [ref=e527]: aistudio
+                      - cell "Creates a Google AI Studio conversation with the current page as context" [ref=e528]
+                    - row [ref=e529]:
+                      - cell [ref=e530]:
+                        - strong [ref=e531]: Open in Devin
+                      - cell [ref=e532]:
+                        - code [ref=e533]: devin
+                      - cell "Creates a Devin session with the current page as context" [ref=e534]
+                    - row [ref=e535]:
+                      - cell [ref=e536]:
+                        - strong [ref=e537]: Open in Devin Desktop
+                      - cell [ref=e538]:
+                        - code [ref=e539]: devin-desktop
+                      - cell "Opens Devin Desktop with the current page as context. Requires installing Devin Desktop." [ref=e540]
+                    - row [ref=e541]:
+                      - cell [ref=e542]:
+                        - strong [ref=e543]: Copy MCP server URL
+                      - cell [ref=e544]:
+                        - code [ref=e545]: mcp
+                      - cell "Copies your MCP server URL to the clipboard" [ref=e546]
+                    - row [ref=e547]:
+                      - cell [ref=e548]:
+                        - strong [ref=e549]: Copy MCP install command
+                      - cell [ref=e550]:
+                        - code [ref=e551]: add-mcp
+                      - cell [ref=e552]:
+                        - text: Copies the
+                        - code [ref=e553]: npx add-mcp
+                        - text: command to install the MCP server
+                    - row [ref=e554]:
+                      - cell [ref=e555]:
+                        - strong [ref=e556]: Connect to Cursor
+                      - cell [ref=e557]:
+                        - code [ref=e558]: cursor
+                      - cell "Installs your hosted MCP server in Cursor" [ref=e559]
+                    - row [ref=e560]:
+                      - cell [ref=e561]:
+                        - strong [ref=e562]: Connect to VS Code
+                      - cell [ref=e563]:
+                        - code [ref=e564]: vscode
+                      - cell "Installs your hosted MCP server in VS Code" [ref=e565]
+                    - row [ref=e566]:
+                      - cell [ref=e567]:
+                        - strong [ref=e568]: Connect to Devin
+                      - cell [ref=e569]:
+                        - code [ref=e570]: devin-mcp
+                      - cell "Installs your hosted MCP server in Devin" [ref=e571]
+                    - row [ref=e572]:
+                      - cell [ref=e573]:
+                        - strong [ref=e574]: Download API spec
+                      - cell [ref=e575]:
+                        - code [ref=e576]: download-spec
+                      - cell "Downloads your deployment’s OpenAPI spec. If there are multiple specs, downloads them as a zip archive. Only appears on API reference pages." [ref=e577]
+                    - row [ref=e578]:
+                      - cell [ref=e579]:
+                        - strong [ref=e580]: Custom options
+                      - cell "Object" [ref=e581]
+                      - cell "Add custom options to the contextual menu" [ref=e582]
+              - generic [ref=e587]:
+                - img "The expanded contextual menu showing the Copy page, View as Markdown, Open in ChatGPT, and Open in Claude menu items." [ref=e590]
+                - generic:
+                  - 'button "Expand image: The expanded contextual menu showing the Copy page, View as Markdown, Open in ChatGPT, and Open in Claude menu items."'
+              - heading "Navigate to header Enable the contextual menu" [level=2] [ref=e591]:
+                - link "Navigate to header" [ref=e592] [cursor=pointer]:
+                  - /url: "#enable-the-contextual-menu"
+                - generic [ref=e597] [cursor=pointer]: Enable the contextual menu
+              - generic [ref=e598]:
+                - text: Add the
+                - code [ref=e599]: contextual
+                - text: field to your
+                - code [ref=e600]: docs.json
+                - text: file and specify which options you want to include. Options appear in the menu in the order you list them.
+              - generic [ref=e601]:
+                - generic [ref=e602]:
+                  - button "Report incorrect code" [ref=e604] [cursor=pointer]
+                  - generic [ref=e608]:
+                    - button "Copy the contents from the code block" [ref=e609] [cursor=pointer]
+                    - status [ref=e613]
+                  - button "Ask Assistant" [ref=e615] [cursor=pointer]
+                - code [ref=e622]:
+                  - generic [ref=e623]: "{"
+                  - generic [ref=e624]: "\"contextual\": {"
+                  - generic [ref=e625]: "\"options\": ["
+                  - generic [ref=e626]: "\"copy\","
+                  - generic [ref=e627]: "\"view\","
+                  - generic [ref=e628]: "\"assistant\","
+                  - generic [ref=e629]: "\"chatgpt\","
+                  - generic [ref=e630]: "\"claude\","
+                  - generic [ref=e631]: "\"perplexity\","
+                  - generic [ref=e632]: "\"grok\","
+                  - generic [ref=e633]: "\"aistudio\","
+                  - generic [ref=e634]: "\"devin\","
+                  - generic [ref=e635]: "\"devin-desktop\","
+                  - generic [ref=e636]: "\"mcp\","
+                  - generic [ref=e637]: "\"cursor\","
+                  - generic [ref=e638]: "\"vscode\","
+                  - generic [ref=e639]: "\"devin-mcp\","
+                  - generic [ref=e640]: "\"download-spec\","
+                  - generic [ref=e641]: "\"download-pdf\""
+                  - generic [ref=e642]: "]"
+                  - generic [ref=e643]: "}"
+                  - generic [ref=e644]: "}"
+              - heading "Navigate to header Display location" [level=2] [ref=e645]:
+                - link "Navigate to header" [ref=e646] [cursor=pointer]:
+                  - /url: "#display-location"
+                - generic [ref=e651] [cursor=pointer]: Display location
+              - generic [ref=e652]:
+                - text: By default, the contextual menu appears in the page header. You can configure it to display in the table of contents sidebar instead using the
+                - code [ref=e653]: display
+                - text: option.
+              - generic [ref=e654]:
+                - generic [ref=e655]:
+                  - button "Report incorrect code" [ref=e657] [cursor=pointer]
+                  - generic [ref=e661]:
+                    - button "Copy the contents from the code block" [ref=e662] [cursor=pointer]
+                    - status [ref=e666]
+                  - button "Ask Assistant" [ref=e668] [cursor=pointer]
+                - code [ref=e675]:
+                  - generic [ref=e676]: "{"
+                  - generic [ref=e677]: "\"contextual\": {"
+                  - generic [ref=e678]: "\"options\": [\"copy\", \"view\", \"chatgpt\", \"claude\"],"
+                  - generic [ref=e679]: "\"display\": \"toc\""
+                  - generic [ref=e680]: "}"
+                  - generic [ref=e681]: "}"
+              - region "Scrollable table" [ref=e682]:
+                - table [ref=e684]:
+                  - rowgroup [ref=e685]:
+                    - row [ref=e686]:
+                      - columnheader "Value" [ref=e687]
+                      - columnheader "Description" [ref=e688]
+                  - rowgroup [ref=e689]:
+                    - row [ref=e690]:
+                      - cell [ref=e691]:
+                        - code [ref=e692]: header
+                      - cell "Displays options in the top-of-page context menu (default)" [ref=e693]
+                    - row [ref=e694]:
+                      - cell [ref=e695]:
+                        - code [ref=e696]: toc
+                      - cell "Displays options in the table of contents sidebar" [ref=e697]
+              - heading "Navigate to header Add custom options" [level=2] [ref=e698]:
+                - link "Navigate to header" [ref=e699] [cursor=pointer]:
+                  - /url: "#add-custom-options"
+                - generic [ref=e704] [cursor=pointer]: Add custom options
+              - generic [ref=e705]:
+                - text: Create custom options in the contextual menu by adding an object to the
+                - code [ref=e706]: options
+                - text: "array. Each custom option requires these properties:"
+              - generic [ref=e707]:
+                - generic [ref=e710]:
+                  - generic:
+                    - 'link "Navigate to header: title" [ref=e711] [cursor=pointer]':
+                      - /url: "#param-title"
+                    - status [ref=e716]
+                  - button "title" [ref=e717] [cursor=pointer]
+                  - generic [ref=e718]:
+                    - generic [ref=e719]: string
+                    - text: required
+                - generic [ref=e720]: The title of the option.
+              - generic [ref=e722]:
+                - generic [ref=e725]:
+                  - generic:
+                    - 'link "Navigate to header: description" [ref=e726] [cursor=pointer]':
+                      - /url: "#param-description"
+                    - status [ref=e731]
+                  - button "description" [ref=e732] [cursor=pointer]
+                  - generic [ref=e733]:
+                    - generic [ref=e734]: string
+                    - text: required
+                - generic [ref=e735]: The description of the option. Displayed beneath the title when the contextual menu expands.
+              - note "Info" [ref=e737]:
+                - generic [ref=e742]:
+                  - text: You must include one of
+                  - code [ref=e743]: icon
+                  - text: or
+                  - code [ref=e744]: src
+                  - text: .
+              - generic [ref=e745]:
+                - generic [ref=e748]:
+                  - generic:
+                    - 'link "Navigate to header: icon" [ref=e749] [cursor=pointer]':
+                      - /url: "#param-icon"
+                    - status [ref=e754]
+                  - button "icon" [ref=e755] [cursor=pointer]
+                  - generic [ref=e756]: string
+                - generic [ref=e758]:
+                  - generic [ref=e759]: The icon to display from an icon library.
+                  - generic [ref=e760]: "Options:"
+                  - list [ref=e761]:
+                    - listitem [ref=e762]:
+                      - link "Font Awesome icon" [ref=e763] [cursor=pointer]:
+                        - /url: https://fontawesome.com/icons
+                      - text: name, if you have the
+                      - code [ref=e764]: icons.library
+                      - link "property" [ref=e765] [cursor=pointer]:
+                        - /url: /docs/organize/settings-appearance#param-icons
+                      - text: set to
+                      - code [ref=e766]: fontawesome
+                      - text: in your
+                      - code [ref=e767]: docs.json
+                    - listitem [ref=e768]:
+                      - link "Lucide icon" [ref=e769] [cursor=pointer]:
+                        - /url: https://lucide.dev/icons
+                      - text: name, if you have the
+                      - code [ref=e770]: icons.library
+                      - link "property" [ref=e771] [cursor=pointer]:
+                        - /url: /docs/organize/settings-appearance#param-icons
+                      - text: set to
+                      - code [ref=e772]: lucide
+                      - text: in your
+                      - code [ref=e773]: docs.json
+                    - listitem [ref=e774]:
+                      - link "Tabler icon" [ref=e775] [cursor=pointer]:
+                        - /url: https://tabler.io/icons
+                      - text: name, if you have the
+                      - code [ref=e776]: icons.library
+                      - link "property" [ref=e777] [cursor=pointer]:
+                        - /url: /docs/organize/settings-appearance#param-icons
+                      - text: set to
+                      - code [ref=e778]: tabler
+                      - text: in your
+                      - code [ref=e779]: docs.json
+              - generic [ref=e780]:
+                - generic [ref=e783]:
+                  - generic:
+                    - 'link "Navigate to header: src" [ref=e784] [cursor=pointer]':
+                      - /url: "#param-src"
+                    - status [ref=e789]
+                  - button "src" [ref=e790] [cursor=pointer]
+                  - generic [ref=e791]: string
+                - generic [ref=e793]:
+                  - generic [ref=e794]:
+                    - text: Path or URL to an image to use as the icon. Use
+                    - code [ref=e795]: src
+                    - text: instead of
+                    - code [ref=e796]: icon
+                    - text: when you want to use a custom image rather than an icon from a library.
+                  - generic [ref=e797]: "Options:"
+                  - list [ref=e798]:
+                    - listitem [ref=e799]:
+                      - text: Path to an image file in your project (for example,
+                      - code [ref=e800]: /images/my-icon.svg
+                      - text: )
+                    - listitem [ref=e801]:
+                      - text: URL to an externally hosted image (for example,
+                      - code [ref=e802]: https://example.com/icon.png
+                      - text: )
+              - generic [ref=e803]:
+                - generic [ref=e806]:
+                  - generic:
+                    - 'link "Navigate to header: iconType" [ref=e807] [cursor=pointer]':
+                      - /url: "#param-icon-type"
+                    - status [ref=e812]
+                  - button "iconType" [ref=e813] [cursor=pointer]
+                  - generic [ref=e814]: string
+                - generic [ref=e816]:
+                  - generic [ref=e817]:
+                    - text: The
+                    - link "Font Awesome" [ref=e818] [cursor=pointer]:
+                      - /url: https://fontawesome.com/icons
+                    - text: icon style. Only used with Font Awesome icons.
+                  - generic [ref=e819]:
+                    - text: "Options:"
+                    - code [ref=e820]: regular
+                    - text: ","
+                    - code [ref=e821]: solid
+                    - text: ","
+                    - code [ref=e822]: light
+                    - text: ","
+                    - code [ref=e823]: thin
+                    - text: ","
+                    - code [ref=e824]: sharp-solid
+                    - text: ","
+                    - code [ref=e825]: duotone
+                    - text: ","
+                    - code [ref=e826]: brands
+                    - text: .
+              - generic [ref=e827]:
+                - generic [ref=e830]:
+                  - generic:
+                    - 'link "Navigate to header: href" [ref=e831] [cursor=pointer]':
+                      - /url: "#param-href"
+                    - status [ref=e836]
+                  - button "href" [ref=e837] [cursor=pointer]
+                  - generic [ref=e838]:
+                    - generic [ref=e839]: string | object
+                    - text: required
+                - generic [ref=e840]:
+                  - generic [ref=e841]: The href of the option. Use a string for simple links or an object for dynamic links with query parameters.
+                  - group [ref=e842]:
+                    - paragraph [ref=e846] [cursor=pointer]: Show href object
+              - generic [ref=e847]: "Example custom option:"
+              - generic [ref=e848]:
+                - generic [ref=e849]:
+                  - button "Report incorrect code" [ref=e851] [cursor=pointer]
+                  - generic [ref=e855]:
+                    - button "Copy the contents from the code block" [ref=e856] [cursor=pointer]
+                    - status [ref=e860]
+                  - button "Ask Assistant" [ref=e862] [cursor=pointer]
+                - code [ref=e869]:
+                  - generic [ref=e870]: "{"
+                  - generic [ref=e871]: "\"contextual\": {"
+                  - generic [ref=e872]: "\"options\": ["
+                  - generic [ref=e873]: "\"copy\","
+                  - generic [ref=e874]: "\"view\","
+                  - generic [ref=e875]: "\"chatgpt\","
+                  - generic [ref=e876]: "\"claude\","
+                  - generic [ref=e877]: "\"perplexity\","
+                  - generic [ref=e878]: "{"
+                  - generic [ref=e879]: "\"title\": \"Request a feature\","
+                  - generic [ref=e880]: "\"description\": \"Join the discussion on GitHub to request a new feature\","
+                  - generic [ref=e881]: "\"icon\": \"plus\","
+                  - generic [ref=e882]: "\"href\": \"https://github.com/orgs/mintlify/discussions/categories/feature-requests\""
+                  - generic [ref=e883]: "}"
+                  - generic [ref=e884]: "]"
+                  - generic [ref=e885]: "}"
+                  - generic [ref=e886]: "}"
+              - heading "Navigate to header Override on individual pages" [level=2] [ref=e887]:
+                - link "Navigate to header" [ref=e888] [cursor=pointer]:
+                  - /url: "#override-on-individual-pages"
+                - generic [ref=e893] [cursor=pointer]: Override on individual pages
+              - generic [ref=e894]:
+                - text: To override the global contextual menu on a specific page, add the
+                - code [ref=e895]: contextual
+                - text: field to the page’s frontmatter. Override the global contextual menu to surface page-specific actions like
+                - code [ref=e896]: download-pdf
+                - text: on a terms of service page, or to hide the menu entirely on a landing page.
+              - generic [ref=e897]:
+                - text: The page-level
+                - code [ref=e898]: contextual
+                - text: object replaces the global one for that page. Omit the field to inherit
+                - code [ref=e899]: docs.json
+                - text: ", or set"
+                - code [ref=e900]: "options: []"
+                - text: to disable the contextual menu on that page.
+              - generic [ref=e901]:
+                - generic [ref=e902]:
+                  - button "Report incorrect code" [ref=e904] [cursor=pointer]
+                  - generic [ref=e908]:
+                    - button "Copy the contents from the code block" [ref=e909] [cursor=pointer]
+                    - status [ref=e913]
+                  - button "Ask Assistant" [ref=e915] [cursor=pointer]
+                - code [ref=e922]:
+                  - generic [ref=e923]: "---"
+                  - generic [ref=e924]: "title: \"Terms of Service\""
+                  - generic [ref=e925]: "contextual:"
+                  - generic [ref=e926]: "options:"
+                  - generic [ref=e927]: "- copy"
+                  - generic [ref=e928]: "- download-pdf"
+                  - generic [ref=e929]: "display: header"
+                  - generic [ref=e930]: "---"
+              - generic [ref=e931]:
+                - text: The same fields and validation rules apply as in
+                - code [ref=e932]: docs.json
+                - text: ", including"
+                - link "custom options" [ref=e933] [cursor=pointer]:
+                  - /url: "#add-custom-options"
+                - text: and the
+                - code [ref=e934]: display
+                - text: setting. If a page override is invalid, Mintlify falls back to the global
+                - code [ref=e935]: contextual
+                - text: configuration.
+              - heading "Navigate to header Custom option examples" [level=3] [ref=e936]:
+                - link "Navigate to header" [ref=e937] [cursor=pointer]:
+                  - /url: "#custom-option-examples"
+                - generic [ref=e942] [cursor=pointer]: Custom option examples
+              - generic [ref=e943]:
+                - group [ref=e944]:
+                  - paragraph [ref=e949] [cursor=pointer]: Simple link
+                - group [ref=e950]:
+                  - paragraph [ref=e955] [cursor=pointer]: Dynamic link with page content
+            - navigation "Pagination" [ref=e956]:
+              - link "Navigation Previous" [ref=e957] [cursor=pointer]:
+                - /url: /docs/organize/navigation
+                - generic [ref=e958]:
+                  - generic [ref=e959]: Navigation
+                  - generic [ref=e960]: Previous
+              - link "Bring your own model Next" [ref=e964] [cursor=pointer]:
+                - /url: /docs/ai/bring-your-own-model
+                - generic [ref=e965]:
+                  - generic [ref=e966]: Bring your own model
+                  - generic [ref=e967]: Next
+            - generic [ref=e972]:
+              - textbox "Ask a question..." [ref=e973]
+              - generic: ⌘I
+              - button "Send message" [disabled] [ref=e974]
+          - navigation [ref=e981]:
+            - heading [level=2] [ref=e982]:
+              - button "On this page" [ref=e983] [cursor=pointer]
+            - list [ref=e988]:
+              - listitem [ref=e989]:
+                - link "Menu options" [ref=e990] [cursor=pointer]:
+                  - /url: "#menu-options"
+              - listitem [ref=e991]:
+                - link "Enable the contextual menu" [ref=e992] [cursor=pointer]:
+                  - /url: "#enable-the-contextual-menu"
+              - listitem [ref=e993]:
+                - link "Display location" [ref=e994] [cursor=pointer]:
+                  - /url: "#display-location"
+              - listitem [ref=e995]:
+                - link "Add custom options" [ref=e996] [cursor=pointer]:
+                  - /url: "#add-custom-options"
+              - listitem [ref=e997]:
+                - link "Override on individual pages" [ref=e998] [cursor=pointer]:
+                  - /url: "#override-on-individual-pages"
+                - list [ref=e999]:
+                  - listitem [ref=e1000]:
+                    - link "Custom option examples" [ref=e1001] [cursor=pointer]:
+                      - /url: "#custom-option-examples"
+        - contentinfo [ref=e1002]:
+          - generic [ref=e1003]:
+            - generic [ref=e1004]:
+              - generic [ref=e1005]:
+                - link "Mintlify home page light logo" [ref=e1006] [cursor=pointer]:
+                  - /url: https://mintlify.com/docs
+                  - generic [ref=e1007]: Mintlify home page
+                  - img "light logo" [ref=e1008]
+                - generic [ref=e1009]:
+                  - link "x" [ref=e1010] [cursor=pointer]:
+                    - /url: https://x.com/mintlify
+                  - link "linkedin" [ref=e1013] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/company/mintlify
+                  - link "github" [ref=e1016] [cursor=pointer]:
+                    - /url: https://github.com/mintlify
+              - generic [ref=e1019]:
+                - generic [ref=e1021]:
+                  - paragraph [ref=e1022]: Explore
+                  - link "Startups" [ref=e1023] [cursor=pointer]:
+                    - /url: https://www.mintlify.com/startups
+                  - link "Enterprise" [ref=e1024] [cursor=pointer]:
+                    - /url: https://www.mintlify.com/enterprise
+                  - link "Switch" [ref=e1025] [cursor=pointer]:
+                    - /url: https://www.mintlify.com/switch
+                - generic [ref=e1027]:
+                  - paragraph [ref=e1028]: Resources
+                  - link "Learn" [ref=e1029] [cursor=pointer]:
+                    - /url: https://learn.mintlify.com/
+                  - link "Customers" [ref=e1030] [cursor=pointer]:
+                    - /url: https://mintlify.com/customers
+                  - link "Blog" [ref=e1031] [cursor=pointer]:
+                    - /url: https://mintlify.com/blog
+                  - link "Pricing" [ref=e1032] [cursor=pointer]:
+                    - /url: https://www.mintlify.com/pricing
+                  - link "Contact support" [ref=e1033] [cursor=pointer]:
+                    - /url: https://www.mintlify.com/docs/contact-support
+                  - link "Feature requests" [ref=e1034] [cursor=pointer]:
+                    - /url: https://github.com/orgs/mintlify/discussions/categories/feature-requests
+                  - link "Status" [ref=e1035] [cursor=pointer]:
+                    - /url: https://www.mintlify.com/docs/status
+                - generic [ref=e1037]:
+                  - paragraph [ref=e1038]: Company
+                  - link "Careers" [ref=e1039] [cursor=pointer]:
+                    - /url: https://mintlify.com/careers
+                  - link "Wall of love" [ref=e1040] [cursor=pointer]:
+                    - /url: https://www.mintlify.com/wall-of-love
+                - generic [ref=e1042]:
+                  - paragraph [ref=e1043]: Legal
+                  - link "Privacy policy" [ref=e1044] [cursor=pointer]:
+                    - /url: https://mintlify.com/legal/privacy
+                  - link "Terms of Service" [ref=e1045] [cursor=pointer]:
+                    - /url: https://mintlify.com/legal/terms
+                  - link "Security" [ref=e1046] [cursor=pointer]:
+                    - /url: https://security.mintlify.com/?_gl=1*ascm4x*_gcl_au*NTU1ODkzNjQ0LjE3NTQ5Mjg4NzIuMTgzMDQ5NTExMS4xNzU3NTQwMDk1LjE3NTc1NDAwOTQ.
+            - generic [ref=e1048]:
+              - link "Powered by This documentation is built and hosted on Mintlify, a developer documentation platform" [ref=e1050] [cursor=pointer]:
+                - /url: https://www.mintlify.com?utm_campaign=poweredBy&utm_medium=referral&utm_source=mintlify
+                - generic [ref=e1051]: Powered by
+                - generic [ref=e1061]: This documentation is built and hosted on Mintlify, a developer documentation platform
+              - generic [ref=e1062]:
+                - button "Switch to system theme" [ref=e1063] [cursor=pointer]
+                - button "Switch to light theme" [ref=e1067] [cursor=pointer]
+                - button "Switch to dark theme" [ref=e1074] [cursor=pointer]
+  - alert [ref=e1077]
+  - dialog "We value your privacy" [active] [ref=e1078]:
+    - generic [ref=e1079]:
+      - generic [ref=e1080]: We value your privacy
+      - generic [ref=e1081]: This site uses cookies to improve your browsing experience, analyze site traffic, and show personalized content.
+    - generic [ref=e1082]:
+      - generic [ref=e1083]:
+        - button "Reject All" [ref=e1084] [cursor=pointer]
+        - button "Accept All" [ref=e1085] [cursor=pointer]
+      - button "Customize" [ref=e1087] [cursor=pointer]

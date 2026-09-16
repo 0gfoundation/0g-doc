@@ -1,0 +1,122 @@
+- generic [ref=f14e4]:
+  - generic [ref=f14e7]:
+    - img "Google" [ref=f14e10]
+    - generic [ref=f14e11]:
+      - generic [ref=f14e13]:
+        - heading "Sign in" [level=1] [ref=f14e14]
+        - paragraph [ref=f14e15]: to continue to Google Analytics
+      - generic [ref=f14e18]:
+        - generic [ref=f14e21]:
+          - generic [ref=f14e26]:
+            - textbox "Email or phone" [active] [ref=f14e27]
+            - generic: Email or phone
+          - paragraph [ref=f14e28]:
+            - link "Forgot email?" [ref=f14e29] [cursor=pointer]:
+              - /url: /signin/usernamerecovery?continue=https://analytics.google.com/analytics/web/%23&dsh=S-1323631248:1788263445599693&flowEntry=ServiceLogin&flowName=WebLiteSignIn&followup=https://analytics.google.com/analytics/web/&service=analytics
+        - paragraph [ref=f14e32]:
+          - text: Not your computer? Use a private browsing window to sign in.
+          - link "Learn more about using Guest mode (external, opens in a new window)" [ref=f14e33] [cursor=pointer]:
+            - /url: https://support.google.com/accounts?p=signin_privatebrowsing&hl=en-US
+            - text: Learn more about using Guest mode
+        - generic [ref=f14e35]:
+          - button "Next" [ref=f14e37]
+          - link "Create account" [ref=f14e39] [cursor=pointer]:
+            - /url: /lifecycle/flows/signup?continue=https://analytics.google.com/analytics/web/%23&dsh=S-1323631248:1788263445599693&flowEntry=SignUp&flowName=GlifWebSignIn&followup=https://analytics.google.com/analytics/web/&nogm=1&service=analytics
+  - contentinfo [ref=f14e40]:
+    - combobox [ref=f14e43] [cursor=pointer]:
+      - option "Afrikaans"
+      - option "azərbaycan"
+      - option "bosanski"
+      - option "català"
+      - option "Čeština"
+      - option "Cymraeg"
+      - option "Dansk"
+      - option "Deutsch"
+      - option "eesti"
+      - option "English (United Kingdom)"
+      - option "English (United States)" [selected]
+      - option "Español (España)"
+      - option "Español (Latinoamérica)"
+      - option "euskara"
+      - option "Filipino"
+      - option "Français (Canada)"
+      - option "Français (France)"
+      - option "Gaeilge"
+      - option "galego"
+      - option "Hrvatski"
+      - option "Indonesia"
+      - option "isiZulu"
+      - option "íslenska"
+      - option "Italiano"
+      - option "Kiswahili"
+      - option "latviešu"
+      - option "lietuvių"
+      - option "magyar"
+      - option "Melayu"
+      - option "Nederlands"
+      - option "norsk"
+      - option "o‘zbek"
+      - option "polski"
+      - option "Português (Brasil)"
+      - option "Português (Portugal)"
+      - option "română"
+      - option "shqip"
+      - option "Slovenčina"
+      - option "slovenščina"
+      - option "srpski (latinica)"
+      - option "Suomi"
+      - option "Svenska"
+      - option "Tiếng Việt"
+      - option "Türkçe"
+      - option "Ελληνικά"
+      - option "беларуская"
+      - option "български"
+      - option "кыргызча"
+      - option "қазақ тілі"
+      - option "македонски"
+      - option "монгол"
+      - option "Русский"
+      - option "српски (ћирилица)"
+      - option "Українська"
+      - option "ქართული"
+      - option "հայերեն"
+      - option "‫עברית‬‎"
+      - option "‫اردو‬‎"
+      - option "‫العربية‬‎"
+      - option "‫فارسی‬‎"
+      - option "አማርኛ"
+      - option "नेपाली"
+      - option "मराठी"
+      - option "हिन्दी"
+      - option "অসমীয়া"
+      - option "বাংলা"
+      - option "ਪੰਜਾਬੀ"
+      - option "ગુજરાતી"
+      - option "ଓଡ଼ିଆ"
+      - option "தமிழ்"
+      - option "తెలుగు"
+      - option "ಕನ್ನಡ"
+      - option "മലയാളം"
+      - option "සිංහල"
+      - option "ไทย"
+      - option "ລາວ"
+      - option "မြန်မာ"
+      - option "ខ្មែរ"
+      - option "한국어"
+      - option "中文（香港）"
+      - option "日本語"
+      - option "简体中文"
+      - option "繁體中文"
+    - list [ref=f14e44]:
+      - listitem [ref=f14e45]:
+        - link "Open Google Account Help Center (external, opens in a new window)" [ref=f14e46] [cursor=pointer]:
+          - /url: https://support.google.com/accounts?hl=en-US&p=account_iph
+          - text: Help
+      - listitem [ref=f14e47]:
+        - link "Privacy Policy (external, opens in a new window)" [ref=f14e48] [cursor=pointer]:
+          - /url: https://accounts.google.com/TOS?loc=IN&hl=en-US&privacy=true
+          - text: Privacy
+      - listitem [ref=f14e49]:
+        - link "Google Terms of Service (external, opens in a new window)" [ref=f14e50] [cursor=pointer]:
+          - /url: https://accounts.google.com/TOS?loc=IN&hl=en-US
+          - text: Terms

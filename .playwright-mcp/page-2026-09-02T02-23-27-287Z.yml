@@ -1,0 +1,992 @@
+- generic [ref=f4e6]:
+  - banner [ref=f4e7]:
+    - generic [ref=f4e9]:
+      - generic [active]:
+        - link "Jump to Content":
+          - /url: "#content"
+      - link [ref=f4e11] [cursor=pointer]:
+        - /url: https://readme.com
+        - img "ReadMe" [ref=f4e12]
+      - text:       
+      - generic [ref=f4e13]:
+        - button "Search ⌘k" [ref=f4e15] [cursor=pointer]:
+          - generic [ref=f4e16]: 
+          - generic [ref=f4e17]: Search
+          - generic [ref=f4e18]: ⌘K
+        - button "ai.asAiAriaLabel" [ref=f4e19] [cursor=pointer]:
+          - generic [ref=f4e24]: Ask AI
+      - generic [ref=f4e25]:
+        - link "Log In" [ref=f4e27] [cursor=pointer]:
+          - /url: /login?redirect_uri=/main/docs/your-projects-mcp-server
+        - button "Toggle color scheme" [ref=f4e29] [cursor=pointer]:
+          - img "Toggle color scheme" [ref=f4e30]
+          - img "Toggle color scheme" [ref=f4e34]
+          - img "Toggle color scheme" [ref=f4e37]
+    - navigation "Primary navigation" [ref=f4e45]:
+      - link " Guides" [ref=f4e46] [cursor=pointer]:
+        - /url: /main/docs
+        - generic [ref=f4e47]: 
+        - generic [ref=f4e48]: Guides
+      - link " Recipes" [ref=f4e49] [cursor=pointer]:
+        - /url: /main/recipes
+        - generic [ref=f4e50]: 
+        - generic [ref=f4e51]: Recipes
+      - link " API Reference" [ref=f4e52] [cursor=pointer]:
+        - /url: /main/reference
+        - generic [ref=f4e53]: 
+        - generic [ref=f4e54]: API Reference
+      - link " Changelog" [ref=f4e55] [cursor=pointer]:
+        - /url: /main/changelog
+        - generic [ref=f4e56]: 
+        - generic [ref=f4e57]: Changelog
+      - link " Discussions" [ref=f4e58] [cursor=pointer]:
+        - /url: /main/discuss
+        - generic [ref=f4e59]: 
+        - generic [ref=f4e60]: Discussions
+  - main [ref=f4e62]:
+    - generic [ref=f4e63]:
+      - navigation "Secondary navigation" [ref=f4e64]:
+        - generic [ref=f4e65]:
+          - generic [ref=f4e66]:
+            - heading "Getting Started" [level=2] [ref=f4e67]
+            - list [ref=f4e68]:
+              - listitem [ref=f4e69]:
+                - link "Welcome to ReadMe" [ref=f4e70] [cursor=pointer]:
+                  - /url: /main/docs/about-readme
+              - listitem [ref=f4e75]:
+                - link "Quickstart" [ref=f4e76] [cursor=pointer]:
+                  - /url: /main/docs/quickstart
+              - listitem [ref=f4e81]:
+                - link "Build with AI" [ref=f4e82] [cursor=pointer]:
+                  - /url: /main/docs/ai-overview
+              - listitem [ref=f4e87]:
+                - link "Migrating to ReadMe" [ref=f4e88] [cursor=pointer]:
+                  - /url: /main/docs/migration-moving-your-docs-to-their-new-home
+              - listitem [ref=f4e93]:
+                - link "Enterprise Guides" [ref=f4e94] [cursor=pointer]:
+                  - /url: https://docs.readme.com/ent/docs/intro-to-readme-enterprise
+                  - img [ref=f4e100]: 
+          - generic [ref=f4e101]:
+            - heading "AI" [level=2] [ref=f4e102]
+            - list [ref=f4e103]:
+              - listitem [ref=f4e104]:
+                - link "Agent Show subpages for Agent" [ref=f4e105] [cursor=pointer]:
+                  - /url: /main/docs/aiagent
+                  - generic [ref=f4e106]: Agent
+                  - button "Show subpages for Agent" [ref=f4e110]:
+                    - generic [ref=f4e111]: 
+                - list:
+                  - listitem [ref=f4e112]:
+                    - link "The Agent in the Editor" [ref=f4e113] [cursor=pointer]:
+                      - /url: /main/docs/inline-ai
+              - listitem [ref=f4e118]:
+                - link "Linter" [ref=f4e119] [cursor=pointer]:
+                  - /url: /main/docs/linter
+              - listitem [ref=f4e124]:
+                - link "Docs Audit" [ref=f4e125] [cursor=pointer]:
+                  - /url: /main/docs/docs-audit
+              - listitem [ref=f4e130]:
+                - link "GitHub AI Writer" [ref=f4e131] [cursor=pointer]:
+                  - /url: /main/docs/github-ai-writer
+              - listitem [ref=f4e136]:
+                - link "Ask AI" [ref=f4e137] [cursor=pointer]:
+                  - /url: /main/docs/ask-ai
+              - listitem [ref=f4e142]:
+                - link "MCP" [ref=f4e143] [cursor=pointer]:
+                  - /url: /main/docs/your-projects-mcp-server
+              - listitem [ref=f4e148]:
+                - link "Discoverability" [ref=f4e149] [cursor=pointer]:
+                  - /url: /main/docs/ai-discoverability
+              - listitem [ref=f4e154]:
+                - link "AI Dropdown" [ref=f4e155] [cursor=pointer]:
+                  - /url: /main/docs/askai
+          - generic [ref=f4e160]:
+            - heading "Project Setup" [level=2] [ref=f4e161]
+            - list [ref=f4e162]:
+              - listitem [ref=f4e163]:
+                - link "Creating a Project Show subpages for Creating a Project" [ref=f4e164] [cursor=pointer]:
+                  - /url: /main/docs/creating-a-project
+                  - generic [ref=f4e165]: Creating a Project
+                  - button "Show subpages for Creating a Project" [ref=f4e169]:
+                    - generic [ref=f4e170]: 
+                - list:
+                  - listitem [ref=f4e171]:
+                    - link "Your Dashboard and Profile" [ref=f4e172] [cursor=pointer]:
+                      - /url: /main/docs/your-dashboard-and-profile
+              - listitem [ref=f4e175]:
+                - link "Navigate Your Docs" [ref=f4e176] [cursor=pointer]:
+                  - /url: /main/docs/navigating-your-hub-1
+              - listitem [ref=f4e181]:
+                - link "Custom Domain & SSL Show subpages for Custom Domain & SSL" [ref=f4e182] [cursor=pointer]:
+                  - /url: /main/docs/setting-up-custom-domain
+                  - generic [ref=f4e183]: Custom Domain & SSL
+                  - button "Show subpages for Custom Domain & SSL" [ref=f4e187]:
+                    - generic [ref=f4e188]: 
+                - list:
+                  - listitem [ref=f4e189]:
+                    - link "Having Problems Generating SSL?" [ref=f4e190] [cursor=pointer]:
+                      - /url: /main/docs/having-problems-generating-ssl
+                  - listitem [ref=f4e193]:
+                    - link "URL Paths in ReadMe" [ref=f4e194] [cursor=pointer]:
+                      - /url: /main/docs/url-paths-in-readme
+                  - listitem [ref=f4e197]:
+                    - link "Turn Off Cloudflare Proxy" [ref=f4e198] [cursor=pointer]:
+                      - /url: /main/docs/turn-off-cloudflare-proxy
+              - listitem [ref=f4e201]:
+                - link "System Configuration Show subpages for System Configuration" [ref=f4e202] [cursor=pointer]:
+                  - /url: /main/docs/system-configuration
+                  - generic [ref=f4e203]: System Configuration
+                  - button "Show subpages for System Configuration" [ref=f4e207]:
+                    - generic [ref=f4e208]: 
+                - list:
+                  - listitem [ref=f4e209]:
+                    - link "Login Expiration" [ref=f4e210] [cursor=pointer]:
+                      - /url: /main/docs/login-expiration
+                  - listitem [ref=f4e213]:
+                    - link "Internal Documentation" [ref=f4e214] [cursor=pointer]:
+                      - /url: /main/docs/internal-documentation
+                  - listitem [ref=f4e217]:
+                    - link "Error Pages and Redirects" [ref=f4e218] [cursor=pointer]:
+                      - /url: /main/docs/error-pages
+                  - listitem [ref=f4e221]:
+                    - link "Redirect Scenarios" [ref=f4e222] [cursor=pointer]:
+                      - /url: /main/docs/redirect-scenarios
+                  - listitem [ref=f4e225]:
+                    - link "Outbound IP Addresses" [ref=f4e226] [cursor=pointer]:
+                      - /url: /main/docs/ip-addresses
+              - listitem [ref=f4e229]:
+                - link "OpenAPI Support Show subpages for OpenAPI Support" [ref=f4e230] [cursor=pointer]:
+                  - /url: /main/docs/openapi
+                  - generic [ref=f4e231]: OpenAPI Support
+                  - button "Show subpages for OpenAPI Support" [ref=f4e235]:
+                    - generic [ref=f4e236]: 
+                - list:
+                  - listitem [ref=f4e237]:
+                    - link "Categories, Pages, and Subpages" [ref=f4e238] [cursor=pointer]:
+                      - /url: /main/docs/openapi-categories-pages-subpages
+                  - listitem [ref=f4e241]:
+                    - link "Re-syncing Your OpenAPI Document" [ref=f4e242] [cursor=pointer]:
+                      - /url: /main/docs/openapi-resyncing
+                  - listitem [ref=f4e245]:
+                    - link "OpenAPI Compatibility Chart" [ref=f4e246] [cursor=pointer]:
+                      - /url: /main/docs/openapi-compatibility-chart
+                  - listitem [ref=f4e249]:
+                    - link "OpenAPI Extensions" [ref=f4e250] [cursor=pointer]:
+                      - /url: /main/docs/openapi-extensions
+              - listitem [ref=f4e253]:
+                - link "Custom Login Page" [ref=f4e254] [cursor=pointer]:
+                  - /url: /main/docs/custom-login-page
+              - listitem [ref=f4e259]:
+                - link "Custom Data in Your Docs" [ref=f4e260] [cursor=pointer]:
+                  - /url: /main/docs/user-data-options
+              - listitem [ref=f4e265]:
+                - link "Integrations Show subpages for Integrations" [ref=f4e266] [cursor=pointer]:
+                  - /url: /main/docs/integrations
+                  - generic [ref=f4e267]: Integrations
+                  - button "Show subpages for Integrations" [ref=f4e271]:
+                    - generic [ref=f4e272]: 
+                - list:
+                  - listitem [ref=f4e273]:
+                    - link "Amazon API Gateway" [ref=f4e274] [cursor=pointer]:
+                      - /url: /main/docs/aws
+                  - listitem [ref=f4e277]:
+                    - link "Google Analytics" [ref=f4e278] [cursor=pointer]:
+                      - /url: /main/docs/google-analytics
+                  - listitem [ref=f4e281]:
+                    - link "Google Site Verification" [ref=f4e282] [cursor=pointer]:
+                      - /url: /main/docs/google-site-verification
+                  - listitem [ref=f4e285]:
+                    - link "Searching ReadMe in the Intercom Messenger" [ref=f4e286] [cursor=pointer]:
+                      - /url: /main/docs/searching-readme-within-the-intercom-widget-changing-so-404-results-rb
+                  - listitem [ref=f4e289]:
+                    - link "Postman" [ref=f4e290] [cursor=pointer]:
+                      - /url: /main/docs/postman-1
+                  - listitem [ref=f4e293]:
+                    - link "Localize" [ref=f4e294] [cursor=pointer]:
+                      - /url: /main/docs/localize
+                  - listitem [ref=f4e297]:
+                    - link "reCaptcha" [ref=f4e298] [cursor=pointer]:
+                      - /url: /main/docs/recaptcha
+                  - listitem [ref=f4e301]:
+                    - link "Segment" [ref=f4e302] [cursor=pointer]:
+                      - /url: /main/docs/segment
+                  - listitem [ref=f4e305]:
+                    - link "Slack" [ref=f4e306] [cursor=pointer]:
+                      - /url: /main/docs/slack
+                  - listitem [ref=f4e309]:
+                    - link "Transifex" [ref=f4e310] [cursor=pointer]:
+                      - /url: /main/docs/transifex
+                  - listitem [ref=f4e313]:
+                    - link "Typekit" [ref=f4e314] [cursor=pointer]:
+                      - /url: /main/docs/typekit-key
+                  - listitem [ref=f4e317]:
+                    - link "Zendesk" [ref=f4e318] [cursor=pointer]:
+                      - /url: /main/docs/zendesk
+          - generic [ref=f4e321]:
+            - heading "Writing Docs" [level=2] [ref=f4e322]
+            - list [ref=f4e323]:
+              - listitem [ref=f4e324]:
+                - link "Guides Show subpages for Guides" [ref=f4e325] [cursor=pointer]:
+                  - /url: /main/docs/guides
+                  - generic [ref=f4e326]: Guides
+                  - button "Show subpages for Guides" [ref=f4e330]:
+                    - generic [ref=f4e331]: 
+                - list:
+                  - listitem [ref=f4e332]:
+                    - link "Creating and Managing Guides" [ref=f4e333] [cursor=pointer]:
+                      - /url: /main/docs/creating-and-managing-guides
+                  - listitem [ref=f4e336]:
+                    - link "Structuring Your Documentation" [ref=f4e337] [cursor=pointer]:
+                      - /url: /main/docs/structuring-your-docs
+                  - listitem [ref=f4e340]:
+                    - link "Creating Mermaid Diagrams" [ref=f4e341] [cursor=pointer]:
+                      - /url: /main/docs/creating-mermaid-diagrams
+              - listitem [ref=f4e344]:
+                - link "API Reference Show subpages for API Reference" [ref=f4e345] [cursor=pointer]:
+                  - /url: /main/docs/api-reference
+                  - generic [ref=f4e346]: API Reference
+                  - button "Show subpages for API Reference" [ref=f4e350]:
+                    - generic [ref=f4e351]: 
+                - list:
+                  - listitem [ref=f4e352]:
+                    - link "OpenAPI Upload and Management" [ref=f4e353] [cursor=pointer]:
+                      - /url: /main/docs/openapi-upload-and-management
+                  - listitem [ref=f4e356]:
+                    - link "Building APIs from Scratch with the API Designer" [ref=f4e357] [cursor=pointer]:
+                      - /url: /main/docs/building-apis-from-scratch-with-the-api-designer
+                  - listitem [ref=f4e360]:
+                    - link "GraphQL API Reference (Limited Support)" [ref=f4e361] [cursor=pointer]:
+                      - /url: /main/docs/graphql
+                  - listitem [ref=f4e364]:
+                    - link "OAuth Flows in Try It!" [ref=f4e365] [cursor=pointer]:
+                      - /url: /main/docs/oauth-workflows-in-try-it
+              - listitem [ref=f4e368]:
+                - link "Recipes Show subpages for Recipes" [ref=f4e369] [cursor=pointer]:
+                  - /url: /main/docs/recipes
+                  - generic [ref=f4e370]: Recipes
+                  - button "Show subpages for Recipes" [ref=f4e374]:
+                    - generic [ref=f4e375]: 
+                - list:
+                  - listitem [ref=f4e376]:
+                    - link "Creating a Recipe" [ref=f4e377] [cursor=pointer]:
+                      - /url: /main/docs/creating-recipes
+              - listitem [ref=f4e380]:
+                - link "Changelog" [ref=f4e381] [cursor=pointer]:
+                  - /url: /main/docs/changelog
+              - listitem [ref=f4e386]:
+                - link "Landing Page" [ref=f4e387] [cursor=pointer]:
+                  - /url: /main/docs/landing-page
+              - listitem [ref=f4e392]:
+                - link "Custom Pages" [ref=f4e393] [cursor=pointer]:
+                  - /url: /main/docs/custom-page
+              - listitem [ref=f4e398]:
+                - link "MDX Show subpages for MDX" [ref=f4e399] [cursor=pointer]:
+                  - /url: /main/docs/mdx
+                  - generic [ref=f4e400]: MDX
+                  - button "Show subpages for MDX" [ref=f4e404]:
+                    - generic [ref=f4e405]: 
+                - list:
+                  - listitem [ref=f4e406]:
+                    - link "Built-in Components" [ref=f4e407] [cursor=pointer]:
+                      - /url: /main/docs/built-in-components
+                  - listitem [ref=f4e410]:
+                    - link "Custom Components" [ref=f4e411] [cursor=pointer]:
+                      - /url: /main/docs/building-custom-mdx-components
+                  - listitem [ref=f4e414]:
+                    - link "Troubleshoot MDX Errors" [ref=f4e415] [cursor=pointer]:
+                      - /url: /main/docs/rendering-errors-invalid-mdx
+              - listitem [ref=f4e418]:
+                - link "Reusable Content" [ref=f4e419] [cursor=pointer]:
+                  - /url: /main/docs/reusable-content
+              - listitem [ref=f4e424]:
+                - link "ReadMe's MCP Server" [ref=f4e425] [cursor=pointer]:
+                  - /url: /main/docs/readmes-mcp-server
+          - generic [ref=f4e430]:
+            - heading "Syncing Docs" [level=2] [ref=f4e431]
+            - list [ref=f4e432]:
+              - listitem [ref=f4e433]:
+                - link "Bi-Directional Sync Show subpages for Bi-Directional Sync" [ref=f4e434] [cursor=pointer]:
+                  - /url: /main/docs/bi-directional-sync
+                  - generic [ref=f4e435]: Bi-Directional Sync
+                  - button "Show subpages for Bi-Directional Sync" [ref=f4e439]:
+                    - generic [ref=f4e440]: 
+                - list:
+                  - listitem [ref=f4e441]:
+                    - link "Sync with GitHub" [ref=f4e442] [cursor=pointer]:
+                      - /url: /main/docs/sync-with-github
+                  - listitem [ref=f4e445]:
+                    - link "Sync with GitLab" [ref=f4e446] [cursor=pointer]:
+                      - /url: /main/docs/sync-with-gitlab
+                  - listitem [ref=f4e449]:
+                    - link "Documentation Structure" [ref=f4e450] [cursor=pointer]:
+                      - /url: /main/docs/documentation-structure
+          - generic [ref=f4e453]:
+            - heading "Version Control" [level=2] [ref=f4e454]
+            - list [ref=f4e455]:
+              - listitem [ref=f4e456]:
+                - link "Versioning" [ref=f4e457] [cursor=pointer]:
+                  - /url: /main/docs/versions
+              - listitem [ref=f4e462]:
+                - link "Branches" [ref=f4e463] [cursor=pointer]:
+                  - /url: /main/docs/branches
+              - listitem [ref=f4e468]:
+                - link "Reviews Show subpages for Reviews" [ref=f4e469] [cursor=pointer]:
+                  - /url: /main/docs/reviews
+                  - generic [ref=f4e470]: Reviews
+                  - button "Show subpages for Reviews" [ref=f4e474]:
+                    - generic [ref=f4e475]: 
+                - list:
+                  - listitem [ref=f4e476]:
+                    - link "Notifications" [ref=f4e477] [cursor=pointer]:
+                      - /url: /main/docs/notifications
+              - listitem [ref=f4e480]:
+                - link "Suggest in GitHub" [ref=f4e481] [cursor=pointer]:
+                  - /url: /main/docs/suggest-in-github
+          - generic [ref=f4e486]:
+            - heading "Developer Experience" [level=2] [ref=f4e487]
+            - list [ref=f4e488]:
+              - listitem [ref=f4e489]:
+                - link "Developer Dashboard Show subpages for Developer Dashboard" [ref=f4e490] [cursor=pointer]:
+                  - /url: /main/docs/developer-dashboard
+                  - generic [ref=f4e491]: Developer Dashboard
+                  - button "Show subpages for Developer Dashboard" [ref=f4e495]:
+                    - generic [ref=f4e496]: 
+                - list:
+                  - listitem [ref=f4e497]:
+                    - link "My Developers Overview" [ref=f4e498] [cursor=pointer]:
+                      - /url: /main/docs/my-developers
+                  - listitem [ref=f4e501]:
+                    - link "Personalized API Docs Overview Show subpages for Personalized API Docs Overview" [ref=f4e502] [cursor=pointer]:
+                      - /url: /main/docs/personalized-docs
+                      - generic [ref=f4e503]: Personalized API Docs Overview
+                      - button "Show subpages for Personalized API Docs Overview" [ref=f4e505]:
+                        - generic [ref=f4e506]: 
+                    - list:
+                      - listitem [ref=f4e507]:
+                        - link "Set Up Personalized Docs" [ref=f4e508] [cursor=pointer]:
+                          - /url: /main/docs/personalized-docs-webhook
+                      - listitem [ref=f4e511]:
+                        - link "Using Amazon API Gateway with the Personalized Docs Webhook" [ref=f4e512] [cursor=pointer]:
+                          - /url: /main/docs/amazon-api-gateway-webhook
+              - listitem [ref=f4e515]:
+                - link "API Exploration Tools Show subpages for API Exploration Tools" [ref=f4e516] [cursor=pointer]:
+                  - /url: /main/docs/api-exploration-tools
+                  - generic [ref=f4e517]: API Exploration Tools
+                  - button "Show subpages for API Exploration Tools" [ref=f4e521]:
+                    - generic [ref=f4e522]: 
+                - list:
+                  - listitem [ref=f4e523]:
+                    - link "Real-Time API Logs Overview" [ref=f4e524] [cursor=pointer]:
+                      - /url: /main/docs/sending-api-logs
+                  - listitem [ref=f4e527]:
+                    - link "API Reference Landing Pages Show subpages for API Reference Landing Pages" [ref=f4e528] [cursor=pointer]:
+                      - /url: /main/docs/reference-core-pages
+                      - generic [ref=f4e529]: API Reference Landing Pages
+                      - button "Show subpages for API Reference Landing Pages" [ref=f4e531]:
+                        - generic [ref=f4e532]: 
+                    - list:
+                      - listitem [ref=f4e533]:
+                        - link "My Requests Overview" [ref=f4e534] [cursor=pointer]:
+                          - /url: /main/docs/my-requests
+                      - listitem [ref=f4e537]:
+                        - link "Show API Request History To Users" [ref=f4e538] [cursor=pointer]:
+                          - /url: /main/docs/showing-api-logs-to-users
+                      - listitem [ref=f4e541]:
+                        - link "SDKs Show subpages for SDKs" [ref=f4e542] [cursor=pointer]:
+                          - /url: /main/docs/sdks
+                          - generic [ref=f4e543]: SDKs
+                          - button "Show subpages for SDKs" [ref=f4e545]:
+                            - generic [ref=f4e546]: 
+                        - list:
+                          - listitem [ref=f4e547]:
+                            - link "Node.js Setup" [ref=f4e548] [cursor=pointer]:
+                              - /url: /main/docs/sending-logs-to-readme-with-nodejs
+                          - listitem [ref=f4e551]:
+                            - link "Python (Django) Setup" [ref=f4e552] [cursor=pointer]:
+                              - /url: /main/docs/python-django-api-metrics
+                          - listitem [ref=f4e555]:
+                            - link "Python (Flask) Setup" [ref=f4e556] [cursor=pointer]:
+                              - /url: /main/docs/python-flask-api-metrics
+                          - listitem [ref=f4e559]:
+                            - link "PHP (Laravel) Setup" [ref=f4e560] [cursor=pointer]:
+                              - /url: /main/docs/sending-logs-to-readme-with-php-laravel
+                          - listitem [ref=f4e563]:
+                            - link "Ruby (Rails/Rack) Setup" [ref=f4e564] [cursor=pointer]:
+                              - /url: /main/docs/ruby-api-metrics-set-up
+                          - listitem [ref=f4e567]:
+                            - link ".NET Setup" [ref=f4e568] [cursor=pointer]:
+                              - /url: /main/docs/net-setup
+                      - listitem [ref=f4e571]:
+                        - link "Other Ways to Send API Requests" [ref=f4e572] [cursor=pointer]:
+                          - /url: /main/docs/other-ways-to-use-api-metrics
+              - listitem [ref=f4e575]:
+                - link "API & Docs Metrics Charts Show subpages for API & Docs Metrics Charts" [ref=f4e576] [cursor=pointer]:
+                  - /url: /main/docs/using-metrics-charts
+                  - generic [ref=f4e577]: API & Docs Metrics Charts
+                  - button "Show subpages for API & Docs Metrics Charts" [ref=f4e581]:
+                    - generic [ref=f4e582]: 
+                - list:
+                  - listitem [ref=f4e583]:
+                    - link "Export Metrics Data" [ref=f4e584] [cursor=pointer]:
+                      - /url: /main/docs/exporting-metrics-data
+              - listitem [ref=f4e587]:
+                - link "Community Building Show subpages for Community Building" [ref=f4e588] [cursor=pointer]:
+                  - /url: /main/docs/community-building
+                  - generic [ref=f4e589]: Community Building
+                  - button "Show subpages for Community Building" [ref=f4e593]:
+                    - generic [ref=f4e594]: 
+                - list:
+                  - listitem [ref=f4e595]:
+                    - link "Discussion Forums Show subpages for Discussion Forums" [ref=f4e596] [cursor=pointer]:
+                      - /url: /main/docs/discussion-forums
+                      - generic [ref=f4e597]: Discussion Forums
+                      - button "Show subpages for Discussion Forums" [ref=f4e599]:
+                        - generic [ref=f4e600]: 
+                    - list:
+                      - listitem [ref=f4e601]:
+                        - link "Managing Forum Support" [ref=f4e602] [cursor=pointer]:
+                          - /url: /main/docs/managing-forum-support
+                      - listitem [ref=f4e605]:
+                        - link "Creating a Dev FAQ" [ref=f4e606] [cursor=pointer]:
+                          - /url: /main/docs/creating-a-dev-faq
+                  - listitem [ref=f4e609]:
+                    - link "Health Check Status Updates" [ref=f4e610] [cursor=pointer]:
+                      - /url: /main/docs/health-check-status-updates
+                  - listitem [ref=f4e613]:
+                    - link "Supporting Your Developers" [ref=f4e614] [cursor=pointer]:
+                      - /url: /main/docs/supporting-your-developers
+          - generic [ref=f4e617]:
+            - heading "Customizing Docs" [level=2] [ref=f4e618]
+            - list [ref=f4e619]:
+              - listitem [ref=f4e620]:
+                - link "Themes" [ref=f4e621] [cursor=pointer]:
+                  - /url: /main/docs/design-themes
+              - listitem [ref=f4e626]:
+                - link "Custom CSS, HTML, and JavaScript Show subpages for Custom CSS, HTML, and JavaScript" [ref=f4e627] [cursor=pointer]:
+                  - /url: /main/docs/custom-css-and-javascript
+                  - generic [ref=f4e628]: Custom CSS, HTML, and JavaScript
+                  - button "Show subpages for Custom CSS, HTML, and JavaScript" [ref=f4e632]:
+                    - generic [ref=f4e633]: 
+                - list:
+                  - listitem [ref=f4e634]:
+                    - link "Custom Icons" [ref=f4e635] [cursor=pointer]:
+                      - /url: /main/docs/custom-icons
+              - listitem [ref=f4e638]:
+                - link "Site Navigation Show subpages for Site Navigation" [ref=f4e639] [cursor=pointer]:
+                  - /url: /main/docs/site-navigation
+                  - generic [ref=f4e640]: Site Navigation
+                  - button "Show subpages for Site Navigation" [ref=f4e644]:
+                    - generic [ref=f4e645]: 
+                - list:
+                  - listitem [ref=f4e646]:
+                    - link "Site Footer" [ref=f4e647] [cursor=pointer]:
+                      - /url: /main/docs/site-footer
+          - generic [ref=f4e650]:
+            - heading "ReadMe Refactored" [level=2] [ref=f4e651]
+            - list [ref=f4e652]:
+              - listitem [ref=f4e653]:
+                - link "Upgrade Guide" [ref=f4e654] [cursor=pointer]:
+                  - /url: /main/docs/upgrade-to-readme-refactored
+              - listitem [ref=f4e659]:
+                - link "Upgrade FAQ" [ref=f4e660] [cursor=pointer]:
+                  - /url: /main/docs/upgrade-faq
+              - listitem [ref=f4e665]:
+                - link "Upgrading CLI to rdme@10 Opens in new tab" [ref=f4e666] [cursor=pointer]:
+                  - /url: https://github.com/readmeio/rdme/blob/v10/documentation/migration-guide.md#migrating-to-rdme10
+                  - generic [ref=f4e667]: Upgrading CLI to rdme@10
+                  - img "Opens in new tab" [ref=f4e672]: 
+          - generic [ref=f4e673]:
+            - heading "Administration" [level=2] [ref=f4e674]
+            - list [ref=f4e675]:
+              - listitem [ref=f4e676]:
+                - link "Settings" [ref=f4e677] [cursor=pointer]:
+                  - /url: /main/docs/project-settings
+              - listitem [ref=f4e682]:
+                - link "Your Account Show subpages for Your Account" [ref=f4e683] [cursor=pointer]:
+                  - /url: /main/docs/your-account
+                  - generic [ref=f4e684]: Your Account
+                  - button "Show subpages for Your Account" [ref=f4e688]:
+                    - generic [ref=f4e689]: 
+                - list:
+                  - listitem [ref=f4e690]:
+                    - link "Two-Factor Authentication" [ref=f4e691] [cursor=pointer]:
+                      - /url: /main/docs/two-factor-authentication
+              - listitem [ref=f4e694]:
+                - link "Teammates and Roles" [ref=f4e695] [cursor=pointer]:
+                  - /url: /main/docs/manage-team
+              - listitem [ref=f4e700]:
+                - link "Plans and Pricing Show subpages for Plans and Pricing" [ref=f4e701] [cursor=pointer]:
+                  - /url: /main/docs/plans-and-pricing
+                  - generic [ref=f4e702]: Plans and Pricing
+                  - button "Show subpages for Plans and Pricing" [ref=f4e706]:
+                    - generic [ref=f4e707]: 
+                - list:
+                  - listitem [ref=f4e708]:
+                    - link "Payment and Billing Info" [ref=f4e709] [cursor=pointer]:
+                      - /url: /main/docs/payment-and-billing-info
+              - listitem [ref=f4e712]:
+                - link "Exporting Data" [ref=f4e713] [cursor=pointer]:
+                  - /url: /main/docs/exporting-data
+          - generic [ref=f4e718]:
+            - heading "Support" [level=2] [ref=f4e719]
+            - list [ref=f4e720]:
+              - listitem [ref=f4e721]:
+                - link "Need More Support? Show subpages for Need More Support?" [ref=f4e722] [cursor=pointer]:
+                  - /url: /main/docs/need-more-support
+                  - generic [ref=f4e723]: Need More Support?
+                  - button "Show subpages for Need More Support?" [ref=f4e727]:
+                    - generic [ref=f4e728]: 
+                - list:
+                  - listitem [ref=f4e729]:
+                    - link "Technical FAQ" [ref=f4e730] [cursor=pointer]:
+                      - /url: /main/docs/technical-faq
+              - listitem [ref=f4e733]:
+                - link "ReadMe Status Opens in new tab" [ref=f4e734] [cursor=pointer]:
+                  - /url: http://readmestatus.com
+                  - generic [ref=f4e735]: ReadMe Status
+                  - img "Opens in new tab" [ref=f4e740]: 
+              - listitem [ref=f4e741]:
+                - link "Security Show subpages for Security" [ref=f4e742] [cursor=pointer]:
+                  - /url: /main/docs/security-faq
+                  - generic [ref=f4e743]: Security
+                  - button "Show subpages for Security" [ref=f4e747]:
+                    - generic [ref=f4e748]: 
+                - list:
+                  - listitem [ref=f4e749]:
+                    - link "Bug Bounty Program" [ref=f4e750] [cursor=pointer]:
+                      - /url: /main/docs/bug-bounty-program
+                  - listitem [ref=f4e753]:
+                    - link "Allow iFrames" [ref=f4e754] [cursor=pointer]:
+                      - /url: /main/docs/allowing-iframes
+              - listitem [ref=f4e757]:
+                - link "Accessibility Report" [ref=f4e758] [cursor=pointer]:
+                  - /url: /main/docs/vpat
+          - generic [ref=f4e763]:
+            - heading "Syncing Your Content" [level=2] [ref=f4e764]
+            - list [ref=f4e765]:
+              - listitem [ref=f4e766]:
+                - link "Syncing Docs via CLI / GitHub Show subpages for Syncing Docs via CLI / GitHub" [ref=f4e767] [cursor=pointer]:
+                  - /url: /main/docs/rdme
+                  - generic [ref=f4e768]: Syncing Docs via CLI / GitHub
+                  - button "Show subpages for Syncing Docs via CLI / GitHub" [ref=f4e772]:
+                    - generic [ref=f4e773]: 
+                - list:
+                  - listitem [ref=f4e774]:
+                    - 'link "GitHub Actions Example: Syncing Markdown" [ref=f4e775] [cursor=pointer]':
+                      - /url: /main/docs/github-actions-docs-example
+                  - listitem [ref=f4e778]:
+                    - 'link "GitHub Actions Example: Syncing OpenAPI" [ref=f4e779] [cursor=pointer]':
+                      - /url: /main/docs/github-actions-openapi-example
+          - generic [ref=f4e782]:
+            - text: Powered by
+            - link "ReadMe" [ref=f4e783] [cursor=pointer]:
+              - /url: https://readme.com?ref_src=hub&project=developers
+        - button "Hide sidebar navigation" [ref=f4e786] [cursor=pointer]
+      - generic [ref=f4e787]:
+        - article [ref=f4e788]:
+          - generic [ref=f4e791]:
+            - list [ref=f4e793]:
+              - listitem [ref=f4e794]:
+                - generic [ref=f4e795]: AI
+            - heading "MCP" [level=1] [ref=f4e796]
+            - paragraph [ref=f4e799]: Give your users' AI tools live access to your API spec and docs.
+          - generic [ref=f4e801]:
+            - generic [ref=f4e803]:
+              - paragraph [ref=f4e804]: Your MCP server gives AI coding assistants — Cursor, Claude Code, VS Code Copilot — a live connection to your API spec and documentation. Once enabled, AI tools connect to your MCP URL and can list endpoints, inspect schemas, make API calls, and search your docs directly, so they generate accurate code instead of guessing at your endpoints and parameters.
+              - heading "Getting Started Skip link to Getting Started" [level=2] [ref=f4e805]:
+                - generic [ref=f4e807]: Getting Started
+                - link "Skip link to Getting Started" [ref=f4e808] [cursor=pointer]:
+                  - /url: "#getting-started"
+              - list [ref=f4e809]:
+                - listitem [ref=f4e810]: Open your project in ReadMe.
+                - listitem [ref=f4e811]:
+                  - text: Open
+                  - strong [ref=f4e812]: AI
+                  - text: →
+                  - strong [ref=f4e813]: MCP
+                  - text: and toggle
+                  - strong [ref=f4e814]: MCP Server
+                  - text: on.
+                - listitem [ref=f4e815]:
+                  - text: "Share the URL with your users:  "
+                  - code [ref=f4e816]: https://your-project.readme.io/mcp
+              - paragraph [ref=f4e817]: Your hub's AI dropdown gives readers quick options to connect to Cursor, VS Code, or copy the MCP config directly. You can also write a custom guide page with connection instructions if you'd like to tailor the experience.
+              - heading "Configure Skip link to Configure" [level=2] [ref=f4e818]:
+                - generic [ref=f4e820]: Configure
+                - link "Skip link to Configure" [ref=f4e821] [cursor=pointer]:
+                  - /url: "#configure"
+              - heading "Available tools Skip link to Available tools" [level=3] [ref=f4e822]:
+                - generic [ref=f4e824]: Available tools
+                - link "Skip link to Available tools" [ref=f4e825] [cursor=pointer]:
+                  - /url: "#available-tools"
+              - paragraph [ref=f4e826]:
+                - strong [ref=f4e827]: OpenAPI tools
+                - text: "— available on all plans:"
+              - table [ref=f4e830]:
+                - rowgroup [ref=f4e831]:
+                  - row [ref=f4e832]:
+                    - columnheader "Tool" [ref=f4e833]
+                    - columnheader "What it does" [ref=f4e834]
+                - rowgroup [ref=f4e835]:
+                  - row [ref=f4e836]:
+                    - cell [ref=f4e837]:
+                      - text:  
+                      - code [ref=f4e838]: list-endpoints
+                    - cell "Returns all API paths and HTTP methods with summaries" [ref=f4e839]
+                  - row [ref=f4e840]:
+                    - cell [ref=f4e841]:
+                      - text:  
+                      - code [ref=f4e842]: get-endpoint
+                    - 'cell "Returns full detail on one endpoint: parameters, security, description" [ref=f4e843]'
+                  - row [ref=f4e844]:
+                    - cell [ref=f4e845]:
+                      - text:  
+                      - code [ref=f4e846]: search-specs
+                    - cell "Case-insensitive search across paths, operations, and schemas" [ref=f4e847]
+                  - row [ref=f4e848]:
+                    - cell [ref=f4e849]:
+                      - text:  
+                      - code [ref=f4e850]: execute-request
+                    - cell "Makes a live API call and returns the response" [ref=f4e851]
+                  - row [ref=f4e852]:
+                    - cell [ref=f4e853]:
+                      - text:  
+                      - code [ref=f4e854]: list-specs
+                    - cell "Lists all API specs in the project" [ref=f4e855]
+                  - row [ref=f4e856]:
+                    - cell [ref=f4e857]:
+                      - text:  
+                      - code [ref=f4e858]: get-server-variables
+                    - cell "Returns server variables" [ref=f4e859]
+              - paragraph [ref=f4e860]:
+                - strong [ref=f4e861]: Documentation tools
+                - text: "— require AI Booster Pack:"
+              - table [ref=f4e864]:
+                - rowgroup [ref=f4e865]:
+                  - row [ref=f4e866]:
+                    - columnheader "Tool" [ref=f4e867]
+                    - columnheader "What it does" [ref=f4e868]
+                - rowgroup [ref=f4e869]:
+                  - row [ref=f4e870]:
+                    - cell [ref=f4e871]:
+                      - text:  
+                      - code [ref=f4e872]: search
+                    - cell "Full-text search across guide and non-endpoint reference pages" [ref=f4e873]
+                  - row [ref=f4e874]:
+                    - cell [ref=f4e875]:
+                      - text:  
+                      - code [ref=f4e876]: fetch
+                    - cell "Returns the full content of a guide or non-endpoint reference page by ID" [ref=f4e877]
+              - heading "Authentication Skip link to Authentication" [level=3] [ref=f4e878]:
+                - generic [ref=f4e880]: Authentication
+                - link "Skip link to Authentication" [ref=f4e881] [cursor=pointer]:
+                  - /url: "#authentication"
+              - paragraph [ref=f4e882]:
+                - strong [ref=f4e883]: Public projects
+                - text: — no auth needed. Users connect with just the URL.
+              - paragraph [ref=f4e884]:
+                - strong [ref=f4e885]: API execution
+                - text: — the  
+                - code [ref=f4e886]: execute-request
+                - text: tool forwards headers from the user's MCP config to your API. If your API requires an  
+                - code [ref=f4e887]: Authorization
+                - text: "header:"
+              - generic [ref=f4e888]:
+                - generic [ref=f4e889]:
+                  - button "JSON"
+                - generic [ref=f4e891]:
+                  - button "Copy Code" [ref=f4e892]:  
+                  - code [ref=f4e893]:
+                    - generic [ref=f4e894]: "{ \"mcpServers\": { \"My API\": { \"url\": \"https://your-project.readme.io/mcp\", \"headers\": { \"Authorization\": \"Bearer user-api-key-here\" } } } }"
+              - paragraph [ref=f4e895]:
+                - strong [ref=f4e896]: Private projects
+                - text: — users must pass an  
+                - code [ref=f4e897]: x-readme-auth
+                - text: "header:"
+              - table [ref=f4e900]:
+                - rowgroup [ref=f4e901]:
+                  - row [ref=f4e902]:
+                    - columnheader "Access type" [ref=f4e903]
+                    - columnheader "Header" [ref=f4e904]
+                    - columnheader "Value" [ref=f4e905]
+                - rowgroup [ref=f4e906]:
+                  - row [ref=f4e907]:
+                    - cell "Password protected" [ref=f4e908]
+                    - cell [ref=f4e909]:
+                      - text:  
+                      - code [ref=f4e910]: x-readme-auth
+                    - cell "The site password" [ref=f4e911]
+                  - row [ref=f4e912]:
+                    - cell "Teammates only" [ref=f4e913]
+                    - cell [ref=f4e914]:
+                      - text:  
+                      - code [ref=f4e915]: x-readme-auth
+                    - cell [ref=f4e916]:
+                      - text:  
+                      - code [ref=f4e917]: Bearer rdme_xxx
+                      - text: (ReadMe API key)
+                  - row [ref=f4e918]:
+                    - cell "Custom login (JWT/SSO)" [ref=f4e919]
+                    - cell [ref=f4e920]:
+                      - text:  
+                      - code [ref=f4e921]: x-readme-auth
+                    - cell [ref=f4e922]:
+                      - text:  
+                      - code [ref=f4e923]: Bearer rdme_xxx
+                      - text: (ReadMe API key)
+              - paragraph [ref=f4e924]:
+                - text: For clients that don't support custom headers (like the Claude web UI), pass the same value as a  
+                - code [ref=f4e925]: token
+                - text: "query parameter instead:"
+              - generic [ref=f4e926]:
+                - button "Copy Code" [ref=f4e927]:  
+                - code [ref=f4e928]: https://your-project.readme.io/mcp?token=your-site-password https://your-project.readme.io/mcp?token=rdme_xxxxxxxxxxxx
+              - heading "MCP server URLs Skip link to MCP server URLs" [level=3] [ref=f4e929]:
+                - generic [ref=f4e931]: MCP server URLs
+                - link "Skip link to MCP server URLs" [ref=f4e932] [cursor=pointer]:
+                  - /url: "#mcp-server-urls"
+              - paragraph [ref=f4e933]:
+                - text: The standard URL is  
+                - code [ref=f4e934]: https://your-project.readme.io/mcp
+                - text: ". Append parameters to customize behavior:"
+              - table [ref=f4e937]:
+                - rowgroup [ref=f4e938]:
+                  - row [ref=f4e939]:
+                    - columnheader "Parameter" [ref=f4e940]
+                    - columnheader "Example" [ref=f4e941]
+                    - columnheader "Description" [ref=f4e942]
+                - rowgroup [ref=f4e943]:
+                  - row [ref=f4e944]:
+                    - cell [ref=f4e945]:
+                      - text:  
+                      - code [ref=f4e946]: branch
+                    - cell [ref=f4e947]:
+                      - text:  
+                      - code [ref=f4e948]: "?branch=v2.0"
+                    - cell "Connect to a specific version branch. Doc search tools are not available on branches." [ref=f4e949]
+                  - row [ref=f4e950]:
+                    - cell [ref=f4e951]:
+                      - text:  
+                      - code [ref=f4e952]: project
+                    - cell [ref=f4e953]:
+                      - text:  
+                      - code [ref=f4e954]: "?project=my-api"
+                    - cell "Enterprise only. Limit to a single project." [ref=f4e955]
+                  - row [ref=f4e956]:
+                    - cell [ref=f4e957]:
+                      - text:  
+                      - code [ref=f4e958]: token
+                    - cell [ref=f4e959]:
+                      - text:  
+                      - code [ref=f4e960]: "?token=rdme_xxx"
+                    - cell [ref=f4e961]:
+                      - text: Authenticate to a private project without setting a header. Accepts the site password or a ReadMe API key — same value you'd use in  
+                      - code [ref=f4e962]: x-readme-auth
+                      - text: .
+                  - row [ref=f4e963]:
+                    - cell [ref=f4e964]:
+                      - text:  
+                      - code [ref=f4e965]: server
+                    - cell [ref=f4e966]:
+                      - text:  
+                      - code [ref=f4e967]: "?server=1"
+                    - cell "Select a server from your API spec by index (zero-based). Only this server is exposed, and requests to others are rejected." [ref=f4e968]
+                  - row [ref=f4e969]:
+                    - cell [ref=f4e970]:
+                      - text:  
+                      - code [ref=f4e971]: server_variables
+                    - cell [ref=f4e972]:
+                      - text:  
+                      - code [ref=f4e973]: "?server_variables=region=eu"
+                    - cell [ref=f4e974]:
+                      - text: "Override a server variable. Format:  "
+                      - code [ref=f4e975]: KEY=VALUE
+                      - text: . Repeat the parameter for multiple variables.
+              - group [ref=f4e977]:
+                - generic "Enterprise and custom domain URLs" [ref=f4e978] [cursor=pointer]
+                - text:        
+              - heading "Custom tools Skip link to Custom tools" [level=3] [ref=f4e981]:
+                - generic [ref=f4e983]: Custom tools
+                - link "Skip link to Custom tools" [ref=f4e984] [cursor=pointer]:
+                  - /url: "#custom-tools"
+              - paragraph [ref=f4e985]:
+                - text: Define your own tools that users' AI assistants can call. Go to
+                - strong [ref=f4e986]: AI
+                - text: →
+                - strong [ref=f4e987]: MCP
+                - text: →
+                - strong [ref=f4e988]: Custom Tools
+                - text: and click
+                - strong [ref=f4e989]: New Tool
+                - text: .
+              - paragraph [ref=f4e990]: Each tool requires a title, a description (when should the AI use it), and a body (instructions to follow). Tool titles cannot match built-in tool names.
+              - heading "Controlling which endpoints are exposed Skip link to Controlling which endpoints are exposed" [level=3] [ref=f4e991]:
+                - generic [ref=f4e993]: Controlling which endpoints are exposed
+                - link "Skip link to Controlling which endpoints are exposed" [ref=f4e994] [cursor=pointer]:
+                  - /url: "#controlling-which-endpoints-are-exposed"
+              - paragraph [ref=f4e995]:
+                - text: All endpoints in your OpenAPI spec are available by default. Toggle individual endpoints on or off in
+                - strong [ref=f4e996]: AI
+                - text: →
+                - strong [ref=f4e997]: MCP
+                - text: →
+                - strong [ref=f4e998]: Enabled MCP Routes
+                - text: .
+              - heading "Use Cases Skip link to Use Cases" [level=2] [ref=f4e999]:
+                - generic [ref=f4e1001]: Use Cases
+                - link "Skip link to Use Cases" [ref=f4e1002] [cursor=pointer]:
+                  - /url: "#use-cases"
+              - paragraph [ref=f4e1003]: These examples use the Petstore API to show what users can do with your MCP server.
+              - heading "Build an API client Skip link to Build an API client" [level=3] [ref=f4e1004]:
+                - generic [ref=f4e1006]: Build an API client
+                - link "Skip link to Build an API client" [ref=f4e1007] [cursor=pointer]:
+                  - /url: "#build-an-api-client"
+              - paragraph [ref=f4e1008]: "A developer connects their coding assistant to your MCP server and prompts:"
+              - generic [ref=f4e1009]:
+                - generic [ref=f4e1010]:
+                  - button "Text"
+                - generic [ref=f4e1012]:
+                  - button "Copy Code" [ref=f4e1013]:  
+                  - code [ref=f4e1014]:
+                    - generic [ref=f4e1015]: Write a Python script that lists all pets with status "available" and lets me add a new pet by name.
+              - paragraph [ref=f4e1016]:
+                - text: The AI calls  
+                - code [ref=f4e1017]: list-endpoints
+                - text: to discover the relevant paths,  
+                - code [ref=f4e1018]: get-endpoint
+                - text: to read the schemas, and generates working code with correct fields and auth.
+              - generic [ref=f4e1019]:
+                - generic [ref=f4e1020]:
+                  - button "Python"
+                - generic [ref=f4e1022]:
+                  - button "Copy Code" [ref=f4e1023]:  
+                  - code [ref=f4e1024]:
+                    - generic [ref=f4e1025]: "import requests BASE_URL = \"https://petstore.swagger.io/v2\" API_KEY = \"your-api-key\" def list_available_pets(): resp = requests.get( f\"{BASE_URL}/pet/findByStatus\", params={\"status\": \"available\"}, headers={\"api_key\": API_KEY}, ) resp.raise_for_status() return resp.json() def add_pet(name: str, status: str = \"available\") -> dict: payload = {\"name\": name, \"status\": status, \"photoUrls\": []} resp = requests.post( f\"{BASE_URL}/pet\", json=payload, headers={\"api_key\": API_KEY, \"Content-Type\": \"application/json\"}, ) resp.raise_for_status() return resp.json()"
+              - heading "Explore an unfamiliar API Skip link to Explore an unfamiliar API" [level=3] [ref=f4e1026]:
+                - generic [ref=f4e1028]: Explore an unfamiliar API
+                - link "Skip link to Explore an unfamiliar API" [ref=f4e1029] [cursor=pointer]:
+                  - /url: "#explore-an-unfamiliar-api"
+              - generic [ref=f4e1030]:
+                - generic [ref=f4e1031]:
+                  - button "Text"
+                - generic [ref=f4e1033]:
+                  - button "Copy Code" [ref=f4e1034]:  
+                  - code [ref=f4e1035]:
+                    - generic [ref=f4e1036]: "I've never used this API before. Use MCP tools to give me a quick-start guide: what endpoints exist, what auth I need, and a curl example."
+              - paragraph [ref=f4e1037]:
+                - text: The AI calls  
+                - code [ref=f4e1038]: list-endpoints
+                - text: and assembles an overview without you writing any additional documentation.
+              - heading "Generate tests from your spec Skip link to Generate tests from your spec" [level=3] [ref=f4e1039]:
+                - generic [ref=f4e1041]: Generate tests from your spec
+                - link "Skip link to Generate tests from your spec" [ref=f4e1042] [cursor=pointer]:
+                  - /url: "#generate-tests-from-your-spec"
+              - generic [ref=f4e1043]:
+                - generic [ref=f4e1044]:
+                  - button "Text"
+                - generic [ref=f4e1046]:
+                  - button "Copy Code" [ref=f4e1047]:  
+                  - code [ref=f4e1048]:
+                    - generic [ref=f4e1049]: "Look at the POST /pet endpoint and generate a Jest test suite covering: a successful create, missing required fields, and an invalid status value."
+              - paragraph [ref=f4e1050]:
+                - text: The AI reads the request body schema, finds enum values for  
+                - code [ref=f4e1051]: status
+                - text: ", and writes tests against the actual contract."
+              - heading "Automated API monitoring Skip link to Automated API monitoring" [level=3] [ref=f4e1052]:
+                - generic [ref=f4e1054]: Automated API monitoring
+                - link "Skip link to Automated API monitoring" [ref=f4e1055] [cursor=pointer]:
+                  - /url: "#automated-api-monitoring"
+              - generic [ref=f4e1056]:
+                - generic [ref=f4e1057]:
+                  - button "Text"
+                - generic [ref=f4e1059]:
+                  - button "Copy Code" [ref=f4e1060]:  
+                  - code [ref=f4e1061]:
+                    - generic [ref=f4e1062]: "Check that the API is behaving correctly: 1. Call GET /pet/1 and verify the response matches the schema 2. Try POST /pet with an invalid status and confirm it returns a 400 3. Report any discrepancies"
+              - paragraph [ref=f4e1063]:
+                - text: The agent uses  
+                - code [ref=f4e1064]: get-endpoint
+                - text: to know what a valid response looks like, then  
+                - code [ref=f4e1065]: execute-request
+                - text: to make the calls and compare.
+              - heading "FAQ Skip link to FAQ" [level=2] [ref=f4e1066]:
+                - generic [ref=f4e1068]: FAQ
+                - link "Skip link to FAQ" [ref=f4e1069] [cursor=pointer]:
+                  - /url: "#faq"
+              - group [ref=f4e1071]:
+                - generic "Can I show different information to different users?" [ref=f4e1072] [cursor=pointer]
+              - group [ref=f4e1076]:
+                - generic "What plan do I need?" [ref=f4e1077] [cursor=pointer]
+              - group [ref=f4e1081]:
+                - generic "Can I disable specific endpoints?" [ref=f4e1082] [cursor=pointer]
+            - paragraph [ref=f4e1087]: Updated 11 days ago
+            - separator [ref=f4e1092]
+            - navigation "Pagination Controls" [ref=f4e1093]:
+              - 'link "Previous Page: Ask AI" [ref=f4e1094] [cursor=pointer]':
+                - /url: /main/docs/ask-ai
+                - generic [ref=f4e1095]: 
+                - generic [ref=f4e1096]: Ask AI
+              - 'link "Next Page: Discoverability" [ref=f4e1097] [cursor=pointer]':
+                - /url: /main/docs/ai-discoverability
+                - generic [ref=f4e1098]: Discoverability
+                - generic [ref=f4e1099]: 
+            - generic [ref=f4e1101]:
+              - text: Did this page help you?
+              - generic [ref=f4e1102]:
+                - button "Yes, this page helped me" [ref=f4e1104] [cursor=pointer]:
+                  - generic [ref=f4e1105]: 
+                  - generic [ref=f4e1106]: "Yes"
+                - button "No, this page did not help me" [ref=f4e1108] [cursor=pointer]:
+                  - generic [ref=f4e1109]: 
+                  - generic [ref=f4e1110]: "No"
+        - generic [ref=f4e1111]:
+          - generic [ref=f4e1112]:
+            - button "Copy Page" [ref=f4e1113] [cursor=pointer]
+            - button [ref=f4e1120] [cursor=pointer]
+          - navigation "Table of contents" [ref=f4e1124]:
+            - list [ref=f4e1125]:
+              - listitem [ref=f4e1126]:
+                - list [ref=f4e1127]:
+                  - listitem [ref=f4e1128]:
+                    - link "Getting Started" [ref=f4e1129] [cursor=pointer]:
+                      - /url: "#getting-started"
+                  - listitem [ref=f4e1130]:
+                    - link "Configure" [ref=f4e1131] [cursor=pointer]:
+                      - /url: "#configure"
+                  - listitem [ref=f4e1132]:
+                    - list [ref=f4e1133]:
+                      - listitem [ref=f4e1134]:
+                        - link "Available tools" [ref=f4e1135] [cursor=pointer]:
+                          - /url: "#available-tools"
+                      - listitem [ref=f4e1136]:
+                        - link "Authentication" [ref=f4e1137] [cursor=pointer]:
+                          - /url: "#authentication"
+                      - listitem [ref=f4e1138]:
+                        - link "MCP server URLs" [ref=f4e1139] [cursor=pointer]:
+                          - /url: "#mcp-server-urls"
+                      - listitem [ref=f4e1140]:
+                        - link "Custom tools" [ref=f4e1141] [cursor=pointer]:
+                          - /url: "#custom-tools"
+                      - listitem [ref=f4e1142]:
+                        - link "Controlling which endpoints are exposed" [ref=f4e1143] [cursor=pointer]:
+                          - /url: "#controlling-which-endpoints-are-exposed"
+                  - listitem [ref=f4e1144]:
+                    - link "Use Cases" [ref=f4e1145] [cursor=pointer]:
+                      - /url: "#use-cases"
+                  - listitem [ref=f4e1146]:
+                    - list [ref=f4e1147]:
+                      - listitem [ref=f4e1148]:
+                        - link "Build an API client" [ref=f4e1149] [cursor=pointer]:
+                          - /url: "#build-an-api-client"
+                      - listitem [ref=f4e1150]:
+                        - link "Explore an unfamiliar API" [ref=f4e1151] [cursor=pointer]:
+                          - /url: "#explore-an-unfamiliar-api"
+                      - listitem [ref=f4e1152]:
+                        - link "Generate tests from your spec" [ref=f4e1153] [cursor=pointer]:
+                          - /url: "#generate-tests-from-your-spec"
+                      - listitem [ref=f4e1154]:
+                        - link "Automated API monitoring" [ref=f4e1155] [cursor=pointer]:
+                          - /url: "#automated-api-monitoring"
+                  - listitem [ref=f4e1156]:
+                    - link "FAQ" [ref=f4e1157] [cursor=pointer]:
+                      - /url: "#faq"
