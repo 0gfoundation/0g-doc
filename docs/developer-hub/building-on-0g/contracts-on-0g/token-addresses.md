@@ -7,13 +7,11 @@ keywords: [0G token, W0G, wrapped 0G, contract address, CCIP, Ethereum, Base, So
 
 # 0G Token Addresses
 
-On **0G Mainnet** (chain ID 16661) the 0G token is the native gas token, like ETH on Ethereum: it has no contract address of its own. Every official contract representation of the token, on 0G and on other chains, is listed on this page. Treat any address not listed here as unofficial.
-
-All addresses below were checked on-chain on 2026-09-16 (contract name, symbol and decimals read from each contract).
+On **0G Mainnet** (chain ID 16661) the 0G token is the native gas token, like ETH on Ethereum: it has no contract address of its own. Every official contract representation of the token, on 0G and on other chains, is listed on this page.
 
 ## W0G on 0G Mainnet
 
-Wrapped 0G (W0G) is the ERC-20 form of the native token on 0G Mainnet, backed by the [WrappedOGBase precompile](./precompiles/precompiles-wrappedogbase). Use it wherever a contract needs an ERC-20 instead of the native token.
+Wrapped 0G (W0G) is the ERC-20 form of the native token on 0G Mainnet, backed by the [WrappedOGBase precompile](./precompiles/precompiles-wrappedogbase).
 
 | Network | Chain ID | Token | Address | Decimals |
 |---------|----------|-------|---------|----------|
@@ -45,8 +43,10 @@ The earlier bridged representation is a LayerZero OFT named `0G`. It deliberatel
 
 `0G` (LayerZero) and `W0G` (CCIP) are different contracts on Ethereum. Check which one a venue or bridge expects before sending funds.
 
-## Verify before you send
+## Related links
 
-- Confirm the symbol and decimals on the block explorer linked in each row; a legitimate contract will read `Wrapped 0G` / `W0G` or `0G` / `0G`.
-- Addresses are never announced only in direct messages or replies. If in doubt, come back to this page or ask in the official [Discord](https://discord.gg/0glabs).
-- Looking for how to buy, bridge or swap the token? See [How to Get 0G](/introduction/how-to-get-0g).
+- [WrappedOGBase precompile](./precompiles/precompiles-wrappedogbase): how W0G is minted and burned on 0G Mainnet
+- [How to Get 0G](/introduction/how-to-get-0g): buying, bridging and swapping the token
+- [Chainlink CCIP directory](https://docs.chain.link/ccip/directory/mainnet): cross-chain token and lane details for W0G
+- [Stargate](https://stargate.finance): bridge for the LayerZero 0G token
+- [0G Hub bridge](https://hub.0g.ai/bridge): moving W0G between Ethereum and 0G
