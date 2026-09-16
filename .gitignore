@@ -19,3 +19,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .vercel
+
+# Local working files that must never be committed
+.playwright-mcp/
+builder-queries/
