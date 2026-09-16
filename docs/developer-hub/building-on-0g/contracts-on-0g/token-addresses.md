@@ -13,7 +13,7 @@ All addresses below were checked on-chain on 2026-09-16 (contract name, symbol a
 
 ## W0G on 0G Mainnet
 
-Wrapped 0G (W0G) is the ERC-20 form of the native token on 0G Mainnet, backed by the [WrappedOGBase precompile](./precompiles/wrappedogbase). Use it wherever a contract needs an ERC-20 instead of the native token.
+Wrapped 0G (W0G) is the ERC-20 form of the native token on 0G Mainnet, backed by the [WrappedOGBase precompile](./precompiles/precompiles-wrappedogbase). Use it wherever a contract needs an ERC-20 instead of the native token.
 
 | Network | Chain ID | Token | Address | Decimals |
 |---------|----------|-------|---------|----------|
