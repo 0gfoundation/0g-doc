@@ -7,7 +7,7 @@ keywords: [0G token, W0G, wrapped 0G, contract address, CCIP, Ethereum, Base, So
 
 # 0G Token Addresses
 
-On **0G Mainnet** (chain ID 16661) the 0G token is the native gas token, like ETH on Ethereum: it has no contract address of its own. Every official contract representation of the token, on 0G and on other chains, is listed on this page.
+On **0G Mainnet** the 0G token is the native gas token, like ETH on Ethereum: it has no contract address of its own. Every official contract representation of the token, on 0G and on other chains, is listed on this page.
 
 ## W0G on 0G Mainnet
 
