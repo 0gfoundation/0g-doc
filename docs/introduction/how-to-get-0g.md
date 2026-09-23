@@ -79,7 +79,7 @@ Buy the [official bridged $0G](#official-token-contracts) directly on [Fomo](htt
 
 - **URL**: [https://hub.0g.ai/bridge](https://hub.0g.ai/bridge)
 - **Networks**: Ethereum, Arbitrum, Base, BNB Chain, Solana and Robinhood Chain to 0G
-- **How it works**: The Hub quotes every route it can reach across Chainlink CCIP, LI.FI and Khalani (plus a Wormhole Portal route for SOL) and ranks the cheapest first. Some routes deliver w0G first and unwrap it to native $0G in a second step, which needs a little $0G for gas.
+- **How it works**: The Hub quotes every route it can reach across Chainlink CCIP, LI.FI and Khalani (plus a Wormhole Portal route for SOL) and ranks the cheapest first. Some routes deliver w0G first and unwrap it to native $0G in a second step, which needs a little 0G for gas.
 
 ### More Bridges & Aggregators
 
