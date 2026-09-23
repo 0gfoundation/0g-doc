@@ -75,11 +75,11 @@ Buy the [official bridged $0G](#official-token-contracts) directly on [Fomo](htt
 5. Confirm transaction and wait for bridging to complete
 6. Once bridged, swap your assets to $0G on the 0G Hub
 
-### Khalani TokenFlight (Cross-Chain Swap on 0G Hub)
+### 0G Hub (Bridge & Swap)
 
-- **URL**: [https://hub.0g.ai/khalani/transfer](https://hub.0g.ai/khalani/transfer)
-- **Networks**: 20 chains, including Ethereum, BNB Chain, Arbitrum, Base, Solana, Monad, Bitcoin and Tron
-- **How it works**: Intent-based routing with atomic settlement. Select a source chain and token; TokenFlight finds the best route and delivers on 0G.
+- **URL**: [https://hub.0g.ai/bridge](https://hub.0g.ai/bridge)
+- **Networks**: Ethereum, Arbitrum, Base, BNB Chain, Solana and Robinhood Chain to 0G
+- **How it works**: The Hub quotes every route it can reach across Chainlink CCIP, LI.FI and Khalani (plus a Wormhole Portal route for SOL) and ranks the cheapest first. Some routes deliver w0G first and unwrap it to native $0G in a second step, which needs a little $0G for gas.
 
 ### More Bridges & Aggregators
 
@@ -89,7 +89,6 @@ Buy the [official bridged $0G](#official-token-contracts) directly on [Fomo](htt
 | **[Interport](https://interport.fi)** | 10+ chains incl. Solana & Monad | Gas Transfer feature delivers native 0G for fees |
 | **[Stargate](https://stargate.finance)** | Ethereum & BNB Chain | Bridges $0G, plus WBTC / WETH / cbBTC to 0G |
 | **[Wormhole Portal](https://portalbridge.com)** | Solana and 15+ chains | Wrapped-asset token bridge |
-| **[0G Hub Bridge](https://hub.0g.ai/bridge)** | Ethereum ↔ 0G | Moves W0G (wrapped 0G) |
 | **[Gas.zip](https://www.gas.zip)** | Gas refuel only | Tops up a small amount of native 0G for transaction fees |
 
 :::note For developers
@@ -104,8 +103,8 @@ Once you have assets on the 0G network, swap them for native $0G tokens.
 
 - **URL**: [https://hub.0g.ai/swap](https://hub.0g.ai/swap)
 - **Features**: Official swap interface for the 0G ecosystem
-- **Powered by**: [Jaine](https://jaine.app/)
-- **Available Pairs**: Multiple trading pairs including ETH, USDT, USDC
+- **Routes through**: Bond, Oku and Zia, with the trade sent to the best price
+- **Available tokens**: Include USDC, WETH, WBTC and w0G
 
 The 0G Hub provides seamless token swapping, portfolio tracking, and access to the entire 0G ecosystem.
 
