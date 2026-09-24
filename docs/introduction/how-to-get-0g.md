@@ -85,7 +85,7 @@ Buy the [official bridged $0G](#official-token-contracts) directly on [Fomo](htt
 
 | Bridge | Route to 0G | Notes |
 |--------|-------------|-------|
-| **[Jumper](https://jumper.exchange)** | 60+ chains | LI.FI aggregator; includes a gas-refuel option |
+| **[Jumper](https://jumper.xyz)** | 60+ chains | LI.FI aggregator; includes a gas-refuel option |
 | **[Interport](https://interport.fi)** | 10+ chains incl. Solana & Monad | Gas Transfer feature delivers native 0G for fees |
 | **[Stargate](https://stargate.finance)** | Ethereum & BNB Chain | Bridges $0G, plus WBTC / WETH / cbBTC to 0G |
 | **[Wormhole Portal](https://portalbridge.com)** | Solana and 15+ chains | Wrapped-asset token bridge |
