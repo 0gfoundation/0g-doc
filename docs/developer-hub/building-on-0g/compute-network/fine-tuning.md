@@ -9,6 +9,17 @@ description: "Fine-tune AI models on 0G Compute Network. Prepare datasets, confi
 
 Customize AI models with your own data using 0G's distributed GPU network.
 
+:::warning Temporarily Unavailable
+The mainnet fine-tuning service is **temporarily unavailable** while its GPU host undergoes maintenance. New tasks cannot be created until it returns; this page will be updated when it does.
+
+**Your funds are safe.** Balances sit on-chain in your sub-account and are not affected. To move them back to your main account:
+
+```bash
+# Run once to request the refund (24-hour lock), then again after the lock to complete it
+0g-compute-cli retrieve-fund --service fine-tuning --provider 0x940b4a101CaBa9be04b16A7363cafa29C1660B0d
+```
+:::
+
 ## Quick Start
 
 ### Prerequisites
