@@ -65,11 +65,11 @@ import TabItem from '@theme/TabItem';
 Download the latest Aristotle mainnet package:
 
 ```bash
-wget -O aristotle.tar.gz https://github.com/0gfoundation/0gchain-Aristotle/releases/download/v1.0.6/aristotle-v1.0.6.tar.gz
+wget -O aristotle.tar.gz https://github.com/0gfoundation/0gchain-Aristotle/releases/download/v1.0.7/aristotle-v1.0.7.tar.gz
 ```
 
 :::note Version Information
-Latest Aristotle mainnet release: v1.0.6. Check [releases page](https://github.com/0gfoundation/0gchain-Aristotle/releases) for newer versions.
+Latest Aristotle mainnet release: v1.0.7. It is an RPC-only release that corrects `eth_estimateGas` on reth and changes only the `reth` binary, so `geth` and `0gchaind` are identical to v1.0.6. Check [releases page](https://github.com/0gfoundation/0gchain-Aristotle/releases) for newer versions.
 :::
 
 ### 2. Extract Package
@@ -77,7 +77,7 @@ Latest Aristotle mainnet release: v1.0.6. Check [releases page](https://github.c
 Extract the Aristotle node package to your home directory:
 
 ```bash
-tar -xzvf aristotle-v1.0.6.tar.gz -C ~
+tar -xzvf aristotle.tar.gz -C ~
 ```
 
 ### 3. Create Data Directory and Copy Configuration
@@ -85,7 +85,7 @@ tar -xzvf aristotle-v1.0.6.tar.gz -C ~
 Create your data directory and copy the default configuration:
 
 ```bash
-cd Aristotle-v1.0.6
+cd ~/aristotle-v1.0.7
 
 cp -r 0g-home {your data path}
 sudo chmod 777 ./bin/geth
@@ -174,7 +174,7 @@ export BLOCK_NUM=1
 Launch the 0gchaind consensus client with validator-specific parameters:
 
 ```bash
-cd Aristotle-v1.0.6
+cd ~/aristotle-v1.0.7
 
 nohup ./bin/0gchaind start \
     --rpc.laddr tcp://0.0.0.0:26657 \
@@ -198,7 +198,7 @@ nohup ./bin/0gchaind start \
 Launch the Geth execution client:
 
 ```bash
-cd Aristotle-v1.0.6
+cd ~/aristotle-v1.0.7
 
 nohup ./bin/geth \
     --config geth-config.toml \
@@ -456,8 +456,8 @@ wget -O galileo.tar.gz https://github.com/0gfoundation/0gchain-NG/releases/downl
 tar -xzvf Galileo-v3.0.4.tar.gz -C ~
 
 # For Mainnet (Aristotle)
-wget -O aristotle.tar.gz https://github.com/0gfoundation/0gchain-Aristotle/releases/download/v1.0.6/aristotle-v1.0.6.tar.gz
-tar -xzvf aristotle-v1.0.6.tar.gz -C ~
+wget -O aristotle.tar.gz https://github.com/0gfoundation/0gchain-Aristotle/releases/download/v1.0.7/aristotle-v1.0.7.tar.gz
+tar -xzvf aristotle.tar.gz -C ~
 
 # Verify extraction
 ls -la {network}-v{version}/

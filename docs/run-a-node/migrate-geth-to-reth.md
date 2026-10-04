@@ -61,7 +61,7 @@ The node runs:
 
 ### Required files
 
-All binaries and configuration files are distributed as part of the official release package. After extracting the release, confirm the following files are present in your working directory:
+The binaries and configuration files below ship in the official release package. After extracting the release, confirm they are present in your working directory:
 
 | File | Description |
 | --- | --- |
@@ -70,7 +70,14 @@ All binaries and configuration files are distributed as part of the official rel
 | `0g-home/0gchaind-home/config/genesis.json` | CL genesis configuration |
 | `geth-genesis.json` | EL genesis configuration |
 | `kzg-trusted-setup.json` | KZG trusted setup for the CL |
-| `jwt.hex` | JWT secret for CL–EL authentication |
+
+One more file is required but is **not** in the package:
+
+| File | Description |
+| --- | --- |
+| `jwt.hex` | Shared secret authenticating the CL to the EL engine API. You generate it, see the initialize step below. |
+
+`jwt.hex` is local to your node rather than a network value, so there is no official copy to download. If you already run a 0G node, reuse its existing `jwt.hex`. The secret is not tied to the execution client, so the one you used with geth works unchanged with reth.
 
 <Tabs>
   <TabItem value="mainnet" label="Mainnet (Aristotle)" default>
@@ -78,13 +85,13 @@ All binaries and configuration files are distributed as part of the official rel
 ### Download the package (Mainnet)
 
 ```bash
-wget -O aristotle.tar.gz https://github.com/0gfoundation/0gchain-Aristotle/releases/download/v1.0.6/aristotle-v1.0.6.tar.gz
+wget -O aristotle.tar.gz https://github.com/0gfoundation/0gchain-Aristotle/releases/download/v1.0.7/aristotle-v1.0.7.tar.gz
 tar -xzvf aristotle.tar.gz -C ~
-cd Aristotle-v1.0.6
+cd ~/aristotle-v1.0.7
 ```
 
 :::note Version Information
-Latest Aristotle mainnet release: v1.0.6. Check the [releases page](https://github.com/0gfoundation/0gchain-Aristotle/releases) for newer versions.
+Latest Aristotle mainnet release: v1.0.7. It is an RPC-only release that corrects `eth_estimateGas` on reth and changes only the `reth` binary, so `geth` and `0gchaind` are identical to v1.0.6. Check the [releases page](https://github.com/0gfoundation/0gchain-Aristotle/releases) for newer versions.
 :::
 
 The consensus client requires an **Ethereum mainnet** RPC endpoint to read Symbiotic restaking contract state (e.g. QuickNode, Alchemy, Infura):
@@ -127,6 +134,20 @@ Copy the genesis file into the CL config directory:
 ```bash
 cp -f 0g-home/0gchaind-home/config/genesis.json $DATA_DIR/0gchaind-home/config
 ```
+
+Generate the JWT secret and place it in the working directory. The CL and EL must read the
+same file, and the start commands below pass a relative path, so it has to sit next to `bin/`:
+
+```bash
+./bin/0gchaind jwt generate --home $DATA_DIR/0gchaind-home --chaincfg.chain-spec mainnet
+
+cp -f $DATA_DIR/0gchaind-home/config/jwt.hex ./
+```
+
+:::note Migrating an existing node
+Reuse your current `jwt.hex` instead of generating a new one. Copy it into the working
+directory in place of the commands above.
+:::
 
 Initialize the execution layer (`reth`):
 
@@ -244,6 +265,20 @@ Copy the genesis file into the CL config directory:
 ```bash
 cp -f 0g-home/0gchaind-home/config/genesis.json $DATA_DIR/0gchaind-home/config
 ```
+
+Generate the JWT secret and place it in the working directory. The CL and EL must read the
+same file, and the start commands below pass a relative path, so it has to sit next to `bin/`:
+
+```bash
+./bin/0gchaind jwt generate --home $DATA_DIR/0gchaind-home --chaincfg.chain-spec testnet
+
+cp -f $DATA_DIR/0gchaind-home/config/jwt.hex ./
+```
+
+:::note Migrating an existing node
+Reuse your current `jwt.hex` instead of generating a new one. Copy it into the working
+directory in place of the commands above.
+:::
 
 Initialize the execution layer (`reth`):
 
