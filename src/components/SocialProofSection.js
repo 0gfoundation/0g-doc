@@ -1,17 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { usePluginData } from '@docusaurus/useGlobalData';
 
-// Final values. These are also the initial state so that the numbers are
-// present in the server-rendered HTML: crawlers and other fetchers that do not
-// run JavaScript used to read "0+ Partners". The count-up animation runs after
-// hydration and counts up from 60% of the final value, so the numbers never
-// drop to zero after the server-rendered values have been shown.
-const TARGETS = {
-  partners: 350,
-  accounts: 20,
-  transactions: 250,
-};
+// Whole units shown with a "+" suffix, so a number is never overstated:
+// 5,571,152 accounts renders as "5M+".
+const wholeMillions = (n) => Math.max(1, Math.floor(n / 1e6));
 
+// The values come from live-stats-plugin (fetched at build time, refreshed by
+// the daily production redeploy). They are also the initial state so that the
+// numbers are present in the server-rendered HTML: crawlers and other fetchers
+// that do not run JavaScript used to read "0+ Partners". The count-up animation
+// runs after hydration and counts up from 60% of the final value, so the numbers
+// never drop to zero after the server-rendered values have been shown.
 const SocialProofSection = () => {
+  const stats = usePluginData('live-stats-plugin');
+  const TARGETS = {
+    partners: stats.partners,
+    accounts: wholeMillions(stats.accounts),
+    transactions: wholeMillions(stats.transactions),
+  };
   const sectionRef = useRef(null);
   const timerRef = useRef(null);
   const hasAnimatedRef = useRef(false);
@@ -117,6 +123,7 @@ const SocialProofSection = () => {
           <div className="stat-label">Transactions</div>
         </div>
       </div>
+      <div className="stats-updated">Network data as of {stats.fetchedAt}</div>
     </section>
   );
 };
