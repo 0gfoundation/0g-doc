@@ -241,7 +241,7 @@ Latest Galileo testnet release: v3.0.4. Check [releases page](https://github.com
 Extract the package to your home directory:
 
 ```bash
-tar -xzvf Galileo-v3.0.4.tar.gz -C ~
+tar -xzvf galileo.tar.gz -C ~
 ```
 
 ### 3. Create Data Directory and Copy Configuration
@@ -249,7 +249,7 @@ tar -xzvf Galileo-v3.0.4.tar.gz -C ~
 Copy the configuration files and set proper permissions:
 
 ```bash
-cd Galileo-v3.0.4
+cd ~/galileo-v3.0.4
 
 cp -r 0g-home {your data path}
 sudo chmod 777 ./bin/geth
@@ -315,7 +315,7 @@ export BLOCK_NUM=1
 Launch the 0gchaind consensus client with testnet parameters:
 
 ```bash
-cd ~/Galileo-v3.0.4
+cd ~/galileo-v3.0.4
 
 nohup ./bin/0gchaind start \
     --rpc.laddr tcp://0.0.0.0:26657 \
@@ -335,7 +335,7 @@ nohup ./bin/0gchaind start \
 Launch the Geth execution client:
 
 ```bash
-cd ~/Galileo-v3.0.4
+cd ~/galileo-v3.0.4
 
 nohup ./bin/geth \
     --config geth-config.toml \
@@ -453,7 +453,7 @@ To restore your validator from backup:
 ```bash
 # For Testnet (Galileo)
 wget -O galileo.tar.gz https://github.com/0gfoundation/0gchain-NG/releases/download/v3.0.4/Galileo-v3.0.4.tar.gz
-tar -xzvf Galileo-v3.0.4.tar.gz -C ~
+tar -xzvf galileo.tar.gz -C ~
 
 # For Mainnet (Aristotle)
 wget -O aristotle.tar.gz https://github.com/0gfoundation/0gchain-Aristotle/releases/download/v1.0.7/aristotle-v1.0.7.tar.gz

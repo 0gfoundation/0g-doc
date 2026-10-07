@@ -225,7 +225,7 @@ nohup ./bin/0gchaind start \
 ```bash
 wget -O galileo.tar.gz https://github.com/0gfoundation/0gchain-NG/releases/latest/download/Galileo-latest.tar.gz
 tar -xzvf galileo.tar.gz -C ~
-cd Galileo-<version>
+cd ~/galileo-<version>
 ```
 
 :::note Version Information
