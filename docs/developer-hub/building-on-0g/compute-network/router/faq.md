@@ -43,7 +43,7 @@ There is no Router markup on top of provider prices — what you see in the cata
 
 ## What happens if no providers are available?
 
-If every provider for your chosen model is unhealthy, you get `503 no_providers_available`. The Router does **not** fall back to a different model — picking a model is your decision. Choose a different model yourself, or wait and retry.
+If every provider for your chosen model is unhealthy, you get `503 no_available_provider`. The Router does **not** fall back to a different model — picking a model is your decision. Choose a different model yourself, or wait and retry.
 
 ## Does the Router store my prompts?
 
