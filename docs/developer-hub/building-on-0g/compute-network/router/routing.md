@@ -31,7 +31,7 @@ The Router identifies a conversation by the first of these it finds:
 1. The `X-Session-Id` header.
 2. The `X-Claude-Code-Session-Id` header, which [Claude Code](./clients/claude-code) sends on its own.
 3. `prompt_cache_key` in the request body.
-4. The opening of the conversation: the system prompt and the first user message. Agent loops resend these unchanged on every turn, so most clients need no changes.
+4. The opening of the conversation: the system prompt and the first message after it. Agent loops resend these unchanged on every turn, so most clients need no changes.
 
 Send your own `X-Session-Id` when the opening of a conversation changes between turns (for example, the system prompt includes the current time), or when two conversations start identically and you want them kept apart. Use the same value for every turn of a conversation; a new value starts a new conversation.
 
@@ -46,7 +46,7 @@ curl https://router-api.0g.ai/v1/chat/completions \
   }'
 ```
 
-Affinity only chooses among providers that rank equally for your request. It never overrides `X-0G-Provider-Sort`, a price cap, or a pinned address. If the provider fails, the Router fails over as usual and the conversation continues on the next provider, whose cache starts cold.
+Affinity only chooses among providers that rank equally for your request. It never overrides `X-0G-Provider-Sort`, a price cap, or a pinned address. If the provider fails, that request is retried on another provider as usual (unless you pin an address without allowing fallbacks), and the retry starts with a cold cache. Later turns go back to the original provider once it is serving again.
 
 ## Routing surfaces
 
