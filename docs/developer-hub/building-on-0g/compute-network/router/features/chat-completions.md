@@ -121,9 +121,11 @@ Every Router response carries an `x_0g_trace` object with metadata about the req
   "request_id": "0852f405-6c56-40c2-a800-e6fd70785065",
   "provider": "0xd9966e13a6026Fcca4b13E7ff95c94DE268C471C",
   "billing": {
+    "currency":    "0g",
     "input_cost":  "19000000000000",
     "output_cost": "1916800000000000",
-    "total_cost":  "1935800000000000"
+    "total_cost":  "1935800000000000",
+    "total_cost_usd_micro": "348"
   }
 }
 ```
@@ -132,7 +134,9 @@ Every Router response carries an `x_0g_trace` object with metadata about the req
 | --- | --- |
 | `request_id` | Unique ID for this request. Quote it in any support ticket or bug report. |
 | `provider` | On-chain address of the provider that served the request |
-| `billing.input_cost` / `output_cost` / `total_cost` | Exact cost in **neuron** for this specific request |
+| `billing.currency` | Unit of the cost fields: `"0g"` (**neuron**) or `"usd"` (**micro-USD**, 1,000,000 = $1), following your account's [settlement mode](../account/deposits#usd-or-0g) |
+| `billing.input_cost` / `output_cost` / `total_cost` | Exact cost charged for this specific request, in `billing.currency` |
+| `billing.total_cost_usd_micro` | `total_cost` valued in micro-USD whatever your currency, for reporting; a 0G account is still charged `total_cost` in neuron. Omitted when no USD value is available |
 | `tee_verified` | Present only when `verify_tee: true` was set — see [Verifiable Execution](./verifiable-execution) |
 
 This means you don't need to compute costs yourself — the Router tells you exactly what was charged. Handy for per-request logging and client-side budget tracking.
