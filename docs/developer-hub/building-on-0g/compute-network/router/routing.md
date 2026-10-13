@@ -46,7 +46,7 @@ curl https://router-api.0g.ai/v1/chat/completions \
   }'
 ```
 
-Affinity only chooses among providers that rank equally for your request. It never overrides `X-0G-Provider-Sort`, a price cap, or a pinned address. If the provider fails, that request is retried on another provider as usual (unless you pin an address without allowing fallbacks), and the retry starts with a cold cache. Later turns go back to the original provider once it is serving again.
+Affinity only chooses among providers that rank equally for your request. It never overrides `X-0G-Provider-Sort`, a price cap, or a pinned address. If the provider fails, the request is retried as described in [Default Behavior](#default-behavior), and a retry that lands elsewhere starts with a cold cache. Later turns go back to the original provider once it is serving again.
 
 ## Routing surfaces
 
