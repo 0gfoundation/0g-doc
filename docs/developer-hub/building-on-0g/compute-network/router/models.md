@@ -40,6 +40,8 @@ curl https://router-api.0g.ai/v1/models
 
 Prices are in **neuron per token** (1e18 neuron = 1 0G). Multiply by `input_tokens` / `output_tokens` to estimate cost.
 
+Video models (`"type": "video-generation"`) are priced differently. `pricing.variants` lists a price for each resolution tier (`dimensions.resolution`), either per second of output (`unit: "video_second"`) or per token the model reports for the clip (`unit: "video_token"`). Models that accept model-specific options also list them in `video_capabilities`. See [Video Generation](./features/video).
+
 ## Capability Flags
 
 Not every model supports every feature. Before relying on **tool calling**, **vision input**, or **JSON mode**, check the model's entry in the Web UI or in the `/v1/models` response — capability flags are shown on each model card and in the API payload.
@@ -61,4 +63,4 @@ Query parameters:
 | Field          | Description                                                        |
 | -------------- | ------------------------------------------------------------------ |
 | `model`        | Filter to providers serving a specific model ID                    |
-| `service_type` | Filter by service type (e.g. `chatbot`, `text-to-image`, `speech-to-text`) |
+| `service_type` | Filter by service type (e.g. `chatbot`, `text-to-image`, `speech-to-text`, `video-generation`) |
