@@ -63,6 +63,9 @@ client sends. See [Privacy & ZDR](../privacy#enabling-privacy-mode).
   `{"permissions": {"defaultMode": "auto"}}` in `~/.claude/settings.json`. With an API
   key, sessions otherwise start in Manual mode.
 - Everything under `env` also works as shell exports; `modelOverrides` does not.
+- Each Claude Code session stays on one provider, so its prompt cache keeps hitting.
+  Claude Code sends `X-Claude-Code-Session-Id` on its own; nothing to configure. See
+  [Conversation affinity](../routing#conversation-affinity).
 
 ## Models
 
