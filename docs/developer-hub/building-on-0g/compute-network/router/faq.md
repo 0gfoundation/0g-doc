@@ -37,7 +37,7 @@ Yes. Any OpenAI client library — `openai-python`, `openai-node`, LangChain, Ll
 
 ## How is pricing set?
 
-Each provider declares prices per model (input tokens, output tokens). The Router publishes these in `/v1/models`. When you route with `sort: "price"`, the cheapest provider wins; otherwise failover picks a healthy provider regardless of price.
+Each provider declares prices per model (input tokens, output tokens). The Router publishes these in `/v1/models`. By default the Router sends each request to the cheapest healthy provider, and failover moves to the next-cheapest. Set `X-0G-Provider-Sort: latency` to prefer the fastest provider instead.
 
 There is no Router markup on top of provider prices — what you see in the catalog is what you pay.
 

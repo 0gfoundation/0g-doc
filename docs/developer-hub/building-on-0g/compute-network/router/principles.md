@@ -29,7 +29,7 @@ Settlement to individual providers happens periodically in the background — yo
 
 ## 3. Failover by Default
 
-Each model is served by one or more independent providers. The Router health-checks them continuously and distributes requests round-robin across the healthy set. If a request fails, the Router retries on the next healthy provider before returning an error to you.
+Each model is served by one or more independent providers. The Router health-checks them continuously and, by default, sends each request to the cheapest healthy provider. If a request fails, the Router retries on the next healthy provider before returning an error to you.
 
 You can override this — [Provider Routing](./routing) lets you sort by `latency` / `price` or pin to a specific provider address — but the default is "just work."
 

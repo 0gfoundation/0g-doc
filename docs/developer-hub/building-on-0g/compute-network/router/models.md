@@ -52,7 +52,7 @@ If you send a `tools` field to a model that doesn't support it, the Router retur
 curl "https://router-api.0g.ai/v1/providers?model=glm-5.2"
 ```
 
-Returns every TEE-acknowledged provider serving that model, with on-chain address, observed latency, and TEE attestation info. Use these addresses with the [`X-0G-Provider-Address` header](./routing) if you want deterministic routing.
+Returns every provider serving that model across all [trust modes](./routing#trust-modes), including `standard` providers that run without a TEE. Each entry has the provider address, observed latency, its trust mode (`trust_mode`, `verifiability`) and, for TEE providers, attestation info. Use these addresses with the [`X-0G-Provider-Address` header](./routing) if you want deterministic routing.
 
 Each entry also carries `provider_identity` — the operator-declared name of the upstream channel serving that endpoint (for example `aliyun` or `openrouter`). It is a routing label, not an attested property; `verifiability` remains the trust signal. Endpoints serving a model through a single native channel omit the field. To route by channel, use the [`X-0G-Provider-Identity` header](./routing#header-reference) — it filters candidates rather than pinning one endpoint unless combined with an address. Independently of any pin, your usage history records which identity served each request.
 

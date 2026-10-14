@@ -10,15 +10,15 @@ import TabItem from '@theme/TabItem';
 
 # Provider Routing
 
-By default, the Router distributes requests across healthy providers using round-robin with automatic failover. `X-0G-Provider-*` request headers let you override this when you need specific behavior.
+By default, the Router sends each request to the cheapest healthy provider for the model and fails over automatically. `X-0G-Provider-*` request headers let you override this when you need specific behavior.
 
 ## Default Behavior
 
 If you send no routing headers, the Router:
 
-1. Picks a healthy provider for the requested model
-2. Retries on the next healthy provider if the first returns an error
-3. Returns the response — or a `503` if every provider failed
+1. Picks the cheapest healthy provider for the requested model. Providers that tie on price are told apart by recent health and latency; requests to providers that still tie are spread among them (or kept on one per [conversation](#conversation-affinity)).
+2. If that provider fails or answers `429`, retries on the next-best provider, up to 4 attempts in total. A retry skips the upstream that just rejected the request, even when another provider address serves the same upstream.
+3. Returns the response — or, if every attempt failed, the error from the last attempt.
 
 This is the recommended path for most applications.
 
@@ -130,7 +130,9 @@ curl https://router-api.0g.ai/v1/chat/completions \
   }'
 ```
 
-Routes directly to a specific provider by on-chain address. **Fallback is disabled by default when pinning by address** — if the pinned provider fails, the request fails. Add `X-0G-Provider-Allow-Fallbacks: true` to re-enable cross-provider retry.
+Routes directly to a specific provider by on-chain address. **Fallback is disabled by default when pinning by address** — if the pinned provider fails, the request fails. Add `X-0G-Provider-Allow-Fallbacks: true` to retry a failed request; retries stay on the pinned address.
+
+One provider address can serve a model through several upstream channels (see the **Pin an Upstream** tab). If you pin only the address and the upstream that would serve you has just answered `429`, the Router picks another upstream under the same address when one is available. That upstream is a separate listing and may differ in price (you pay the rate of the upstream that served you), context length and supported parameters; a price ceiling you set still applies. Add `X-0G-Provider-Identity` to pin one upstream exactly.
 
 </TabItem>
 <TabItem value="identity" label="Pin an Upstream (identity)">
@@ -194,15 +196,16 @@ HTTP header names are case-insensitive per RFC 7230 — `X-0G-Provider-Address` 
 | ------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `X-0G-Provider-Address`         | on-chain address (`0x…`)            | Pin the request to a specific provider. Implies `Allow-Fallbacks: false` unless overridden.                  |
 | `X-0G-Provider-Identity`        | upstream channel name (e.g. `aliyun`) | Route to a named upstream channel. Alone it filters candidates to that identity and normal ranking picks among them; with `X-0G-Provider-Address` it pins the exact variant and inherits `Allow-Fallbacks: false`. An identity matching no endpoint is rejected with `400 provider_model_mismatch`. |
-| `X-0G-Provider-Sort`            | `latency` \| `price`                | Sort strategy when no address is pinned. Ignored if `X-0G-Provider-Address` is set. Must be exactly `latency` or `price` — any other non-empty value is rejected with `400 invalid_provider_header`. |
+| `X-0G-Provider-Sort`            | `latency` \| `price`                | Sort strategy when no address is pinned. Default: `price`. Ignored if `X-0G-Provider-Address` is set. Must be exactly `latency` or `price` — any other non-empty value is rejected with `400 invalid_provider_header`. |
 | `X-0G-Provider-Trust-Mode`      | `standard` \| `verified` \| `private` | Restrict provider selection to a trust tier — see [Trust modes](#trust-modes).                                |
-| `X-0G-Provider-Allow-Fallbacks` | `true` \| `false`                   | Allow cross-provider retry on failure. Must be exactly `true` or `false` (case-insensitive) — `1`, `0`, `yes`, and other non-empty values are rejected with `400 invalid_provider_header`. |
+| `X-0G-Provider-Allow-Fallbacks` | `true` \| `false`                   | Retry a failed request on another provider (with a pinned address, on the same address). Must be exactly `true` or `false` (case-insensitive) — `1`, `0`, `yes`, and other non-empty values are rejected with `400 invalid_provider_header`. |
 | `X-0G-Provider-Max-Price-Usd-Prompt`     | finite, non-negative decimal | Per-request ceiling on prompt token price, USD per 1M tokens. See [Capping price per request](#capping-price-per-request). |
 | `X-0G-Provider-Max-Price-Usd-Completion` | finite, non-negative decimal | Per-request ceiling on completion token price, USD per 1M tokens. See [Capping price per request](#capping-price-per-request). |
 | `X-0G-Provider-Max-Price-Usd-Image`      | finite, non-negative decimal | Per-request ceiling on image price, USD per generated image. See [Capping price per request](#capping-price-per-request). |
+| `X-0G-Provider-Require-Parameters` | `true` \| `false`              | Route only to providers that support every sampling and reasoning parameter in the request. Default `false`. See [Requiring parameter support](#requiring-parameter-support). Same value rules as `Allow-Fallbacks`. |
 | `X-Session-Id`                  | any string, stable per conversation | Keep every turn of a conversation on the same provider. Optional — see [Conversation affinity](#conversation-affinity). |
 
-Defaults: `Allow-Fallbacks` is `true` normally, and `false` when `X-0G-Provider-Address` is set.
+Defaults: `Require-Parameters` is `false`. `Allow-Fallbacks` is `true` normally, and `false` when `X-0G-Provider-Address` is set.
 
 A header that is absent, or blank after trimming whitespace, is treated as unset and falls back to the default. Only a **present-but-malformed** value is rejected — a blank header meaning "I didn't set this" is never an error.
 
@@ -217,6 +220,31 @@ A header that is absent, or blank after trimming whitespace, is treated as unset
 | `private`  | TeeML providers only           | Verifiability **and** privacy — the model itself runs inside the TEE, so prompts never leave the enclave. |
 
 Values other than `standard`/`verified`/`private` are rejected with `400 invalid_trust_mode`. Omit the header for no trust-tier restriction (the default) — an unrestricted request can be served by any provider of the model, including `standard` ones.
+
+### Requiring parameter support
+
+On `/v1/chat/completions` and `/v1/messages`, a request that uses `tools` or `response_format` only ever goes to providers that support them.
+
+For `frequency_penalty`, `presence_penalty`, `seed`, `tool_choice` and `reasoning_effort` the default is a preference: the Router prefers providers that list the parameter in `supported_parameters` (even over a cheaper or faster one), and otherwise uses a provider that ignores it. The request never fails for lack of support.
+
+Send `X-0G-Provider-Require-Parameters: true` to make this a hard requirement:
+
+- If no provider supports every such parameter in the request, it fails with `400 model_not_capable`.
+- If the request sets `max_tokens` or `max_completion_tokens`, only providers that report a `max_completion_tokens` at least that large qualify. Providers that report none are excluded. If none qualifies, the request fails with `400 no_provider_within_max_tokens`.
+
+```bash
+curl https://router-api.0g.ai/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-YOUR_API_KEY" \
+  -H "X-0G-Provider-Require-Parameters: true" \
+  -d '{
+    "model": "glm-5.2",
+    "seed": 42,
+    "messages": [{"role": "user", "content": "Hello"}]
+  }'
+```
+
+A pinned `X-0G-Provider-Address` skips both the preference and the requirement.
 
 ## Capping price per request
 
@@ -234,7 +262,7 @@ curl https://router-api.0g.ai/v1/chat/completions \
   }'
 ```
 
-Send any subset — one header, two, or all three. Each value is a finite, non-negative decimal; `NaN`, `Inf`, negative, and non-numeric values are rejected with `400 invalid_max_price_usd`.
+Send any subset — one header, two, or all three. Each value is a finite, non-negative decimal; `NaN`, `Inf`, negative, and non-numeric values are rejected with `400 invalid_max_price_usd`. A value of `0` sets no ceiling.
 
 ### Which dimension applies to which endpoint
 
@@ -243,6 +271,8 @@ The ceiling is **service-type aware**. Setting `Image` on a chat call (or `Promp
 | Service type            | Endpoints                                                    | Dimensions enforced     | Unit                   |
 | ----------------------- | ----------------------------------------------------------- | ----------------------- | ---------------------- |
 | Chat                    | `/v1/chat/completions`, `/v1/messages`                      | `Prompt`, `Completion`  | USD per 1M tokens      |
+| Embeddings              | `/v1/embeddings`                                            | `Prompt`                | USD per 1M input tokens |
+| Decisions               | `/v1/decisions`                                             | `Prompt`                | USD per 1M input tokens |
 | Image                   | `/v1/images/generations`, `/v1/images/edits`, `/v1/async/images/*` | `Image`          | USD per generated image |
 | Speech-to-text          | `/v1/audio/transcriptions`                                  | none yet — see below    | —                      |
 
