@@ -46,7 +46,9 @@ curl https://router-api.0g.ai/v1/chat/completions \
   }'
 ```
 
-Affinity only chooses among providers that rank equally for your request. It never overrides `X-0G-Provider-Sort`, a price cap, or a pinned address. If the provider fails, the request is retried as described in [Default Behavior](#default-behavior), and a retry that lands elsewhere starts with a cold cache. Later turns go back to the original provider once it is serving again.
+Affinity only chooses among providers that tie for your request — under the default price sort, providers with exactly the same price in the currency your account pays in. When one provider is strictly cheaper, every request goes there anyway, and ties can appear or disappear as prices change. Affinity never overrides `X-0G-Provider-Sort`, a price cap, or a pinned address.
+
+Requests whose response carries `X-0G-E2EE: sealed` don't get conversation affinity yet. If the provider fails, the request is retried as described in [Default Behavior](#default-behavior), and a retry that lands elsewhere starts with a cold cache. Later turns go back to the original provider once it is serving again.
 
 ## Routing surfaces
 
