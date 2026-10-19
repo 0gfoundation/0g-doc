@@ -54,12 +54,33 @@ curl https://router-api.0g.ai/v1/account/balance \
 ```json
 {
   "address": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
-  "deposit_balance": "2000000000000000000",
-  "total_balance":   "2000000000000000000"
+  "currency": "usd",
+  "deposit_balance": "20000000",
+  "credit_balance": "5000000",
+  "pending_charge": "0",
+  "total_balance": "25000000",
+  "balance": "25000000"
 }
 ```
 
-Values are in **neuron**. `total_balance` is what is available to spend right now. It may lag your Payment Layer balance slightly because the Router pulls from the Payment Layer in batches (see below). When `total_balance` hits zero and the Payment Layer is also empty, the next inference request returns `402 insufficient_balance`.
+Amounts are integer strings in the unit named by `currency`:
+
+| `currency` | Unit | Example |
+|---|---|---|
+| `usd` | micro-USD (1 USD = 10⁶) | `"25000000"` is $25.00 |
+| `0g` | wei (1 0G = 10¹⁸) | `"1000000000000000000"` is 1 0G |
+
+A response without `currency` is a `0g` account. Divide by the right power of ten before showing a balance: a `usd` amount read as wei is off by a factor of 10¹².
+
+| Field | Meaning |
+|---|---|
+| `total_balance` | What you can spend right now: `deposit_balance + credit_balance`. Never negative |
+| `deposit_balance` | Your own funds |
+| `credit_balance` | Credit granted to the account, such as promotional credit |
+| `pending_charge` | An amount you owe. It is not subtracted from `total_balance`, so a request can be refused while `total_balance` is positive |
+| `balance` | Same as `total_balance`, kept for older clients |
+
+When `total_balance` hits zero, the next inference request returns `402 insufficient_balance`. For a `0g` account, `total_balance` may lag your Payment Layer balance slightly, because the Router pulls from the Payment Layer in batches (see below), and a request is only refused once the Payment Layer is also empty.
 
 ## Check Your Usage
 
