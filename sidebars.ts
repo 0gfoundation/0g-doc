@@ -118,6 +118,7 @@ const sidebars: SidebarsConfig = {
                           label: 'Features',
                           items: [
                             'developer-hub/building-on-0g/compute-network/router/features/chat-completions',
+                            'developer-hub/building-on-0g/compute-network/router/features/messages',
                             'developer-hub/building-on-0g/compute-network/router/features/image-generation',
                             'developer-hub/building-on-0g/compute-network/router/features/audio',
                             'developer-hub/building-on-0g/compute-network/router/features/verifiable-execution',
