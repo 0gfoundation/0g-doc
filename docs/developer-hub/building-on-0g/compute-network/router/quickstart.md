@@ -92,5 +92,6 @@ That's it. You're talking to a decentralized TEE-backed provider through an Open
 
 - **[Chat Completions](./features/chat-completions)** — streaming, tool calling, system prompts
 - **[Provider Routing](./routing)** — route by latency, price, or specific provider
+- **[0gpc CLI](./clients/0gpc-cli)** — connect Claude Code, OpenCode, Pi, or Hermes Agent with one command, no hand-edited config
 - **[Claude Code](./clients/claude-code)** — point Claude Code at the Router, including auto mode's permission gate
 - **[Models](./models)** — browse the catalog with live pricing
