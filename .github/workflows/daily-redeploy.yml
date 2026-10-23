@@ -1,0 +1,27 @@
+name: Daily production redeploy
+
+# The homepage network stats are fetched at build time (src/plugins/live-stats-plugin.js).
+# Rebuilding production once a day keeps them at most about a day old without
+# any runtime fetch. Requires the VERCEL_DEPLOY_HOOK_URL repository secret:
+# Vercel project > Settings > Git > Deploy Hooks, branch main.
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the Vercel deploy hook
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning::VERCEL_DEPLOY_HOOK_URL secret is not set; skipping. See AGENTS.md (Deployments)."
+            exit 0
+          fi
+          code=$(curl -s -o response.json -w '%{http_code}' -X POST "$HOOK")
+          echo "Vercel responded $code"; cat response.json || true
+          case "$code" in 200|201) ;; *) echo "::error::deploy hook failed with HTTP $code"; exit 1;; esac
