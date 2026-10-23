@@ -68,6 +68,8 @@ Run `0gpc` again after setup to open the management menu, where you can:
 
 ## Installation
 
+0gpc is published on npm as [`@0gfoundation/0gpc`](https://www.npmjs.com/package/@0gfoundation/0gpc).
+
 **Requirements:**
 
 1. macOS or Linux
