@@ -205,7 +205,10 @@ module.exports = function llmsTxtPlugin(context, options = {}) {
             k = j + 1;
             while (k < lines.length && lines[k].trim() === '') k += 1;
           }
-          const following = (lines[k] || '').trim();
+          // Skip any other H1 or opening blockquote the same way
+          // firstBodyLine does, so a page whose H1 differs from its title
+          // still matches.
+          const following = firstBodyLine(lines.slice(k, k + 50).join('\n'));
           const match = candidates.get(m[1]).find((c) => !used.has(c.doc.id) && c.firstLine && following.startsWith(c.firstLine.slice(0, 60)));
           if (!match) continue;
           used.add(match.doc.id);
