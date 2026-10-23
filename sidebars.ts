@@ -133,6 +133,7 @@ const sidebars: SidebarsConfig = {
                               'Point an existing client or coding tool at the Router — configuration only, no SDK changes.',
                           },
                           items: [
+                            'developer-hub/building-on-0g/compute-network/router/clients/0gpc-cli',
                             'developer-hub/building-on-0g/compute-network/router/clients/claude-code',
                           ],
                         },

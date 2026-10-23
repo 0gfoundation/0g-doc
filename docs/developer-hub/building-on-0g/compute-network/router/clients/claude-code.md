@@ -10,6 +10,10 @@ description: "Configure Claude Code to run on the 0G Compute Router."
 [Claude Code](https://code.claude.com/docs) reaches the Router over the Anthropic Messages
 API, so it needs configuration only — no plugin, no proxy.
 
+:::tip Skip the manual setup
+[0gpc](./0gpc-cli) writes this configuration for you, previews every change, and can undo it.
+:::
+
 ## Configure
 
 Create `~/.claude/settings.json` (Windows: `C:\Users\<username>\.claude\settings.json`)
