@@ -11,7 +11,9 @@ import TabItem from '@theme/TabItem';
 
 # Verifiable Execution
 
-Every 0G Compute provider runs inside a **Trusted Execution Environment (TEE)** and cryptographically signs its responses. The Router can verify that signature synchronously on your behalf and report the result back in the response metadata.
+Providers on the `verified` and `private` [trust tiers](../routing#trust-modes) run inside a **Trusted Execution Environment (TEE)** and cryptographically sign their responses. The Router can verify that signature synchronously on your behalf and report the result back in the response metadata.
+
+For **Private models** (TeeML, such as `glm-5.3`), the request is encrypted before it reaches the Router, so the Router cannot check the signature and the check happens one step earlier. See [Private models](#private-models).
 
 ## Opt in with `verify_tee`
 
@@ -65,7 +67,26 @@ When `verify_tee` is set, the Router adds a `tee_verified` field to the response
 | --- | --- |
 | `true` | The provider's TEE signature was validated successfully |
 | `false` | A signature was present but did not verify — treat the response as untrusted |
-| `null` / absent | Verification was not requested for this response |
+| absent | No verdict from the Router: verification was not requested, the response came from a Private model (see [Private models](#private-models)), or the provider is on the `standard` tier and signs nothing |
+
+## Private models
+
+Requests to Private models (TeeML providers, such as `glm-5.3`) on `router-api.0g.ai` are encrypted to the provider's enclave by the 0G gateway in front of the Router. The Router forwards ciphertext it cannot read, so it does not set `tee_verified` on these responses, **even with `verify_tee: true`**. This is expected, not a failed check.
+
+The signature check runs in the gateway instead, on every request, whether or not you set `verify_tee`. The gateway runs inside a TEE and checks each response's signature against the TEE signer the provider registered on-chain:
+
+- **Non-streaming:** a response whose signature does not verify is never delivered; you get an error instead.
+- **Streaming:** the signature covers the whole response, so it can only be checked after the last chunk has been sent. If it fails, the stream ends with an error event (for chat completions, in place of `data: [DONE]`). Treat a streamed answer as verified only once the stream has finished normally.
+
+These response headers tell you what happened:
+
+| Header | Meaning |
+| --- | --- |
+| `X-0G-E2EE: sealed` | The request was encrypted to the provider's enclave and the response decrypted from it. `none` means the request went through unencrypted. |
+| `X-Provider` | The provider the request was encrypted to. |
+| `ZG-Res-Key` | The handle to fetch this response's signature from the provider (step 2 under [Without the SDK](#without-the-sdk)). |
+
+You can fetch the signature with `ZG-Res-Key` and confirm it recovers to the provider's on-chain TEE signer (steps 1 to 3 below). Step 4 does not apply: for a Private model the provider signs hashes of the *encrypted* request and response, which only the gateway sees.
 
 ## When to use it
 
