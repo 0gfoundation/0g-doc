@@ -590,7 +590,9 @@
     "wbtc",
     "weth",
     "zhipu",
-    "wormhole"
+    "wormhole",
+    "mimo",
+    "multimodal"
   ],
   "ignorePaths": [
     "node_modules/**",

@@ -28,6 +28,8 @@ Fully compatible with the [OpenAI Chat Completions API](https://developers.opena
 
 All standard OpenAI fields are accepted — `temperature`, `top_p`, `n`, `stop`, `presence_penalty`, `frequency_penalty`, `logit_bias`, `user`, `response_format`, and so on.
 
+To send images to a model that takes them, see [Image Inputs](./image-inputs).
+
 ### 0G Router Extensions
 
 Optional top-level fields. Stripped before the request is forwarded to the provider, so they never conflict with the OpenAI schema.
