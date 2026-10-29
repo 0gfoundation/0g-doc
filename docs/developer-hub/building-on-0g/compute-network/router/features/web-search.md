@@ -25,6 +25,10 @@ There are two ways to ask for it:
 
 Both return the same `url_citation` annotations and are billed the same per-search fee.
 
+:::caution `claude-sonnet-4.6` answers from its training data
+`claude-sonnet-4.6` rarely uses the web, and answers from its training data instead. With the tool, it almost never decides to search. With the plugin, the search runs and is charged, but the model usually ignores the results. For questions about recent events, use another model, such as `claude-sonnet-5` or `claude-opus-4.7`.
+:::
+
 ## Web plugin
 
 Add `plugins` to the request. The Router builds a search query from the conversation, runs the search, adds the results to the system prompt, and then sends the request to the model.
