@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 # File Inputs
 
-You can attach files inline to `POST /v1/chat/completions` and `POST /v1/messages` requests, in each API's standard shape. Any chat model can answer questions about them: when the provider serving the request cannot read files itself, the Router extracts the text and puts it in the message where you attached the file.
+You can attach files inline to `POST /v1/chat/completions` and `POST /v1/messages` requests, in each API's standard shape. Any chat model can answer questions about them, except the [end-to-end encrypted models](#end-to-end-encrypted-models): when the provider serving the request cannot read files itself, the Router extracts the text and puts it in the message where you attached the file.
 
 Supported formats are **PDF** (with a text layer) and **UTF-8 text** files such as `.txt`, `.md`, `.csv`, `.json` or source code. The format is detected from the file's content, not from its name or declared MIME type.
 
@@ -86,6 +86,10 @@ The file name (`filename`, or `title` on `/v1/messages`) is shown to the model w
 ```
 
 Because the provider received a modified request, its TEE signature will not match the request you sent when `request_rewritten` is present.
+
+## End-to-end encrypted models
+
+Requests to `0gm-1.0-35b-a3b` and `glm-5.3` are encrypted before they reach the Router, so the Router cannot read the file or extract its text. The file reaches the provider unchanged, and the provider rejects the request with a `400` error. To ask about a file with these models, paste its text into the message instead, or use another model, such as `glm-5.3-flash`.
 
 ## Limits
 
