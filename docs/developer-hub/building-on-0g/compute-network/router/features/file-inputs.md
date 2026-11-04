@@ -99,7 +99,8 @@ The limits and errors below apply when the Router extracts the text. When the pr
 | --- | --- |
 | Files per request | 20, counted across all messages, including files attached in earlier turns |
 | Text kept per file | 200,000 bytes; the rest is cut and the model is told the file was truncated |
-| Request body | 20 MB, after base64 encoding |
+
+The request body is limited to 20 MiB, after base64 encoding, on every `/v1/chat/completions` and `/v1/messages` request, whoever reads the file. A larger body fails with `413` and `payload_too_large` when its `Content-Length` header shows the size, or with `400` and `invalid_request` when it is sent chunked.
 
 Files are not stored: send the file again in every request that needs it, as in a normal conversation history.
 

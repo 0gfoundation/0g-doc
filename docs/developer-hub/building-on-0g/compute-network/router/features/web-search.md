@@ -20,7 +20,7 @@ There are two ways to ask for it:
 | Who decides to search | The Router, on every request | The model, only when it needs the web |
 | Who writes the query | The Router, from the conversation | The model |
 | Searches per request | 1 | Up to `max_uses` (default 1, at most 5) |
-| Model turns | 1 | 1 without a search, 2 with one |
+| Model turns | 1 | 1 without a search, 2 with one (more when `0g:web_fetch` is also listed) |
 | Model requirement | Any chat model | A model that supports tool calling |
 
 Both return the same `url_citation` annotations and are billed the same per-search fee.
@@ -118,8 +118,9 @@ Things to know:
 - **Tool-calling models only.** The tool counts as `tools`, so a model without tool-calling support returns `400`. Check `supported_parameters` in the [catalog](../models).
 - **Your own tools work alongside it.** List your function tools in the same `tools` array. If the model calls one of yours in the deciding turn without searching, you get that tool call as usual. If it searches, the answering turn decides tool calls again.
 - **One search round.** The model cannot search again after it has seen the results.
+- **With `0g:web_fetch`.** If the request also lists the [`0g:web_fetch`](./web-fetch) tool, searching runs inside the web fetch loop instead. The model can search and fetch over up to 5 rounds, with at most `max_uses` searches in total, so more than two model turns can run. Each round is its own usage entry, with the request ID plus `-wf1`, `-wf2`, and so on, instead of `-ws`.
 - **Name clash.** If one of your own tools is named `web_search`, the Router removes the `0g:web_search` tool and sends the request without it.
-- **Streaming shows progress, then the answer.** With `"stream": true`, the response starts at once with `200` and `text/event-stream`. Until the deciding turn and the search are done, the stream carries only SSE comment lines, which SSE clients and SDKs ignore: `: 0g web_search query="..."` for the search the model asks for, and `: ping` when the stream opens and every 15 seconds. The answer's content arrives after that. Because the status is already `200`, a request that fails after the stream has opened ends with an error event in the stream instead of an error status: on `/v1/chat/completions`, a `data:` line holding the usual `{"error": {...}}` object, with no `data: [DONE]` after it; on `/v1/messages`, an `event: error`.
+- **Streaming shows progress, then the answer.** With `"stream": true`, the response starts at once with `200` and `text/event-stream`. Until the deciding turn and the search are done, the stream carries SSE comment lines, which SSE clients and SDKs ignore: `: 0g web_search query="..."` for the search the model asks for, and `: ping` when the stream opens and every 15 seconds. On `/v1/messages`, that is all it carries. On `/v1/chat/completions`, a reasoning model's reasoning from the deciding turn may also arrive as `reasoning_content` deltas in `data:` chunks. The answer's content arrives after that. Because the status is already `200`, a request that fails after the stream has opened ends with an error event in the stream instead of an error status: on `/v1/chat/completions`, a `data:` line holding the usual `{"error": {...}}` object, with no `data: [DONE]` after it; on `/v1/messages`, an `event: error`.
 - **Never sent to the provider.** The `0g:web_search` entry is always removed before the request is forwarded. If search is unavailable for the request, the model answers without it.
 - **One search source.** If a request has both the plugin and the tool and the plugin's search returns results, the tool is removed.
 
@@ -154,7 +155,7 @@ Each search that returns results costs **$0.02**, on top of the model's token ch
 - **Web plugin:** one search per request, so at most $0.02.
 - **Tool:** $0.02 for each search that returned results, up to `max_uses`.
 - **Free:** a search that fails or returns nothing, a request where the model decides not to search, and any request to a free model.
-- **Tokens:** the search results added to the prompt are billed as input tokens. With the tool, a searching request runs two model turns and each is billed on its own token counts. When the model does not search, the request is a single turn, but its prompt includes the tool's definition, so it bills slightly more input than the same request without the tool.
+- **Tokens:** the search results added to the prompt are billed as input tokens. With the tool, a searching request runs two model turns (more with `0g:web_fetch`) and each is billed on its own token counts. When the model does not search, the request is a single turn, but its prompt includes the tool's definition, so it bills slightly more input than the same request without the tool.
 
 The fee shows up in [`x_0g_trace.billing`](./chat-completions#x_0g_trace-always-present). It is included in `input_cost` and `total_cost` and reported on its own in `web_search_cost`, in the same unit as the other cost fields:
 
@@ -171,7 +172,7 @@ The fee shows up in [`x_0g_trace.billing`](./chat-completions#x_0g_trace-always-
 }
 ```
 
-For the tool, `x_0g_trace.billing` covers both turns, while `usage` in the response is the answering turn only. In your usage history, the deciding turn is its own entry, with the request ID plus `-ws`.
+For the tool, `x_0g_trace.billing` covers both turns, while `usage` in the response is the answering turn only. In your usage history, the deciding turn is its own entry, with the request ID plus `-ws` (`-wf1`, `-wf2`, and so on when `0g:web_fetch` is also listed).
 
 A 0G-settled account pays the fee in 0G, converted from the USD price at the Router's current 0G/USD rate and rounded up; the cost fields are then in wei. If no current rate is available, the request is served without search rather than charged.
 
