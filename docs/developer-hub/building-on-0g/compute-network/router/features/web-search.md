@@ -25,6 +25,10 @@ There are two ways to ask for it:
 
 Both return the same `url_citation` annotations and are billed the same per-search fee.
 
+:::caution `claude-sonnet-4.6` answers from its training data
+`claude-sonnet-4.6` rarely uses the web, and answers from its training data instead. With the tool, it almost never decides to search. With the plugin, the search runs and is charged, but the model usually ignores the results. For questions about recent events, use another model, such as `claude-sonnet-5` or `claude-opus-4.7`.
+:::
+
 ## Web plugin
 
 Add `plugins` to the request. The Router builds a search query from the conversation, runs the search, adds the results to the system prompt, and then sends the request to the model.
@@ -115,7 +119,7 @@ Things to know:
 - **Your own tools work alongside it.** List your function tools in the same `tools` array. If the model calls one of yours in the deciding turn without searching, you get that tool call as usual. If it searches, the answering turn decides tool calls again.
 - **One search round.** The model cannot search again after it has seen the results.
 - **Name clash.** If one of your own tools is named `web_search`, the Router removes the `0g:web_search` tool and sends the request without it.
-- **Streaming waits for the deciding turn.** With `"stream": true`, the first bytes arrive only after the deciding turn has finished.
+- **Streaming shows progress, then the answer.** With `"stream": true`, the response starts at once with `200` and `text/event-stream`. Until the deciding turn and the search are done, the stream carries only SSE comment lines, which SSE clients and SDKs ignore: `: 0g web_search query="..."` for the search the model asks for, and `: ping` when the stream opens and every 15 seconds. The answer's content arrives after that. Because the status is already `200`, a request that fails after the stream has opened ends with an error event in the stream instead of an error status: on `/v1/chat/completions`, a `data:` line holding the usual `{"error": {...}}` object, with no `data: [DONE]` after it; on `/v1/messages`, an `event: error`.
 - **Never sent to the provider.** The `0g:web_search` entry is always removed before the request is forwarded. If search is unavailable for the request, the model answers without it.
 - **One search source.** If a request has both the plugin and the tool and the plugin's search returns results, the tool is removed.
 
