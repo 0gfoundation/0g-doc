@@ -37,6 +37,8 @@ Optional top-level fields. Stripped before the request is forwarded to the provi
 | `provider`   | object  | **Deprecated** — prefer `X-0G-Provider-*` request headers. See [Routing](../routing) |
 | `verify_tee` | boolean | Ask the Router to synchronously verify the provider's TEE signature — see [Verifiable Execution](./verifiable-execution) |
 
+To attach PDF or text files to a message, see [File Inputs](./file-inputs).
+
 ## Streaming
 
 Set `"stream": true` to receive Server-Sent Events in the OpenAI SSE format. Any OpenAI client library that handles streaming will work unchanged.
@@ -90,6 +92,8 @@ Models that advertise tool-calling capability accept the standard OpenAI `tools`
 :::
 
 The response shape (`tool_calls` in the assistant message, `tool` role for results) matches OpenAI exactly.
+
+To let the model read web pages by URL, add the Router's `{"type": "0g:web_fetch"}` tool — see [Web Fetch](./web-fetch).
 
 ## JSON Mode
 
