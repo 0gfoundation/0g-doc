@@ -33,6 +33,7 @@ Build and run production workloads on the 0G Mainnet.
 - [ThirdWeb](https://thirdweb.com/0g-aristotle)
 - [Ankr](https://www.ankr.com/rpc/0g/)
 - [dRPC](https://drpc.org/chainlist/0g-mainnet-rpc)
+- [SwiftNodes](https://swiftnodes.io/0g-rpc)
 
 ### Add Network to Wallet
 
