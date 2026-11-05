@@ -28,6 +28,8 @@ Fully compatible with the [OpenAI Chat Completions API](https://developers.opena
 
 All standard OpenAI fields are accepted — `temperature`, `top_p`, `n`, `stop`, `presence_penalty`, `frequency_penalty`, `logit_bias`, `user`, `response_format`, and so on.
 
+To send images to a model that takes them, see [Image Inputs](./image-inputs).
+
 ### 0G Router Extensions
 
 Optional top-level fields. Stripped before the request is forwarded to the provider, so they never conflict with the OpenAI schema.
@@ -36,6 +38,9 @@ Optional top-level fields. Stripped before the request is forwarded to the provi
 | ------------ | ------- | ------------------------------------------------------------------------------------ |
 | `provider`   | object  | **Deprecated** — prefer `X-0G-Provider-*` request headers. See [Routing](../routing) |
 | `verify_tee` | boolean | Ask the Router to synchronously verify the provider's TEE signature — see [Verifiable Execution](./verifiable-execution) |
+| `plugins`    | array   | `[{"id": "web"}]` runs a web search and adds the results to the prompt — see [Web Search](./web-search) |
+
+To attach PDF or text files to a message, see [File Inputs](./file-inputs).
 
 ## Streaming
 
@@ -90,6 +95,10 @@ Models that advertise tool-calling capability accept the standard OpenAI `tools`
 :::
 
 The response shape (`tool_calls` in the assistant message, `tool` role for results) matches OpenAI exactly.
+
+To let the model search the web, add the Router's `{"type": "0g:web_search"}` tool — see [Web Search](./web-search).
+
+To let the model read web pages by URL, add the Router's `{"type": "0g:web_fetch"}` tool — see [Web Fetch](./web-fetch).
 
 ## JSON Mode
 
