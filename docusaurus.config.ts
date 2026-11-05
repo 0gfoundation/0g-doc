@@ -116,6 +116,8 @@ const config: Config = {
         hideSearchBarWithNoSearchContext: false,
       },
     ],
+    // Homepage network stats fetched at build time (see daily-redeploy workflow)
+    require.resolve('./src/plugins/live-stats-plugin'),
     // Add security headers plugin
     require.resolve('./src/plugins/security-headers-plugin'),
     // AI-facing outputs (https://llmstxt.org/): llms.txt generated from the sidebar,
