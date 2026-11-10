@@ -36,6 +36,8 @@ With 0gpc, you pick a tool and a model and enter your key once. 0gpc writes the 
 | Pi | User scope only |
 | Hermes Agent | User scope only; default profile only |
 
+> For Claude Code, 0gpc sets `ANTHROPIC_DEFAULT_HAIKU_MODEL` to `0gm-1.0-35b-a3b`. Claude Code's built-in WebSearch runs only on `claude-*` models and can be sent to that slot, so search can fail without an error even with a `claude-*` main model. See [Claude Code: web search and web fetch](./claude-code#web-search-and-web-fetch).
+
 ### Set up
 
 The first time you run `0gpc`, a guided setup starts:
