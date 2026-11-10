@@ -53,6 +53,10 @@ No. The Router persists only billing metadata (token counts, model, provider, ti
 
 Yes. See the [Inference Provider Setup](../inference-provider) guide. Once you're registered and healthy, the Router will start routing traffic to you alongside existing providers.
 
+## Why does Claude Code's WebSearch find nothing?
+
+Claude Code's built-in WebSearch runs only on the `claude-*` models. Other models, including `glm-5.3` and `0gm-1.0-35b-a3b`, ignore it **without an error** and answer without searching. Claude Code can send the search to the model in `ANTHROPIC_DEFAULT_HAIKU_MODEL` rather than your main model, so check that slot too. WebFetch works with every model. See [Claude Code: web search and web fetch](./clients/claude-code#web-search-and-web-fetch).
+
 ## Where do I get help?
 
 - [**Discord**](https://discord.gg/0glabs) — the `#compute` channel
