@@ -18,6 +18,8 @@ keywords: [agent skill, 0G Private Computer, Claude Code, OpenCode, Pi, Hermes A
 2. **Some balance on your account.** Requests are paid per use from your balance. You top it up on pc.0g.ai; the agent never pays for you.
 3. **A coding agent that can read a web page**, such as Claude Code or OpenCode.
 
+To connect a coding tool (**Connect**), you also need macOS or Linux and Node.js 22 or later, because the agent runs the 0gpc CLI with `npx`. Windows is not supported for Connect, so check this before you start.
+
 ---
 
 ## Start in one line
@@ -36,7 +38,7 @@ Prefer a local copy? For long-term use, install the skill once with `npx skills 
 npx skills add 0gfoundation/0g-agent-skills/skills/private-computer/0g-private-computer
 ```
 
-After installing, ask in plain words (for example "connect Claude Code to 0G PC"), or type `/0g-private-computer` in Claude Code, and restart the tool.
+After installing, restart the tool so it loads the skill. Then ask in plain words (for example "connect Claude Code to 0G PC"), or type `/0g-private-computer` in Claude Code.
 
 | | Paste one line | npx skills add |
 |---|---|---|
@@ -67,6 +69,8 @@ What do you want to do?
    Say: "add a streaming chat endpoint with 0G PC in Private mode"
 5. Compute Direct: wallet-signed calls, broker SDK, sub-accounts, fine-tuning (the Compute skills,
    not this one). https://github.com/0gfoundation/0g-agent-skills/tree/main/skills/compute
+   Install: npx skills add 0gfoundation/0g-agent-skills/skills/compute/<skill>, for example
+   streaming-chat or fine-tuning.
 6. Fix: a 401, a balance problem, a model that seems down (status: https://pc.0g.ai/status),
    or a tool still on the old model.
    Say: "my 0G key gives a 401"
@@ -100,8 +104,6 @@ The rest of this page follows the six choices, in the same order.
 
 ---
 
----
-
 ## Choose a trust mode
 
 Every request runs under one of three modes. You set it as a default on your API key, or per request.
@@ -110,11 +112,9 @@ Every request runs under one of three modes. You set it as a default on your API
 |---|---|
 | Standard (default) | The widest choice of models, at the best price and availability. No privacy or verification guarantee beyond the serving provider's own policy. |
 | Verified | Only routes where the model and route can be proven. Privacy follows the serving provider's policy. |
-| Private | Only TEE-backed providers, with hardware isolation and no retention of prompt content. Available for some models only. |
+| Private | Only TEE-backed providers, with hardware isolation and no retention of prompt content. Available for some models only. Routing and billing metadata may remain visible. |
 
 Not every model supports every mode. Check the model's page on [pc.0g.ai/models](https://pc.0g.ai/models). See [Privacy](/developer-hub/building-on-0g/compute-network/router/privacy) for the full guarantees.
-
----
 
 ---
 
@@ -200,18 +200,20 @@ Embeddings, decisions and video understanding have no Playground page. For those
 
    When it is done, tell the agent.
 
-3. **Pick a model.** The agent lists models that fit from the live catalog, with price and context, and recommends one. Reply with the one you want. For Private, it only offers models served by a TEE-attested provider.
+3. **Pick a model.** The agent lists models that fit from the live catalog, with price and context, and recommends one. Reply with the one you want. For Private, it only offers models served by a TEE-attested provider. If you chose this project only, the agent also shows the current directory and asks you to confirm it is the project root.
 
 4. **Read the preview, then say yes.** The agent shows exactly which file will change and what will be written. Nothing is saved until you reply "yes".
 
-5. **Let it check.** The agent writes the change with 0gpc, and nothing else, then runs an offline check. It asks you first before any online check, which may cost a very small amount.
+5. **Let it check.** The agent writes the change with 0gpc, and nothing else, then runs an offline check. It asks you first before any online check, which may cost a very small amount. It ends with a short report: the tool, scope and model, what changed, the checks, and the command to undo it.
 
 **After the chat**
 
 - Fully quit and reopen Claude Code in that directory. The new model applies after the restart.
 - To check, ask "am I on 0G now?" or look for your new requests under usage on [pc.0g.ai](https://pc.0g.ai/dashboard/overview).
-- To go back, say "turn 0G off". It removes only what 0gpc added; your other settings and your key stay.
+- To go back, say "turn 0G off", or run the undo command from the report, `0gpc reset claude --yes`. It removes only what 0gpc added; your other settings and your key stay.
 
+
+---
 
 ## 4. Build
 
@@ -229,8 +231,6 @@ Embeddings, decisions and video understanding have no Playground page. For those
 | Text-to-Speech | "read intro.md aloud with 0G PC and save it as intro.mp3" | Shows character count and estimated cost | [speech](https://pc.0g.ai/playground/speech) |
 | Embeddings | "embed the Markdown files in ./docs with 0G PC for semantic search" | Shows estimated tokens and cost | |
 | Decisions | "route each ticket in tickets.csv to billing, technical or other with 0G PC" | Shows estimated tokens and cost | |
-
-The Router is at `https://router-api.0g.ai/v1` and is OpenAI-compatible. See the [Router quickstart](/developer-hub/building-on-0g/compute-network/router/quickstart) for the API itself.
 
 The Router is at `https://router-api.0g.ai/v1` and is OpenAI-compatible. See the [Router quickstart](/developer-hub/building-on-0g/compute-network/router/quickstart) for the API itself.
 
