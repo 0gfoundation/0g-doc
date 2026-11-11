@@ -10,6 +10,8 @@ keywords: [0gpc, CLI, Claude Code, OpenCode, Pi, Hermes Agent, 0G Private Comput
 
 > Use [0G Private Computer](https://pc.0g.ai) in the coding tools you already have. It takes one command and a few steps, and you can undo it any time.
 
+Prefer to let your coding agent do the setup? See [Agent skill](./agent-skill): paste one line and the agent runs 0gpc for you.
+
 ---
 
 ## Why we built it
