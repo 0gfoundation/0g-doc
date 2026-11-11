@@ -1,6 +1,6 @@
 ---
 id: agent-skill
-title: Agent skill
+title: 0G Private Computer skill
 sidebar_position: -1
 description: "Get started with 0G Private Computer through your coding agent: paste one line, say what you want, and approve each step. Connect a coding tool, build with 0G models, try models or fix a problem."
 keywords: [agent skill, 0G Private Computer, Claude Code, OpenCode, Pi, Hermes Agent, 0gpc, Router, getting started]
