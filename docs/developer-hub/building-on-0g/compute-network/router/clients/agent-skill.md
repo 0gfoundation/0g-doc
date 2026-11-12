@@ -43,7 +43,7 @@ After installing, restart the tool so it loads the skill. Then ask in plain word
 | | Paste one line | npx skills add |
 |---|---|---|
 | Best for | Getting started now | Long-term use |
-| What it uses | The skill page (`SKILL.md`), read from a URL; nothing is saved on your machine | The whole skill saved on your machine: `SKILL.md` and its three reference files |
+| What it uses | `SKILL.md`, plus one reference file when the task needs it, read from the URL; nothing is saved on your machine | The whole skill saved on your machine: `SKILL.md` and its three reference files |
 | Version | The latest, read each time | A local copy you can review and pin to a version |
 
 ---
@@ -210,7 +210,7 @@ Embeddings, decisions and video understanding have no Playground page. For those
 
 - Fully quit and reopen Claude Code in that directory. The new model applies after the restart.
 - To check, ask "am I on 0G now?" or look for your new requests under usage on [pc.0g.ai](https://pc.0g.ai/dashboard/overview).
-- To go back, say "turn 0G off", or run the undo command from the report, `0gpc reset claude --yes`. It removes only what 0gpc added; your other settings and your key stay.
+- To go back, say "turn 0G off", or run the undo command from the report: `npx -y @0gfoundation/0gpc@latest reset claude --yes` (or `0gpc reset claude --yes` if you have 0gpc installed globally). It removes only what 0gpc added; your other settings and your key stay.
 
 
 ---
