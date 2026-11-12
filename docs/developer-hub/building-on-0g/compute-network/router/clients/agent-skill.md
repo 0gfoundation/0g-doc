@@ -69,8 +69,6 @@ What do you want to do?
    Say: "add a streaming chat endpoint with 0G PC in Private mode"
 5. Compute Direct: wallet-signed calls, broker SDK, sub-accounts, fine-tuning (the Compute skills,
    not this one). https://github.com/0gfoundation/0g-agent-skills/tree/main/skills/compute
-   Install: npx skills add 0gfoundation/0g-agent-skills/skills/compute/<skill>, for example
-   streaming-chat or fine-tuning.
 6. Fix: a 401, a balance problem, a model that seems down (status: https://pc.0g.ai/status),
    or a tool still on the old model.
    Say: "my 0G key gives a 401"
