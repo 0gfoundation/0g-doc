@@ -55,10 +55,12 @@ print(result.text)
 | ----------------- | --------------------------------------------------------------- |
 | `model`           | Audio model ID from [`/v1/models`](../models)                   |
 | `file`            | Audio file (multipart form)                                     |
-| `response_format` | `json`, `text`, `srt`, `verbose_json`, `vtt`                    |
+| `response_format` | `json` (default) or `verbose_json` (adds per-segment timestamps) |
 | `language`        | ISO-639-1 code, e.g. `"en"` — optional, improves accuracy       |
 | `prompt`          | Optional text to guide style and vocabulary                     |
 | `temperature`     | Sampling temperature (0 = deterministic)                        |
+
+`text`, `srt` and `vtt` are not supported and return `400 unsupported_response_format`; use `verbose_json` if you need segment timestamps for subtitles. Streaming is not supported either: `stream: true` returns `400 unsupported_stream`, so omit it and the whole transcript comes back in one response.
 
 ## Response
 
