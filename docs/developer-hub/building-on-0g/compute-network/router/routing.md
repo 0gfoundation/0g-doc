@@ -22,6 +22,34 @@ If you send no routing headers, the Router:
 
 This is the recommended path for most applications.
 
+## Conversation affinity
+
+A prompt cache lives with the provider that wrote it. To keep your cache hits, the Router sends every turn of a conversation to the same provider, as long as that provider stays healthy and is still among the best-ranked for the request. This applies to `/v1/chat/completions` and `/v1/messages`.
+
+The Router identifies a conversation by the first of these it finds:
+
+1. The `X-Session-Id` header.
+2. The `X-Claude-Code-Session-Id` header, which [Claude Code](./clients/claude-code) sends on its own.
+3. `prompt_cache_key` in the request body.
+4. The opening of the conversation: the system prompt and the first message after it. Agent loops resend these unchanged on every turn, so most clients need no changes.
+
+Send your own `X-Session-Id` when the opening of a conversation changes between turns (for example, the system prompt includes the current time), or when two conversations start identically and you want them kept apart. Use the same value for every turn of a conversation; a new value starts a new conversation.
+
+```bash
+curl https://router-api.0g.ai/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-YOUR_API_KEY" \
+  -H "X-Session-Id: support-ticket-4812" \
+  -d '{
+    "model": "glm-5.2",
+    "messages": [{"role": "user", "content": "Hello"}]
+  }'
+```
+
+Affinity only chooses among providers that tie for your request — under the default price sort, providers with exactly the same price in the currency your account pays in. When one provider is strictly cheaper, every request goes there anyway, and ties can appear or disappear as prices change. Affinity never overrides `X-0G-Provider-Sort`, a price cap, or a pinned address.
+
+Requests whose response carries `X-0G-E2EE: sealed` don't get conversation affinity yet. If the provider fails, the request is retried as described in [Default Behavior](#default-behavior), and a retry that lands elsewhere starts with a cold cache. Later turns go back to the original provider once it is serving again.
+
 ## Routing surfaces
 
 The Router accepts routing preferences from two surfaces. In priority order:
@@ -172,6 +200,7 @@ HTTP header names are case-insensitive per RFC 7230 — `X-0G-Provider-Address` 
 | `X-0G-Provider-Max-Price-Usd-Prompt`     | finite, non-negative decimal | Per-request ceiling on prompt token price, USD per 1M tokens. See [Capping price per request](#capping-price-per-request). |
 | `X-0G-Provider-Max-Price-Usd-Completion` | finite, non-negative decimal | Per-request ceiling on completion token price, USD per 1M tokens. See [Capping price per request](#capping-price-per-request). |
 | `X-0G-Provider-Max-Price-Usd-Image`      | finite, non-negative decimal | Per-request ceiling on image price, USD per generated image. See [Capping price per request](#capping-price-per-request). |
+| `X-Session-Id`                  | any string, stable per conversation | Keep every turn of a conversation on the same provider. Optional — see [Conversation affinity](#conversation-affinity). |
 
 Defaults: `Allow-Fallbacks` is `true` normally, and `false` when `X-0G-Provider-Address` is set.
 
