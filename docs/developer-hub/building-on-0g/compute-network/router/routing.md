@@ -22,6 +22,8 @@ If you send no routing headers, the Router:
 
 This is the recommended path for most applications.
 
+To let the Router choose the **model** as well, send `"model": "0g/auto"`: see [Auto Routing](./features/auto-routing.md).
+
 ## Routing surfaces
 
 The Router accepts routing preferences from two surfaces. In priority order:
