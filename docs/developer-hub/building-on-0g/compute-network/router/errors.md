@@ -7,7 +7,7 @@ description: "HTTP status codes and error shapes returned by the Router."
 
 # Errors
 
-Errors follow a consistent OpenAI-compatible shape. The response also includes `request_id` at the top level when available — quote it when reporting issues.
+Errors follow a consistent OpenAI-compatible shape. The response also includes `request_id` at the top level when available — quote it when reporting issues. ([`/v1/messages`](./features/messages#errors) uses the Anthropic error shape instead.)
 
 ```json
 {
@@ -28,10 +28,12 @@ Errors follow a consistent OpenAI-compatible shape. The response also includes `
 | `401`  | Missing or invalid authentication                                               |
 | `402`  | Insufficient balance — [deposit more](./account/deposits)                       |
 | `403`  | The API key does not have permission to perform this action                     |
-| `404`  | Resource not found                                                              |
+| `404`  | Resource not found, including an unknown model ID                               |
+| `423`  | A refund is in progress on your account — wait for it to finish, then deposit to resume |
 | `429`  | Rate limited — check `Retry-After` header, see [Rate Limits](./rate-limits)     |
 | `502`  | Provider returned an error (failover exhausted)                                 |
-| `503`  | No healthy providers available for the requested model                          |
+| `501`  | The model can't be billed to a USD-settled account (`usd_not_supported`)        |
+| `503`  | No healthy providers available for the requested model, or balance check temporarily unavailable |
 
 ## Error Types and Codes
 
@@ -46,13 +48,35 @@ Errors follow a consistent OpenAI-compatible shape. The response also includes `
 | `rate_limit_error`      | `rate_limit_exceeded`                                        | 429 — see [Rate Limits](./rate-limits)               |
 | `server_error`          | `no_available_provider`, `provider_error`, `internal_error`  | 502, 503, 500 — backend problem                      |
 
+## Common Codes
+
+| `code`                        | Status | Meaning                                                                 |
+| ----------------------------- | ------ | ----------------------------------------------------------------------- |
+| `model_not_found`             | `404`  | The model ID is not in [`/v1/models`](./models)                         |
+| `model_format_mismatch`       | `400`  | The model is served only in the Anthropic format — call [`/v1/messages`](./features/messages) instead of `/v1/chat/completions` |
+| `model_not_capable`           | `400`  | No provider for the model supports what the request asks for (for example `tools` or `response_format`) |
+| `unsupported_response_format` | `400`  | [Audio transcription](./features/audio) `response_format` other than `json` or `verbose_json` |
+| `unsupported_stream`          | `400`  | `stream: true` on [audio transcription](./features/audio)               |
+| `refund_pending`              | `423`  | A refund is in progress on your account                                 |
+| `video_jobs_in_flight_limit`  | `429`  | Too many video jobs running at once — wait for one to finish            |
+| `usd_not_supported`           | `501`  | The model can't be billed to a USD-settled account                      |
+| `vault_unavailable`           | `503`  | The balance check is temporarily unavailable — retry                    |
+| `no_available_provider`       | `503`  | No provider for the model is available right now                        |
+
+If a provider reports a refusal with HTTP `200` and only an `error` body, the Router returns it as `400` with that body. Nothing is charged and the request is not retried on another provider.
+
+## Request IDs
+
+The Router assigns every request its own ID: `request_id` in error bodies and `x_0g_trace.request_id` in successful responses, the same value that appears in your usage history. An `X-Request-ID` header you send is not used as the request's ID, so don't rely on it to look a request up later.
+
 ## Retrying
 
 - `429` — honor `Retry-After`, then retry
 - `502` (`provider_error`) — the Router already tried every healthy provider; retrying may help if one just came back online
 - `503` (`no_available_provider`) — unlikely to resolve in seconds; consider a different model or waiting
+- `503` (`vault_unavailable`) — transient; retry
 
-Do **not** retry `400`, `401`, `402`, or `403` without changing your request — they won't succeed.
+Do **not** retry `400`, `401`, `402`, `403`, or `501` without changing your request — they won't succeed.
 
 ## Related
 
