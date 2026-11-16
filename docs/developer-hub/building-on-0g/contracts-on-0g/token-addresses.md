@@ -26,7 +26,7 @@ W0G is also issued on the chains below and moves between them with [Chainlink CC
 | Ethereum | 1 | W0G (Wrapped 0G) | [`0x4C1Dab3Be86347977F3DfC4b9688224ef2272939`](https://etherscan.io/token/0x4C1Dab3Be86347977F3DfC4b9688224ef2272939) | 18 |
 | Base | 8453 | W0G (Wrapped 0G) | [`0x23cd099eB438CcA50349EE2BC809196b1ae00861`](https://basescan.org/token/0x23cd099eB438CcA50349EE2BC809196b1ae00861) | 18 |
 | Solana | mainnet-beta | W0G (Wrapped 0G), SPL mint | [`gNyJyS9pQt33o4y4L3gdWZAF2XHgPrCBRQuaiCZStMe`](https://solscan.io/token/gNyJyS9pQt33o4y4L3gdWZAF2XHgPrCBRQuaiCZStMe) | 9 |
-| Robinhood Chain | 4663 | W0G (Wrapped 0G) | [`0x32003CC8357938bCF615c1222a349c58f2B30698`](https://robinscan.io/address/0x32003CC8357938bCF615c1222a349c58f2B30698) | 18 |
+| Robinhood Chain | 4663 | W0G (Wrapped 0G) | [`0x32003CC8357938bCF615c1222a349c58f2B30698`](https://robinhoodchain.blockscout.com/token/0x32003CC8357938bCF615c1222a349c58f2B30698) | 18 |
 
 :::caution Solana uses 9 decimals
 The Solana mint has 9 decimals; every EVM deployment has 18. Convert amounts when moving between them.
