@@ -29,7 +29,7 @@ This is what makes "decentralized inference" meaningful: you can verify, out-of-
 
 ## What token do I pay in?
 
-**0G tokens**, native to the 0G chain. Deposit once to the Router payment contract; the Router handles conversions and provider payouts.
+**USD or 0G tokens** — each account settles in one of them at a time. Accounts created by signing up at [pc.0g.ai](https://pc.0g.ai) pay in USD, topped up by card from the dashboard; other accounts pay in 0G, deposited to the 0G Payment Layer. You can switch from a signed-in session; switching moves no money. Responses report amounts in micro-USD or neuron and say which in a `currency` field. See [Deposits & Billing](./account/deposits#usd-or-0g).
 
 ## Is the Router really OpenAI-compatible?
 
