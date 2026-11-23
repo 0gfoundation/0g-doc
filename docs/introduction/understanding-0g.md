@@ -1,7 +1,7 @@
 ---
 id: understanding-0g
 title: Understanding 0G
-description: "Learn what 0G (Zero Gravity) is — the first decentralized AI L1 chain with modular storage, compute, data availability, and the native 0G token."
+description: "Learn what 0G (Zero Gravity) is — an AI infrastructure stack with modular storage, compute, data availability, and the native 0G token."
 sidebar_position: 1
 ---
 
@@ -24,7 +24,7 @@ Without overcoming these hurdles, the dream of decentralized AI remains out of r
 
 ## What is 0G?
 
-0G (Zero Gravity) is the first decentralized AI L1 chain that orchestrates hardware resources (storage, compute) and software assets (data, models) to handle AI workloads at scale. It bridges the gap between Web2 AI capabilities and Web3 decentralization.
+0G (Zero Gravity) is an AI infrastructure stack that orchestrates hardware resources (storage, compute) and software assets (data, models) to handle AI workloads at scale. It bridges the gap between Web2 AI capabilities and Web3 decentralization.
 
 :::info 0G is building the global foundation for a better, fairer, and more open AI ecosystem, where power is distributed and innovation thrives
 :::

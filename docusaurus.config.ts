@@ -11,7 +11,7 @@ const isProd = process.env.VERCEL_ENV === 'production';
 // The approved one-line description of 0G. Used for llms.txt, llms-full.txt and
 // site metadata so every machine-readable surface says the same thing.
 const SITE_ONE_LINER =
-  '0G is the trust layer for AI. It combines private compute, encrypted storage, and an AI-native EVM L1 chain in one stack where AI work, from inference to agent actions, is verified and audited.';
+  '0G is the frontier super-intelligence lab solving AI privacy, safety, verifiability, and sovereignty. It combines private compute and encrypted storage in one stack where AI work, from inference to agent actions, is verified and audited.';
 
 const config: Config = {
   title: '0G Documentation',
