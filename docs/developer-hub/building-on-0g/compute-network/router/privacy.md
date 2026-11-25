@@ -101,5 +101,5 @@ The catalog changes as providers join the network; per-provider tiers are shown 
 ## Auditing
 
 - Account usage endpoints break down consumption by trust tier, so you can report exactly which share of traffic ran sealed, per day and per model.
-- Add `verify_tee: true` to any request to have the Router verify the provider's TEE signature synchronously; see [Verifiable Execution](./features/verifiable-execution.md).
+- Responses from Private models are signature-checked by the 0G gateway before they reach you, and carry `X-0G-E2EE: sealed`. The Router's `tee_verified` field is not set on them, even with `verify_tee: true`; see [Verifiable Execution: Private models](./features/verifiable-execution.md#private-models).
 - Provider attestations can be independently verified with [dstack-verifier](https://github.com/Dstack-TEE/dstack), and the verification mechanics are documented under [verification modes](../inference.md#verification-modes).
