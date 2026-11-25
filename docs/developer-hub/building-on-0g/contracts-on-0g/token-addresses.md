@@ -1,7 +1,7 @@
 ---
 id: token-addresses
 title: 0G Token Addresses
-description: "Official contract addresses for the 0G token: W0G on 0G Mainnet, W0G bridged with Chainlink CCIP on Ethereum, Base, Solana and Robinhood Chain, and the bridged 0G token on Ethereum and BNB Chain."
+description: "Official contract addresses for the 0G token: W0G on 0G Mainnet, W0G bridged with Chainlink CCIP on Ethereum, Base, BNB Chain, Solana and Robinhood Chain, and the bridged 0G token on Ethereum and BNB Chain."
 keywords: [0G token, W0G, wrapped 0G, contract address, CCIP, Ethereum, Base, Solana, Robinhood Chain, BNB Chain]
 ---
 
@@ -25,6 +25,7 @@ W0G is also issued on the chains below and moves between them with [Chainlink CC
 |---------|----------|-------|---------|----------|
 | Ethereum | 1 | W0G (Wrapped 0G) | [`0x4C1Dab3Be86347977F3DfC4b9688224ef2272939`](https://etherscan.io/token/0x4C1Dab3Be86347977F3DfC4b9688224ef2272939) | 18 |
 | Base | 8453 | W0G (Wrapped 0G) | [`0x23cd099eB438CcA50349EE2BC809196b1ae00861`](https://basescan.org/token/0x23cd099eB438CcA50349EE2BC809196b1ae00861) | 18 |
+| BNB Chain | 56 | W0G (Wrapped 0G) | [`0x2C2d4d99F95643C8EC2EbD1d73a6Fd0273068B1e`](https://bscscan.com/token/0x2C2d4d99F95643C8EC2EbD1d73a6Fd0273068B1e) | 18 |
 | Solana | mainnet-beta | W0G (Wrapped 0G), SPL mint | [`gNyJyS9pQt33o4y4L3gdWZAF2XHgPrCBRQuaiCZStMe`](https://solscan.io/token/gNyJyS9pQt33o4y4L3gdWZAF2XHgPrCBRQuaiCZStMe) | 9 |
 | Robinhood Chain | 4663 | W0G (Wrapped 0G) | [`0x32003CC8357938bCF615c1222a349c58f2B30698`](https://robinscan.io/address/0x32003CC8357938bCF615c1222a349c58f2B30698) | 18 |
 
@@ -41,7 +42,11 @@ The earlier bridged representation is a LayerZero OFT named `0G`. It deliberatel
 | Ethereum | 1 | 0G (bridged, LayerZero OFT) | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://etherscan.io/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) | 18 |
 | BNB Chain | 56 | 0G (bridged, LayerZero OFT) | [`0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE`](https://bscscan.com/token/0x4B948d64dE1F71fCd12fB586f4c776421a35b3eE) | 18 |
 
-`0G` (LayerZero) and `W0G` (CCIP) are different contracts on Ethereum. Check which one a venue or bridge expects before sending funds.
+`0G` (LayerZero) and `W0G` (CCIP) are different contracts on Ethereum and on BNB Chain. Check which one a venue or bridge expects before sending funds.
+
+:::info BNB Chain migration
+On BNB Chain, the LayerZero `0G` is moving to W0G. If you hold it in your own wallet, swap it 1:1 for W0G at [hub.0g.ai](https://hub.0g.ai/swap). The [migration guide](https://0g.ai/blog/0g-bnb-chain-migration) has the steps and an FAQ.
+:::
 
 ## Related links
 
