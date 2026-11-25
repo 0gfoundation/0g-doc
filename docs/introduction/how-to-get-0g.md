@@ -124,6 +124,7 @@ Every wallet below detects the native $0G token automatically once the 0G networ
 | **[Bitget Wallet](https://web3.bitget.com/)** | Built-in |
 | **[Zerion](https://zerion.io/)** | Built-in |
 | **[Coinbase Wallet](https://www.coinbase.com/wallet)** | Add manually |
+| **[Binance Wallet](https://www.binance.com/en/web3wallet)** | No setup (networks managed by Binance) |
 | **[SafePal](https://www.safepal.com/)** | In-app network directory (App v3.9.0+) |
 | **[Trust Wallet](https://trustwallet.com/)** | Add manually |
 | **[TokenPocket](https://www.tokenpocket.pro/)** | In-app network directory |
